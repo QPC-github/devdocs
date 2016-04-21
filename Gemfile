@@ -1,5 +1,5 @@
-source 'https://rubygems.org'
-ruby '2.3.0'
+source "https://ruby.taobao.org"
+ruby '2.2.1'
 
 gem 'rake'
 gem 'thor'
