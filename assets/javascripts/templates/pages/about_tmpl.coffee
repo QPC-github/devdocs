@@ -96,8 +96,8 @@ credits = [
     'GPLv3',
     'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
   ], [
-    'Apache HTTP Server',
-    '2016 The Apache Software Foundation',
+    'Apache HTTP Server<br>Apache Pig',
+    '2016 The Apache Software Foundation<br>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.',
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
@@ -192,9 +192,9 @@ credits = [
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
     'Express',
-    '2009-2015 TJ Holowaychuk',
-    'MIT',
-    'https://raw.githubusercontent.com/visionmedia/express/master/LICENSE'
+    '2016 StrongLoop, IBM, and other expressjs.com contributors.',
+    'Unknown',
+    'https://github.com/expressjs/expressjs.com/issues/413'
   ], [
     'GCC<br>GNU Fortran',
     'Free Software Foundation',
@@ -272,9 +272,9 @@ credits = [
     'http://www.lua.org/license.html'
   ], [
     'Marionette.js',
-    '2015 Muted Solutions, LLC',
+    '2016 Muted Solutions, LLC',
     'MIT',
-    'http://mutedsolutions.mit-license.org/'
+    'https://mutedsolutions.mit-license.org/'
   ], [
     'Markdown',
     '2004 John Gruber',
@@ -297,7 +297,7 @@ credits = [
     'https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE'
   ], [
     'Modernizr',
-    '2009-2014 Modernizr',
+    '2009-2016 The Modernizr team',
     'MIT',
     'https://modernizr.com/license/'
   ], [
@@ -336,6 +336,11 @@ credits = [
     'npm',
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
+    'NumPy',
+    '2008-2016 NumPy Developers',
+    'NumPy',
+    'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
+  ], [
     'OpenTSDB',
     '2010-2016 The OpenTSDB Authors',
     'LGPLv2.1',
@@ -352,7 +357,7 @@ credits = [
     'https://docs.phalconphp.com/en/latest/reference/license.html'
   ], [
     'Phaser',
-    '2015 Richard Davey, Photon Storm Ltd.',
+    '2016 Richard Davey, Photon Storm Ltd.',
     'MIT',
     'https://raw.githubusercontent.com/photonstorm/phaser/master/license.txt'
   ], [
@@ -427,7 +432,7 @@ credits = [
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
     'Sinon',
-    '2010-2015 Christian Johansen',
+    '2010-2016 Christian Johansen',
     'BSD',
     'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
   ], [
@@ -472,7 +477,7 @@ credits = [
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
     'Webpack',
-    '2012-2015 Tobias Koppers',
+    '2012-2016 Tobias Koppers',
     'MIT',
     'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
   ], [
