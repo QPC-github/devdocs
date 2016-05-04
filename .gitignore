@@ -6,5 +6,4 @@ tmp
 public/assets
 public/fonts
 public/docs/**/*
-!public/docs/docs.json
-!public/docs/**/index.json
+
