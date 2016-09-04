@@ -6,7 +6,7 @@ app.templates.offlinePage = (docs) -> """
       <a class="_docs-link" data-action-all="install">Install all</a><a class="_docs-link" data-action-all="update"><strong>Update all</strong></a><a class="_docs-link" data-action-all="uninstall">Uninstall all</a>
     </div>
     <label class="_docs-label">
-      <input type="checkbox" name="autoUpdate" value="1" #{if app.settings.get('autoUpdate') then 'checked' else ''}>
+      <input type="checkbox" name="autoUpdate" value="1" #{if app.settings.get('manualUpdate') then '' else 'checked'}>
       Check for and install updates automatically
     </label>
   </div>
@@ -33,7 +33,7 @@ app.templates.offlinePage = (docs) -> """
     <dt>I found a bug, where do I report it?
     <dd>In the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>. Thanks!
     <dt>How do I uninstall/reset the app?
-    <dd>Click <a href="javascript:if(confirm('Are you sure you want to reset DevDocs?'))app.reset()">here</a>.
+    <dd>Click <a href="#" data-behavior="reset">here</a>.
     <dt>Why aren't all documentations listed above?
     <dd>You have to <a href="#" data-pick-docs>enable</a> them first.
   </dl>

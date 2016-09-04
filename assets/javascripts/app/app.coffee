@@ -13,9 +13,9 @@
     @showLoading()
 
     @el = $('._app')
-    @store = new Store
+    @localStorage = new LocalStorageStore
     @appCache = new app.AppCache if app.AppCache.isEnabled()
-    @settings = new app.Settings @store
+    @settings = new app.Settings @localStorage
     @db = new app.DB()
 
     @docs = new app.collections.Docs
@@ -27,7 +27,8 @@
     @document = new app.views.Document
     @mobile = new app.views.Mobile if @isMobile()
 
-    if @DOC
+    if document.body.hasAttribute('data-doc')
+      @DOC = JSON.parse(document.body.getAttribute('data-doc'))
       @bootOne()
     else if @DOCS
       @bootAll()
@@ -52,12 +53,22 @@
         Raven.config @config.sentry_dsn,
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/dpQuery/, /NPObject/, /NS_ERROR/, /^null$/]
+          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/]
           tags:
-            mode: if @DOC then 'single' else 'full'
+            mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
+          shouldSendCallback: =>
+            try
+              if @isInjectionError()
+                @onInjectionError()
+                return false
+              if @isAndroidWebview()
+                return false
+            true
           dataCallback: (data) ->
-            try $.extend(data.user ||= {}, app.settings.settings)
+            try
+              $.extend(data.user ||= {}, app.settings.dump())
+              data.user.lastIDBTransaction = app.lastIDBTransaction if app.lastIDBTransaction
             data
         .install()
       @previousErrorHandler = onerror
@@ -103,8 +114,10 @@
   migrateDocs: ->
     for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
       needsSaving = true
+      doc = @disabledDocs.findBy('slug', 'codeigniter~3') if slug == 'codeigniter~3.0'
       doc = @disabledDocs.findBy('slug', 'node~4_lts') if slug == 'node~4.2_lts'
       doc = @disabledDocs.findBy('slug', 'xslt_xpath') if slug == 'xpath'
+      doc = @disabledDocs.findBy('slug', "angularjs~#{match[1]}") if match = /^angular~(1\.\d)$/.exec(slug)
       doc ||= @disabledDocs.findBy('slug_without_version', slug)
       if doc
         @disabledDocs.remove(doc)
@@ -149,7 +162,7 @@
     return
 
   reset: ->
-    @store.clear()
+    @localStorage.reset()
     @settings.reset()
     @db?.reset()
     @appCache?.update()
@@ -158,21 +171,23 @@
 
   showTip: (tip) ->
     return if @isSingleDoc()
-    tips = @settings.get('tips') || []
+    tips = @settings.getTips()
     if tips.indexOf(tip) is -1
       tips.push(tip)
-      @settings.set('tips', tips)
+      @settings.setTips(tips)
       new app.views.Tip(tip)
     return
 
   showLoading: ->
     document.body.classList.remove '_noscript'
     document.body.classList.add '_loading'
+    document.body.insertAdjacentHTML 'beforeend', '<div id="fontLoader" aria-hidden="true" style="position: absolute; top: 0; height: 0; overflow: hidden; visibility: hidden;"><b>Preload</b> <em>all <b>fonts</b></em></div>' # Chrome
     return
 
   hideLoading: ->
     document.body.classList.remove '_booting'
     document.body.classList.remove '_loading'
+    try $.remove document.getElementById('fontLoader')
     return
 
   indexHost: ->
@@ -189,7 +204,7 @@
     return if @quotaExceeded
     @quotaExceeded = true
     new app.views.Notif 'QuotaExceeded', autoHide: null
-    Raven.captureMessage 'QuotaExceededError'
+    Raven.captureMessage 'QuotaExceededError', level: 'warning'
 
   onWindowError: (args...) ->
     if @isInjectionError args...
@@ -207,13 +222,13 @@
       alert """
         JavaScript code has been injected in the page which prevents DevDocs from running correctly.
         Please check your browser extensions/addons. """
-      Raven.captureMessage 'injection error'
+      Raven.captureMessage 'injection error', level: 'info'
     return
 
   isInjectionError: ->
     # Some browser extensions expect the entire web to use jQuery.
     # I gave up trying to fight back.
-    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page
+    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page or typeof $.empty isnt 'function' or typeof page.show isnt 'function'
 
   isAppError: (error, file) ->
     # Ignore errors from external scripts.
@@ -231,16 +246,16 @@
         cssGradients:         supportsCssGradients()
 
       for key, value of features when not value
-        Raven.captureMessage "unsupported/#{key}"
+        Raven.captureMessage "unsupported/#{key}", level: 'info'
         return false
 
       true
     catch error
-      Raven.captureMessage 'unsupported/exception', extra: { error: error }
+      Raven.captureMessage 'unsupported/exception', level: 'info', extra: { error: error }
       false
 
   isSingleDoc: ->
-    !!(@DOC or @doc)
+    document.body.hasAttribute('data-doc')
 
   isMobile: ->
     @_isMobile ?= app.views.Mobile.detect()

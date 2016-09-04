@@ -132,6 +132,12 @@ class AppTest < MiniTest::Spec
       assert last_response.ok?
     end
 
+    it "renders when the doc exists, is a default doc, and all docs are enabled" do
+      set_cookie('docs=')
+      get '/css/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      assert last_response.ok?
+    end
+
     it "redirects via JS cookie when the doc exists and is enabled" do
       set_cookie('docs=html~5')
       get '/html~5/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
@@ -164,6 +170,14 @@ class AppTest < MiniTest::Spec
       assert last_response.not_found?
     end
 
+    it "decodes '~' properly" do
+      get '/html%7E5/'
+      assert last_response.ok?
+
+      get '/html%7E42/'
+      assert last_response.not_found?
+    end
+
     it "redirects with trailing slash" do
       get '/html'
       assert last_response.redirect?
@@ -185,13 +199,13 @@ class AppTest < MiniTest::Spec
     it "works when the doc exists" do
       get '/html~4-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~4"'
+      assert_includes last_response.body, 'data-doc="{&quot;name&quot;:&quot;HTML&quot;,&quot;slug&quot;:&quot;html~4&quot;'
     end
 
     it "works when the doc has no version in the path and a version exists" do
       get '/html-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~5"'
+      assert_includes last_response.body, 'data-doc="{&quot;name&quot;:&quot;HTML&quot;,&quot;slug&quot;:&quot;html~5&quot;'
     end
 
     it "returns 404 when the type is blank" do

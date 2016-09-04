@@ -23,7 +23,8 @@ module Docs
         css('.phpcode').each do |node|
           node.name = 'pre'
           node.inner_html = node.inner_html.gsub(br, "\n")
-          node.content = node.content
+          node.content = node.content.strip
+          node['data-language'] = 'php'
         end
 
         css('> h2:first-child.title').each do |node|

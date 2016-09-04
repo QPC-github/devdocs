@@ -66,12 +66,14 @@ class App < Sinatra::Application
     use BetterErrors::Middleware
     BetterErrors.application_root = File.expand_path('..', __FILE__)
     BetterErrors.editor = :sublime
+
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' *; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
   end
 
   configure :production do
     set :static, false
     set :docs_host, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'unsafe-inline' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -117,7 +119,7 @@ class App < Sinatra::Application
       @docs ||= begin
         cookie = cookies[:docs]
 
-        if cookie.nil? || cookie.empty?
+        if cookie.nil?
           settings.default_docs
         else
           cookie.split('/')
@@ -258,9 +260,9 @@ class App < Sinatra::Application
     '/s/jetbrains/c'      => 'https://www.jetbrains.com/clion/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/jetbrains/web'    => 'https://www.jetbrains.com/webstorm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/code-school'      => 'http://www.codeschool.com/?utm_campaign=devdocs&utm_content=homepage&utm_source=devdocs&utm_medium=sponsorship',
-    '/s/tw'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A',
+    '/s/tw'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search%3A',
     '/s/fb'               => 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io',
-    '/s/re'               => 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20offline%20API%20documentation%20browser&resubmit=true'
+    '/s/re'               => 'https://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search&resubmit=true'
   }.each do |path, url|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
       get '#{path}' do
@@ -278,12 +280,18 @@ class App < Sinatra::Application
     'iojs' => 'node',
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
-    'xpath' => 'xslt_xpath'
+    'xpath' => 'xslt_xpath',
+    'angular~1.5' => 'angularjs~1.5',
+    'angular~1.4' => 'angularjs~1.4',
+    'angular~1.3' => 'angularjs~1.3',
+    'angular~1.2' => 'angularjs~1.2',
+    'codeigniter~3.0' => 'codeigniter~3'
   }
 
-  get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
+  get %r{\A/([\w~\.%]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
+    doc.sub! '%7E', '~'
     return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}" if DOC_REDIRECTS.key?(doc)
-    return redirect "/angular/api#{rest}", 301 if doc == 'angular' && rest.start_with?('/ng')
+    return redirect "/angularjs/api#{rest}", 301 if doc == 'angular' && rest.start_with?('/ng')
     return 404 unless @doc = find_doc(doc)
 
     if rest.nil?

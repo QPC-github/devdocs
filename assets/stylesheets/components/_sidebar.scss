@@ -12,6 +12,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
   background: $sidebarBackground;
+  background-clip: content-box;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none; // IE 10 doesn't support pointer-events
   @extend %user-select-none;
@@ -31,8 +32,6 @@
       border-width: 2px;
     }
   }
-
-  a:focus { outline: 0; }
 
   ._sidebar-hidden & {
     display: none;
@@ -55,6 +54,7 @@
     background: $headerBackground;
     border-right: 1px solid $headerBorder;
     width: 8px;
+    cursor: pointer;
 
     &:before {
       content: '';
@@ -88,6 +88,8 @@
     min-height: 100%;
     padding-bottom: 3.5rem;
   }
+
+  a:focus { outline: 0; }
 }
 
 ._list-title {
@@ -135,7 +137,7 @@
   &:before {
     float: left;
     margin: .25rem .625rem 0 0;
-    @extend %icon;
+    @extend %doc-icon;
   }
 }
 
@@ -338,10 +340,12 @@
 //
 
 ._list-picker {
-  opacity: 0;
-  transition: .2s;
+  > ._list, > ._list-item {
+    opacity: 0;
+    transition: .2s;
+  }
+  &._in { > ._list, > ._list-item { opacity: 1; } }
 
-  &._in { opacity: 1; }
   ._list-item { cursor: pointer; }
   ._list-sub > ._list-item { padding-left: 2.375rem; }
 }
@@ -377,6 +381,8 @@
   width: $sidebarWidth;
   background: $sidebarBackground;
   box-shadow: inset -1px 0 $sidebarBorder;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
 
   @media #{$mediumScreen} { width: $sidebarMediumWidth; }
 
@@ -422,6 +428,8 @@
 }
 
 ._sidebar-footer-edit {
+  display: inline-block;
+
   @if $style == 'dark' {
     &:before { @extend %icon-settings-white; }
   } @else {
@@ -434,6 +442,7 @@
   width: 2rem;
   padding: 0;
   opacity: .65;
+  @extend %hide-text;
 
   &:before {
     float: none;
@@ -454,6 +463,7 @@
   width: 2rem;
   padding: 0;
   opacity: .65;
+  @extend %hide-text;
 
   &:before {
     float: none;

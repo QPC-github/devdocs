@@ -62,22 +62,24 @@ class DocsCLI < Thor
     Docs.install_report :scraper if options[:debug]
     Docs.install_report :progress_bar, :doc if $stdout.tty?
 
-    unless options[:force]
-      puts <<-TEXT.strip_heredoc
-        Note: this command will scrape the documentation from the source.
-        Some scrapers require a local setup. Others will send thousands of
-        HTTP requests, potentially slowing down the source site.
-        Please don't use it unless you are modifying the code.
-
-        To download the latest tested version of a documentation, use:
-        thor docs:download #{name}\n
-      TEXT
-      return unless yes? 'Proceed? (y/n)'
-    end
-
     require 'unix_utils' if options[:package]
 
     doc = Docs.find(name, options[:version])
+
+    if doc < Docs::UrlScraper && !options[:force]
+      puts <<-TEXT.strip_heredoc
+        /!\\ WARNING /!\\
+
+        Some scrapers send thousands of HTTP requests in a short period of time,
+        which can slow down the source site and trouble its maintainers.
+
+        Please scrape responsibly. Don't do it unless you're modifying the code.
+
+        To download the latest tested version of this documentation, run:
+          thor docs:download #{name}\n
+      TEXT
+      return unless yes? 'Proceed? (y/n)'
+    end
 
     result = if doc.version && options[:all]
       doc.superclass.versions.all? do |_doc|
@@ -226,23 +228,16 @@ class DocsCLI < Thor
   end
 
   def download_doc(doc)
-    target = File.join(Docs.store_path, "#{doc.path}.tar.gz")
+    target_path = File.join(Docs.store_path, doc.path)
     open "http://dl.devdocs.io/#{doc.path}.tar.gz" do |file|
-      FileUtils.mkpath(Docs.store_path)
-      FileUtils.mv(file, target)
-      unpackage_doc(doc)
+      FileUtils.mkpath(target_path)
+      file.close
+      tar = UnixUtils.gunzip(file.path)
+      dir = UnixUtils.untar(tar)
+      FileUtils.rm_rf(target_path)
+      FileUtils.mv(dir, target_path)
+      FileUtils.rm(file.path)
     end
-  end
-
-  def unpackage_doc(doc)
-    path = File.join(Docs.store_path, doc.path)
-    FileUtils.mkpath(path)
-    tar = UnixUtils.gunzip("#{path}.tar.gz")
-    dir = UnixUtils.untar(tar)
-    FileUtils.rm_rf(path)
-    FileUtils.mv(dir, path)
-    FileUtils.rm(tar)
-    FileUtils.rm("#{path}.tar.gz")
   end
 
   def package_doc(doc)
