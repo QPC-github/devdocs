@@ -110,6 +110,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Bottle',
+    '2016 Marcel Hellkamp',
+    'MIT',
+    'https://raw.githubusercontent.com/bottlepy/bottle/master/LICENSE'
+  ], [
     'Bower',
     '2016 Bower contributors',
     'MIT',
@@ -214,6 +219,11 @@ credits = [
     '2016 StrongLoop, IBM, and other expressjs.com contributors.',
     'Unknown',
     'https://github.com/expressjs/expressjs.com/issues/413'
+  ], [
+    'Fish',
+    '2005-2009 Axel Liljencrantz',
+    'GPLv2',
+    'https://fishshell.com/docs/current/license.html'
   ], [
     'GCC<br>GNU Fortran',
     'Free Software Foundation',
@@ -484,6 +494,11 @@ credits = [
     '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
+  ], [
+    'scikit-image',
+    '2011 the scikit-image team',
+    'BSD',
+    'http://scikit-image.org/docs/dev/license.html'
   ], [
     'Sinon',
     '2010-2016 Christian Johansen',
