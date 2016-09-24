@@ -376,7 +376,7 @@ credits = [
     'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
   ], [
     'Nokogiri',
-    '2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha',
+    '2008-2016 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha, John Shahid',
     'MIT',
     'https://raw.githubusercontent.com/sparklemotion/nokogiri/master/LICENSE.txt'
   ], [
@@ -399,6 +399,11 @@ credits = [
     '2010-2016 Padrino',
     'MIT',
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
+  ], [
+    'pandas',
+    '2011-2012 Lambda Foundry, Inc. and PyData Development Team<br>&copy; 2008-2011 AQR Capital Management, LLC<br>&copy; 2008-2014 the pandas development team',
+    'BSD',
+    'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
   ], [
     'Perl',
     '1993-2016 Larry Wall and others',
@@ -524,6 +529,11 @@ credits = [
     '2015 The TensorFlow Authors',
     'Apache',
     'https://raw.githubusercontent.com/tensorflow/tensorflow/master/LICENSE'
+  ], [
+    'Twig',
+    '2009-2016 The Twig Team',
+    'BSD',
+    'http://twig.sensiolabs.org/license'
   ], [
     'TypeScript',
     'Microsoft and other contributors',
