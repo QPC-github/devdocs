@@ -9,9 +9,11 @@ class app.views.SimplePage extends app.views.BasePage
 app.views.AngularPage =
 app.views.AngularjsPage =
 app.views.BootstrapPage =
+app.views.BowerPage =
 app.views.CPage =
 app.views.CakephpPage =
 app.views.ChaiPage =
+app.views.CoffeescriptPage =
 app.views.CordovaPage =
 app.views.CrystalPage =
 app.views.D3Page =
