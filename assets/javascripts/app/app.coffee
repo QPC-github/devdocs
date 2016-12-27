@@ -120,6 +120,7 @@
       doc = @disabledDocs.findBy('slug', 'codeigniter~3') if slug == 'codeigniter~3.0'
       doc = @disabledDocs.findBy('slug', 'node~4_lts') if slug == 'node~4.2_lts'
       doc = @disabledDocs.findBy('slug', 'xslt_xpath') if slug == 'xpath'
+      doc = @disabledDocs.findBy('slug', 'angular~2_typescript') if slug == 'angular~2.0_typescript'
       doc = @disabledDocs.findBy('slug', "angularjs~#{match[1]}") if match = /^angular~(1\.\d)$/.exec(slug)
       doc ||= @disabledDocs.findBy('slug_without_version', slug)
       if doc
@@ -196,7 +197,7 @@
   indexHost: ->
     # Can't load the index files from the host/CDN when applicationCache is
     # enabled because it doesn't support caching URLs that use CORS.
-    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_host']
+    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_origin']
 
   onBootError: (args...) ->
     @trigger 'bootError'

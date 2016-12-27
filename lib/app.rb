@@ -17,6 +17,8 @@ class App < Sinatra::Application
     set :root, Pathname.new(File.expand_path('../..', __FILE__))
     set :sprockets, Sprockets::Environment.new(root)
 
+    set :cdn_origin, ''
+
     set :assets_prefix, 'assets'
     set :assets_path, -> { File.join(public_folder, assets_prefix) }
     set :assets_manifest_path, -> { File.join(assets_path, 'manifest.json') }
@@ -24,7 +26,7 @@ class App < Sinatra::Application
 
     require 'yajl/json_gem'
     set :docs_prefix, 'docs'
-    set :docs_host, -> { File.join('', docs_prefix) }
+    set :docs_origin, -> { File.join('', docs_prefix) }
     set :docs_path, -> { File.join(public_folder, docs_prefix) }
     set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
     set :default_docs, %w(css dom dom_events html http javascript)
@@ -72,7 +74,8 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :docs_host, '//docs.devdocs.io'
+    set :cdn_origin, 'https://cdn.devdocs.io'
+    set :docs_origin, '//docs.devdocs.io'
     set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
@@ -105,6 +108,10 @@ class App < Sinatra::Application
   helpers do
     include Sinatra::Cookies
     include Sprockets::Helpers
+
+    def canonical_origin
+      "http://#{request.host_with_port}"
+    end
 
     def browser
       @browser ||= Browser.new(request.user_agent)
@@ -282,6 +289,7 @@ class App < Sinatra::Application
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
     'xpath' => 'xslt_xpath',
+    'angular~2.0_typescript' => 'angular~2_typescript',
     'angular~1.5' => 'angularjs~1.5',
     'angular~1.4' => 'angularjs~1.4',
     'angular~1.3' => 'angularjs~1.3',
@@ -291,7 +299,7 @@ class App < Sinatra::Application
 
   get %r{\A/([\w~\.%]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
     doc.sub! '%7E', '~'
-    return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}" if DOC_REDIRECTS.key?(doc)
+    return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}", 301 if DOC_REDIRECTS.key?(doc)
     return redirect "/angularjs/api#{rest}", 301 if doc == 'angular' && rest.start_with?('/ng')
     return 404 unless @doc = find_doc(doc)
 

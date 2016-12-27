@@ -100,6 +100,11 @@ credits = [
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
+    'Async',
+    '2010-2016 Caolan McMahon',
+    'MIT',
+    'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
+  ], [
     'Backbone.js',
     '2010-2016 Jeremy Ashkenas, DocumentCloud',
     'MIT',
@@ -149,6 +154,16 @@ credits = [
     '2000-2016 Kitware, Inc.<br>&copy; 2000-2011 Insight Software Consortium',
     'BSD',
     'https://cmake.org/licensing/'
+  ], [
+    'Codeception',
+    '2011-2016 Michael Bodnarchuk and contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/Codeception/Codeception/master/LICENSE'
+  ], [
+    'CodeceptJS',
+    '2015 DavertMik',
+    'MIT',
+    'https://raw.githubusercontent.com/Codeception/CodeceptJS/master/LICENSE'
   ], [
     'CodeIgniter',
     '2014-2016 British Columbia Institute of Technology',
@@ -254,6 +269,11 @@ credits = [
     '2005-2016 Haxe Foundation',
     'MIT',
     'http://haxe.org/foundation/open-source.html'
+  ], [
+    'Immutable.js',
+    '2014-2016 Facebook, Inc.',
+    'BSD',
+    'https://raw.githubusercontent.com/facebook/immutable-js/master/LICENSE'
   ], [
     'InfluxData',
     '2015 InfluxData, Inc.',
@@ -505,6 +525,11 @@ credits = [
     'BSD',
     'http://scikit-image.org/docs/dev/license.html'
   ], [
+    'scikit-learn',
+    '2007-2016 The scikit-learn developers',
+    'BSD',
+    'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
+  ], [
     'Sinon',
     '2010-2016 Christian Johansen',
     'BSD',
@@ -514,6 +539,16 @@ credits = [
     '2014-2015 Automattic',
     'MIT',
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
+  ], [
+    'SQLite',
+    'n/a',
+    'Public Domain',
+    'https://sqlite.org/copyright.html'
+  ], [
+    'Statsmodels',
+    '2009-2012 Statsmodels Developers<br>&copy; 2006-2008 Scipy Developers<br>&copy; 2006 Jonathan E. Taylor',
+    'BSD',
+    'https://raw.githubusercontent.com/statsmodels/statsmodels/master/LICENSE.txt'
   ], [
     'Symfony',
     '2004-2016 Fabien Potencier',
@@ -559,6 +594,11 @@ credits = [
     '2012-2016 Tobias Koppers',
     'MIT',
     'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
+  ], [
+    'Yarn',
+    '2016 Yarn Contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
   ], [
     'Yii',
     '2008-2016 by Yii Software LLC',

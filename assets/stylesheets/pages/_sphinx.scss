@@ -6,12 +6,12 @@
   dd > dl:not(.docutils) > dt { @extend %block-label; }
   dt + dt { margin-top: -.5em; }
 
-  .note, .admonition, div.versionadded, div.versionchanged, .deprecated-removed, .deprecated { @extend %note; }
+  .note, .admonition, div.versionadded, div.versionchanged, .deprecated-removed, .deprecated, .topic { @extend %note; }
 
   .important { @extend %note-orange; }
   .warning, .deprecated-removed, .deprecated { @extend %note-red; }
 
-  .versionmodified, span.title {
+  .versionmodified, span.title, .topic-title {
     display: block;
     font-weight: bold;
   }

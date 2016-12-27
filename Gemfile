@@ -1,5 +1,5 @@
 source "https://ruby.taobao.org"
-ruby '2.3.0'
+ruby '2.3.3'
 
 gem 'rake'
 gem 'thor'

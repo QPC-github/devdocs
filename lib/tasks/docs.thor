@@ -232,7 +232,7 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    open "http://dl.devdocs.io/#{doc.path}.tar.gz" do |file|
+    open("http://dl.devdocs.io/#{doc.path}.tar.gz") { |file|
       FileUtils.mkpath(target_path)
       file.close
       tar = UnixUtils.gunzip(file.path)
@@ -240,7 +240,7 @@ class DocsCLI < Thor
       FileUtils.rm_rf(target_path)
       FileUtils.mv(dir, target_path)
       FileUtils.rm(file.path)
-    end
+    }
   end
 
   def package_doc(doc)

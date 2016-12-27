@@ -46,12 +46,12 @@ module Docs
     end
 
     version '1.5' do
-      self.release = '1.5.8'
+      self.release = '1.5.9'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
     version '1.4' do
-      self.release = '1.4.12'
+      self.release = '1.4.14'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
@@ -61,7 +61,7 @@ module Docs
     end
 
     version '1.2' do
-      self.release = '1.2.30'
+      self.release = '1.2.32'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
   end

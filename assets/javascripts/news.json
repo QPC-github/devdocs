@@ -1,5 +1,14 @@
 [
   [
+    "2016-12-04",
+    "New documentations: <a href=\"/sqlite/\">SQLite</a>, <a href=\"/codeception/\">Codeception</a> and <a href=\"/codeceptjs/\">CodeceptJS</a>"
+  ], [
+    "2016-11-20",
+    "New documentations: <a href=\"/yarn/\">Yarn</a>, <a href=\"/immutable/\">Immutable.js</a> and <a href=\"/async/\">Async</a>"
+  ], [
+    "2016-10-10",
+    "New documentations: <a href=\"/scikit_learn/\">scikit-learn</a> and <a href=\"/statsmodels/\">Statsmodels</a>"
+  ], [
     "2016-09-18",
     "New documentations: <a href=\"/pandas/\">pandas</a> and <a href=\"/twig/\">Twig</a>"
   ], [

@@ -91,6 +91,9 @@ app.templates.helpPage = """
       <code class="_shortcut-code">alt + r</code>
     <dd class="_shortcuts-dd">Reveal current page in sidebar
     <dt class="_shortcuts-dt">
+      <code class="_shortcut-code">alt + o</code>
+    <dd class="_shortcuts-dd">Open original page
+    <dt class="_shortcuts-dt">
       <code class="_shortcut-code">alt + g</code>
     <dd class="_shortcuts-dd">Search on Google
     <dt class="_shortcuts-dt">
@@ -104,7 +107,7 @@ app.templates.helpPage = """
     <dd class="_shortcuts-dd">Show this page
   </dl>
   <p class="_note">
-    <strong>Tip:</strong> If the cursor is no longer in the search field, press backspace or
+    <strong>Tip:</strong> If the cursor is no longer in the search field, press <code class="_label">/</code> or
     continue to type and it will refocus the search field and start showing new results.
 
   <h2 class="_lined-heading" id="abbreviations">Abbreviations</h2>

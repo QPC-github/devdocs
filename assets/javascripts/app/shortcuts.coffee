@@ -61,9 +61,9 @@ class app.Shortcuts
       when 34
         @trigger 'pageDown'
       when 35
-        @trigger 'end'
+        @trigger 'pageBottom' unless event.target.form
       when 36
-        @trigger 'home'
+        @trigger 'pageTop' unless event.target.form
       when 37
         @trigger 'left' unless event.target.value
       when 38
@@ -76,6 +76,10 @@ class app.Shortcuts
         @trigger 'down'
         @showTip?()
         false
+      when 191
+        unless event.target.form
+          @trigger 'typing'
+          false
 
   handleKeydownSuperEvent: (event) ->
     switch event.which
@@ -86,14 +90,14 @@ class app.Shortcuts
           @trigger 'superLeft'
           false
       when 38
-        @trigger 'home'
+        @trigger 'pageTop'
         false
       when 39
         unless @isWindows
           @trigger 'superRight'
           false
       when 40
-        @trigger 'end'
+        @trigger 'pageBottom'
         false
 
   handleKeydownShiftEvent: (event) ->
@@ -136,6 +140,9 @@ class app.Shortcuts
         @trigger 'altF', event
       when 71
         @trigger 'altG'
+        false
+      when 79
+        @trigger 'altO'
         false
       when 82
         @trigger 'altR'

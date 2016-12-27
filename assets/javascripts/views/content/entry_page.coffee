@@ -5,6 +5,9 @@ class app.views.EntryPage extends app.View
   @events:
     click: 'onClick'
 
+  @shortcuts:
+    altO: 'onAltO'
+
   @routes:
     before: 'beforeRoute'
 
@@ -37,6 +40,7 @@ class app.views.EntryPage extends app.View
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
       @hiddenView = new app.views.HiddenPage @el, @entry
 
+    @delay @polyfillMathML
     @trigger 'loaded'
     return
 
@@ -47,6 +51,12 @@ class app.views.EntryPage extends app.View
       @clipBoardLink.title = 'Copy to clipboard'
       @clipBoardLink.tabIndex = -1
     el.appendChild(@clipBoardLink.cloneNode()) for el in @el.querySelectorAll('pre')
+    return
+
+  polyfillMathML: ->
+    return unless window.supportsMathML is false and !@polyfilledMathML and @find('math')
+    @polyfilledMathML = true
+    $.append document.head, """<link rel="stylesheet" href="#{app.config.mathml_stylesheet}">"""
     return
 
   LINKS =
@@ -138,4 +148,9 @@ class app.views.EntryPage extends app.View
       $.stopEvent(event)
       target.classList.add if $.copyToClipboard(target.parentNode.textContent) then '_pre-clip-success' else '_pre-clip-error'
       setTimeout (-> target.className = '_pre-clip'), 2000
+    return
+
+  onAltO: =>
+    return unless link = @find('._attribution:last-child ._attribution-link')
+    $.popup(link.href + location.hash)
     return

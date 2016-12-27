@@ -20,12 +20,12 @@ module Docs
     options[:replace_paths] = {
       'testing/index.html'  => 'guide/testing.html',
       'guide/glossary.html' => 'glossary.html',
-      'tutorial'            => 'tutorial/'
+      'tutorial'            => 'tutorial/',
+      'api'                 => 'api/'
     }
 
     options[:fix_urls] = -> (url) do
       url.sub! %r{\A(https://angular\.io/docs/.+/)index\.html\z}, '\1'
-      url.sub! %r{\A(https://angular\.io/docs/.+/index)/\z}, '\1'
       url
     end
 
@@ -37,13 +37,23 @@ module Docs
     stub 'api/' do
       capybara = load_capybara_selenium
       capybara.app_host = 'https://angular.io'
-      capybara.visit('/docs/ts/latest/api/')
+      capybara.visit(URL.parse(self.base_url).path + 'api/')
       capybara.execute_script('return document.body.innerHTML')
     end
 
-    version '2.0 TypeScript' do
-      self.release = '2.0.0'
+    version '2 TypeScript' do
+      self.release = '2.2.4'
       self.base_url = 'https://angular.io/docs/ts/latest/'
+    end
+
+    version '2 Dart' do
+      self.release = '2.2.4'
+      self.base_url = 'https://angular.io/docs/dart/latest/'
+
+      options[:skip_patterns] += [/angular2\.compiler/]
+      options[:skip_link] = ->(link) do
+        link.parent['class'].try(:include?, 'inherited') || link.parent.parent['class'].try(:include?, 'inherited')
+      end
     end
 
     private
