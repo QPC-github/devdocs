@@ -58,7 +58,7 @@ app.templates.aboutPage = -> """
 
   <h2 class="_lined-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
-    <strong>Copyright 2013&ndash;2016 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
+    <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
     You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
     For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
@@ -111,12 +111,12 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
     'Bootstrap',
-    '2011-2016 Twitter, Inc.',
+    '2011-2017 Twitter, Inc.<br>2011-2017 The Bootstrap Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Bottle',
-    '2016 Marcel Hellkamp',
+    '2009-2017 Marcel Hellkamp',
     'MIT',
     'https://raw.githubusercontent.com/bottlepy/bottle/master/LICENSE'
   ], [
@@ -156,7 +156,7 @@ credits = [
     'https://cmake.org/licensing/'
   ], [
     'Codeception',
-    '2011-2016 Michael Bodnarchuk and contributors',
+    '2011-2017 Michael Bodnarchuk and contributors',
     'MIT',
     'https://raw.githubusercontent.com/Codeception/Codeception/master/LICENSE'
   ], [
@@ -166,12 +166,12 @@ credits = [
     'https://raw.githubusercontent.com/Codeception/CodeceptJS/master/LICENSE'
   ], [
     'CodeIgniter',
-    '2014-2016 British Columbia Institute of Technology',
+    '2014-2017 British Columbia Institute of Technology',
     'MIT',
     'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
   ], [
     'CoffeeScript',
-    '2009-2015 Jeremy Ashkenas',
+    '2009-2017 Jeremy Ashkenas',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/coffee-script/master/LICENSE'
   ], [
@@ -180,8 +180,8 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
-    'CSS<br>DOM<br>HTML<br>JavaScript<br>SVG<br>XPath',
-    '2005-2016 Mozilla Developer Network and individual contributors',
+    'CSS<br>DOM<br>HTTP<br>HTML<br>JavaScript<br>SVG<br>XPath',
+    '2005-2017 Mozilla Developer Network and individual contributors',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
@@ -216,12 +216,12 @@ credits = [
     'https://api.drupal.org/api/drupal/LICENSE.txt'
   ], [
     'Ember.js',
-    '2016 Yehuda Katz, Tom Dale and Ember.js contributors',
+    '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
     'Elixir',
-    '2012-2016 Plataformatec',
+    '2012-2017 Plataformatec',
     'Apache',
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
@@ -361,7 +361,7 @@ credits = [
     'https://github.com/seattlerb/minitest/blob/master/README.rdoc#license'
   ], [
     'Mocha',
-    'Mocha contributors',
+    '2016 JS Foundation and contributors',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -406,7 +406,7 @@ credits = [
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
     'NumPy',
-    '2008-2016 NumPy Developers',
+    '2008-2017 NumPy Developers',
     'NumPy',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
@@ -476,12 +476,12 @@ credits = [
     'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
   ], [
     'React, React Native, Flow, Relay',
-    '2013-2016 Facebook Inc.',
+    '2013-2017 Facebook Inc.',
     'CC BY',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
   ], [
     'Redis',
-    '2009-2016 Salvatore Sanfilippo',
+    '2009-2017 Salvatore Sanfilippo',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
@@ -511,7 +511,7 @@ credits = [
     'https://raw.githubusercontent.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
     'Rust',
-    '2016 The Rust Project Developers',
+    '2010 The Rust Project Developers',
     'MIT',
     'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
   ], [
@@ -562,11 +562,11 @@ credits = [
   ], [
     'TensorFlow',
     '2015 The TensorFlow Authors',
-    'Apache',
-    'https://raw.githubusercontent.com/tensorflow/tensorflow/master/LICENSE'
+    'CC BY',
+    'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Twig',
-    '2009-2016 The Twig Team',
+    '2009-2017 The Twig Team',
     'BSD',
     'http://twig.sensiolabs.org/license'
   ], [
@@ -590,13 +590,13 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
-    'Webpack',
+    'webpack',
     '2012-2016 Tobias Koppers',
-    'MIT',
-    'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
+    'CC BY',
+    'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Yarn',
-    '2016 Yarn Contributors',
+    '2016-2017 Yarn Contributors',
     'BSD',
     'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
   ], [

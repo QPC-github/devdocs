@@ -3,7 +3,7 @@ module Docs
     self.type = 'sphinx'
     self.root_path = 'index.html'
     self.links = {
-      home: 'https://bottle.org/',
+      home: 'https://bottlepy.org/',
       code: 'https://github.com/bottlepy/bottle'
     }
 
@@ -14,18 +14,18 @@ module Docs
     options[:skip] = %w(changelog.html development.html _modules/bottle.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Marcel Hellkamp<br>
+      &copy; 2009&ndash;2017 Marcel Hellkamp<br>
       Licensed under the MIT License.
     HTML
 
     version '0.12' do
-      self.release = '0.12'
-      self.base_url = "http://bottlepy.org/docs/#{self.version}/"
+      self.release = '0.12.13'
+      self.base_url = "https://bottlepy.org/docs/#{self.version}/"
     end
 
     version '0.11' do
-      self.release = '0.11'
-      self.base_url = "http://bottlepy.org/docs/#{self.version}/"
+      self.release = '0.11.7'
+      self.base_url = "https://bottlepy.org/docs/#{self.version}/"
     end
   end
 end

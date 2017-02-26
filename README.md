@@ -20,7 +20,7 @@ Unless you wish to contribute to the project, I recommend using the hosted versi
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 2.3.3, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
+DevDocs requires Ruby 2.4.0, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
 ```
 git clone https://github.com/Thibaut/devdocs.git && cd devdocs
@@ -138,7 +138,7 @@ DevDocs's own documentation is available on the [wiki](https://github.com/Thibau
 
 ## Copyright / License
 
-Copyright 2013-2016 Thibaut Courouble and [other contributors](https://github.com/Thibaut/devdocs/graphs/contributors)
+Copyright 2013-2017 Thibaut Courouble and [other contributors](https://github.com/Thibaut/devdocs/graphs/contributors)
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/Thibaut/devdocs/blob/master/LICENSE) files.
 

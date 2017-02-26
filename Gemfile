@@ -1,10 +1,10 @@
 source "https://ruby.taobao.org"
-ruby '2.3.3'
+ruby '2.4.0'
 
 gem 'rake'
 gem 'thor'
 gem 'pry', '~> 0.10.0'
-gem 'activesupport', '~> 4.2', require: false
+gem 'activesupport', '~> 5.0', require: false
 gem 'yajl-ruby', require: false
 
 group :app do
@@ -14,7 +14,7 @@ group :app do
   gem 'thin'
   gem 'sprockets'
   gem 'sprockets-helpers'
-  gem 'erubis'
+  gem 'erubi'
   gem 'browser'
   gem 'sass'
   gem 'coffee-script'

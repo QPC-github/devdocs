@@ -41,7 +41,7 @@ module Docs
     self.html_filters = FilterStack.new
     self.text_filters = FilterStack.new
 
-    html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
+    html_filters.push 'apply_base_url', 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
     text_filters.push 'inner_html', 'clean_text', 'attribution'
 
     def initialize
@@ -115,7 +115,8 @@ module Docs
     def options
       @options ||= self.class.options.deep_dup.tap do |options|
         options.merge! base_url: base_url, root_url: root_url,
-                       root_path: root_path, initial_paths: initial_paths
+                       root_path: root_path, initial_paths: initial_paths,
+                       version: self.class.version
 
         if root_path?
           (options[:skip] ||= []).concat ['', '/']
