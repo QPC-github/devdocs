@@ -170,10 +170,11 @@ $.scrollTo = (el, parent, position = 'center', options = {}) ->
   return unless parent.scrollHeight > parentHeight
 
   top = $.offset(el, parent).top
+  offsetTop = parent.firstElementChild.offsetTop
 
   switch position
     when 'top'
-      parent.scrollTop = top - (if options.margin? then options.margin else 20)
+      parent.scrollTop = top - offsetTop - (if options.margin? then options.margin else 0)
     when 'center'
       parent.scrollTop = top - Math.round(parentHeight / 2 - el.offsetHeight / 2)
     when 'continuous'
@@ -182,8 +183,8 @@ $.scrollTo = (el, parent, position = 'center', options = {}) ->
 
       # If the target element is above the visible portion of its scrollable
       # ancestor, move it near the top with a gap = options.topGap * target's height.
-      if top <= scrollTop + height * (options.topGap or 1)
-        parent.scrollTop = top - height * (options.topGap or 1)
+      if top - offsetTop <= scrollTop + height * (options.topGap or 1)
+        parent.scrollTop = top - offsetTop - height * (options.topGap or 1)
       # If the target element is below the visible portion of its scrollable
       # ancestor, move it near the bottom with a gap = options.bottomGap * target's height.
       else if top >= scrollTop + parentHeight - height * ((options.bottomGap or 1) + 1)
@@ -336,11 +337,21 @@ $.popup = (value) ->
     window.open value.href or value, '_blank'
   return
 
-$.isWindows = ->
-  navigator.platform?.indexOf('Win') >= 0
-
+isMac = null
 $.isMac = ->
-  navigator.userAgent?.indexOf('Mac') >= 0
+  isMac ?= navigator.userAgent?.indexOf('Mac') >= 0
+
+isIE = null
+$.isIE = ->
+  isIE ?= navigator.userAgent?.indexOf('MSIE') >= 0 || navigator.userAgent?.indexOf('rv:11.0') >= 0
+
+isAndroid = null
+$.isAndroid = ->
+  isAndroid ?= navigator.userAgent?.indexOf('Android') >= 0
+
+isIOS = null
+$.isIOS = ->
+  isIOS ?= navigator.userAgent?.indexOf('iPhone') >= 0 || navigator.userAgent?.indexOf('iPad') >= 0
 
 HIGHLIGHT_DEFAULTS =
   className: 'highlight'

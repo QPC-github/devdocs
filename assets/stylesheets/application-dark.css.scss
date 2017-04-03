@@ -3,8 +3,6 @@
 //= depend_on docs.png
 //= depend_on docs@2x.png
 
-//= require vendor/open-sans
-
 /*!
  * Copyright 2013-2017 Thibaut Courouble and other contributors
  *
@@ -22,6 +20,7 @@
         'components/header',
         'components/notif',
         'components/sidebar',
+        'components/settings',
         'components/content',
         'components/page',
         'components/fail',
@@ -82,6 +81,7 @@
         'pages/rfc',
         'pages/rubydoc',
         'pages/rust',
+        'pages/sinon',
         'pages/socketio',
         'pages/sphinx',
         'pages/sphinx_simple',

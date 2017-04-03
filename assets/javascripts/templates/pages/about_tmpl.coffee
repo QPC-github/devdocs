@@ -10,7 +10,7 @@ app.templates.aboutPage = -> """
     </ul>
   </nav>
 
-  <h1 class="_lined-heading">API Documentation Browser</h1>
+  <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
@@ -26,7 +26,7 @@ app.templates.aboutPage = -> """
   <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
     <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
-  <h2 class="_lined-heading" id="credits">Credits</h2>
+  <h2 class="_block-heading" id="credits">Credits</h2>
 
   <p><strong>Special thanks to:</strong>
   <ul>
@@ -45,7 +45,7 @@ app.templates.aboutPage = -> """
     #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
   </table>
 
-  <h2 class="_lined-heading" id="faq">Questions & Answers</h2>
+  <h2 class="_block-heading" id="faq">Questions & Answers</h2>
   <dl>
     <dt>Where can I suggest new docs and features?
     <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
@@ -56,7 +56,7 @@ app.templates.aboutPage = -> """
   </dl>
   <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
 
-  <h2 class="_lined-heading" id="copyright">Copyright and License</h2>
+  <h2 class="_block-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
     <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
@@ -64,7 +64,7 @@ app.templates.aboutPage = -> """
     For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
     and <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
 
-  <h2 class="_lined-heading" id="plugins">Plugins and Extensions</h2>
+  <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
     <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
     <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text plugin</a>
@@ -73,7 +73,7 @@ app.templates.aboutPage = -> """
     <li><a href="https://github.com/xuchunyang/DevDocs.el">Emacs Package</a>
   </ul>
 
-  <h2 class="_lined-heading" id="privacy">Privacy Policy</h2>
+  <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
   <ul>
     <li><a href="http://devdocs.io">devdocs.io</a> ("App") is operated by Thibaut Courouble ("We").
     <li>We do not collect personal information.
@@ -86,7 +86,7 @@ app.templates.aboutPage = -> """
 
 credits = [
   [ 'Angular<br>Angular.js',
-    '2010-2016 Google, Inc.',
+    '2010-2017 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -101,7 +101,7 @@ credits = [
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
     'Async',
-    '2010-2016 Caolan McMahon',
+    '2010-2017 Caolan McMahon',
     'MIT',
     'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
   ], [
@@ -131,7 +131,7 @@ credits = [
     'http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA'
   ], [
     'CakePHP',
-    '2005-2016 The Cake Software Foundation, Inc.',
+    '2005-2017 The Cake Software Foundation, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE.txt'
   ], [
@@ -176,7 +176,7 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/coffee-script/master/LICENSE'
   ], [
     'Cordova',
-    '2012-2016 The Apache Software Foundation',
+    '2012-2017 The Apache Software Foundation',
     'Apache',
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
@@ -186,7 +186,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'Crystal',
-    '2012-2016 Manas Technology Solutions',
+    '2012-2017 Manas Technology Solutions',
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
@@ -232,8 +232,8 @@ credits = [
   ], [
     'Express',
     '2016 StrongLoop, IBM, and other expressjs.com contributors.',
-    'Unknown',
-    'https://github.com/expressjs/expressjs.com/issues/413'
+    'CC BY-SA',
+    'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
   ], [
     'Fish',
     '2005-2009 Axel Liljencrantz',
@@ -246,7 +246,7 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Git',
-    '2005-2016 Linus Torvalds and others',
+    '2005-2017 Linus Torvalds and others',
     'GPLv2',
     'https://raw.githubusercontent.com/git/git/master/COPYING'
   ], [
@@ -306,9 +306,9 @@ credits = [
     'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
     'Kotlin',
-    '2010-2016 JetBrains s.r.o.',
+    '2010-2017 JetBrains s.r.o.',
     'Apache',
-    'https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/LICENSE'
+    'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
   ], [
     'Laravel',
     'Taylor Otwell',
@@ -336,7 +336,7 @@ credits = [
     'http://www.gnu.org/copyleft/fdl.html'
   ], [
     'Marionette.js',
-    '2016 Muted Solutions, LLC',
+    '2017 Muted Solutions, LLC',
     'MIT',
     'https://mutedsolutions.mit-license.org/'
   ], [
@@ -346,7 +346,7 @@ credits = [
     'https://daringfireball.net/projects/markdown/license'
   ], [
     'Matplotlib',
-    '2012-2016 Matplotlib Development Team. All rights reserved.',
+    '2012-2017 Matplotlib Development Team. All rights reserved.',
     'Custom',
     'https://raw.githubusercontent.com/matplotlib/matplotlib/master/LICENSE/LICENSE'
   ], [
@@ -371,7 +371,7 @@ credits = [
     'https://modernizr.com/license/'
   ], [
     'Moment.js',
-    '2011-2016 Tim Wood, Iskren Chernev, Moment.js contributors',
+    'JS Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/moment/moment/master/LICENSE'
   ], [
@@ -381,7 +381,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2016 Igor Sysoev<br>&copy; 2011-2016 Nginx, Inc.',
+    '2002-2017 Igor Sysoev<br>&copy; 2011-2017 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
@@ -446,9 +446,9 @@ credits = [
     'https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md'
   ], [
     'PHP',
-    '1997-2016 The PHP Documentation Group',
+    '1997-2017 The PHP Documentation Group',
     'CC BY',
-    'https://creativecommons.org/licenses/by/3.0/'
+    'https://secure.php.net/manual/en/copyright.php'
   ], [
     'PHPUnit',
     '2005-2016 Sebastian Bergmann',
@@ -456,19 +456,19 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'PostgreSQL',
-    '1996-2016 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2017 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
-    'http://www.postgresql.org/about/licence/'
+    'https://www.postgresql.org/about/licence/'
   ], [
     'Python',
-    '1990-2015 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    '2001-2017 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [
     'Q',
-    '2009-2015 Kristopher Michael Kowal and contributors',
+    '2009-2017 Kristopher Michael Kowal',
     'MIT',
-    'https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE'
+    'https://raw.githubusercontent.com/kriskowal/q/master/LICENSE'
   ], [
     'Ramda',
     '2013-2016 Scott Sauyet and Michael Hurley',
@@ -506,7 +506,7 @@ credits = [
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [
     'Ruby on Rails',
-    '2004-2016 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
+    '2004-2017 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
     'MIT',
     'https://raw.githubusercontent.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
@@ -531,9 +531,9 @@ credits = [
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
     'Sinon',
-    '2010-2016 Christian Johansen',
+    '2010-2017 Christian Johansen',
     'BSD',
-    'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
+    'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
   ], [
     'Socket.io',
     '2014-2015 Automattic',
@@ -561,7 +561,7 @@ credits = [
     'http://tcl.tk/software/tcltk/license.html'
   ], [
     'TensorFlow',
-    '2015 The TensorFlow Authors',
+    '2017 The TensorFlow Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -581,12 +581,12 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
     'Vagrant',
-    '2010-2016 Mitchell Hashimoto',
-    'MIT',
-    'https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE'
+    '2010-2017 Mitchell Hashimoto',
+    'MPL',
+    'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
     'Vue.js',
-    '2013-2016 Evan You, Vue.js contributors',
+    '2013-2017 Evan You, Vue.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
@@ -601,7 +601,7 @@ credits = [
     'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
   ], [
     'Yii',
-    '2008-2016 by Yii Software LLC',
+    '2008-2017 by Yii Software LLC',
     'BSD',
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ]

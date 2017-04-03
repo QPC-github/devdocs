@@ -1,13 +1,14 @@
-$baseFont: 'Open Sans', Helvetica, Arial, sans-serif;
-$monoFont: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+$baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
+$monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+$boldFontWeight: 500;
+$bolderFontWeight: 600;
 
 $style: 'light';
 
 $maxWidth: 80rem;
 $headerHeight: 3rem;
-$sidebarWidth: 18rem;
+$sidebarWidth: 20rem;
 $sidebarMediumWidth: 16rem;
-$sidebarHiddenWidth: 9px;
 
 $contentBackground: #fff;
 $documentBackground: #fafafa;
@@ -15,6 +16,7 @@ $documentBackground: #fafafa;
 $textColor: #333;
 $textColorLight: #666;
 $textColorLighter: #888;
+$textColorRed: #f44336;
 
 $inputFocusBorder: #35b5f4;
 
@@ -35,11 +37,11 @@ $linkColor: #3377c0;
 $linkColorHover: #2f6cb6;
 $linkTextDecoration: none;
 
-$headerBackground: #f0f0f0;
-$headerBorder: #d9d9d9;
+$headerBackground: #eee;
+$headerBorder: #d7d7d7;
 
 $sidebarBackground: #f9f9f9;
-$sidebarBorder: #e3e3e3;
+$sidebarBorder: #e1e1e1;
 
 $scrollbarColor: #d2d2d2;
 $scrollbarColorHover: #aaa;

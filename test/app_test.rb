@@ -17,6 +17,12 @@ class AppTest < MiniTest::Spec
       assert last_response.ok?
     end
 
+    it "redirects to /#q= when there is a 'q' query param" do
+      get '/search', q: 'foo'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/#q=foo', last_response['Location']
+    end
+
     it "redirects without the query string" do
       get '/', foo: 'bar'
       assert last_response.redirect?
@@ -25,7 +31,7 @@ class AppTest < MiniTest::Spec
 
     it "sets default size" do
       get '/'
-      assert_includes last_response.body, 'data-size="18rem"'
+      assert_includes last_response.body, 'data-size="20rem"'
     end
 
     it "sets size from cookie" do
@@ -109,7 +115,7 @@ class AppTest < MiniTest::Spec
 
     it "sets default size" do
       get '/manifest.appcache'
-      assert_includes last_response.body, '18rem'
+      assert_includes last_response.body, '20rem'
     end
 
     it "sets size from cookie" do

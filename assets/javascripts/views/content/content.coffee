@@ -23,11 +23,12 @@ class app.views.Content extends app.View
     @scrollMap = {}
     @scrollStack = []
 
-    @rootPage    = new app.views.RootPage
-    @staticPage  = new app.views.StaticPage
-    @offlinePage = new app.views.OfflinePage
-    @typePage    = new app.views.TypePage
-    @entryPage   = new app.views.EntryPage
+    @rootPage     = new app.views.RootPage
+    @staticPage   = new app.views.StaticPage
+    @settingsPage = new app.views.SettingsPage
+    @offlinePage  = new app.views.OfflinePage
+    @typePage     = new app.views.TypePage
+    @entryPage    = new app.views.EntryPage
 
     @entryPage
       .on 'loading', @onEntryLoading
@@ -63,7 +64,10 @@ class app.views.Content extends app.View
     return
 
   smoothScrollTo: (value) ->
-    $.smoothScroll @scrollEl, value or 0
+    if app.settings.get('fastScroll')
+      @scrollTo value
+    else
+      $.smoothScroll @scrollEl, value or 0
     return
 
   scrollBy: (n) ->
@@ -98,7 +102,7 @@ class app.views.Content extends app.View
     return if @isLoading()
     if @routeCtx.hash and el = @findTargetByHash @routeCtx.hash
       $.scrollToWithImageLock el, @scrollEl, 'top',
-        margin: 20 + if @scrollEl is @el then 0 else $.offset(@el).top
+        margin: if @scrollEl is @el then 0 else $.offset(@el).top
       $.highlight el, className: '_highlight'
     else
       @scrollTo @scrollMap[@routeCtx.state.id]
@@ -148,6 +152,8 @@ class app.views.Content extends app.View
         @show @entryPage
       when 'type'
         @show @typePage
+      when 'settings'
+        @show @settingsPage
       when 'offline'
         @show @offlinePage
       else

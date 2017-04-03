@@ -1,45 +1,16 @@
-/*! Raven.js 3.5.1 (bef9fa7) | github.com/getsentry/raven-js */
+/*! Raven.js 3.13.1 (f55d281) | github.com/getsentry/raven-js */
 
 /*
  * Includes TraceKit
  * https://github.com/getsentry/TraceKit
  *
- * Copyright 2016 Matt Robenolt and other contributors
+ * Copyright 2017 Matt Robenolt and other contributors
  * Released under the BSD license
  * https://github.com/getsentry/raven-js/blob/master/LICENSE
  *
  */
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Raven = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-exports = module.exports = stringify
-exports.getSerialize = serializer
-
-function stringify(obj, replacer, spaces, cycleReplacer) {
-  return JSON.stringify(obj, serializer(replacer, cycleReplacer), spaces)
-}
-
-function serializer(replacer, cycleReplacer) {
-  var stack = [], keys = []
-
-  if (cycleReplacer == null) cycleReplacer = function(key, value) {
-    if (stack[0] === value) return "[Circular ~]"
-    return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]"
-  }
-
-  return function(key, value) {
-    if (stack.length > 0) {
-      var thisPos = stack.indexOf(this)
-      ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
-      ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key)
-      if (~stack.indexOf(value)) value = cycleReplacer.call(this, key, value)
-    }
-    else stack.push(value)
-
-    return replacer == null ? value : replacer.call(this, key, value)
-  }
-}
-
-},{}],2:[function(_dereq_,module,exports){
 'use strict';
 
 function RavenConfigError(message) {
@@ -51,7 +22,7 @@ RavenConfigError.prototype.constructor = RavenConfigError;
 
 module.exports = RavenConfigError;
 
-},{}],3:[function(_dereq_,module,exports){
+},{}],2:[function(_dereq_,module,exports){
 'use strict';
 
 var wrapMethod = function(console, level, callback) {
@@ -90,32 +61,20 @@ module.exports = {
     wrapMethod: wrapMethod
 };
 
-},{}],4:[function(_dereq_,module,exports){
-/*global XDomainRequest:false*/
+},{}],3:[function(_dereq_,module,exports){
+(function (global){
+/*global XDomainRequest:false, __DEV__:false*/
 'use strict';
 
-var TraceKit = _dereq_(7);
-var RavenConfigError = _dereq_(2);
-var utils = _dereq_(6);
-var stringify = _dereq_(1);
+var TraceKit = _dereq_(6);
+var stringify = _dereq_(7);
+var RavenConfigError = _dereq_(1);
+var utils = _dereq_(5);
 
-var isFunction = utils.isFunction;
-var isUndefined = utils.isUndefined;
-var isError = utils.isError;
-var isEmptyObject = utils.isEmptyObject;
-var hasKey = utils.hasKey;
-var joinRegExp = utils.joinRegExp;
-var each = utils.each;
-var objectMerge = utils.objectMerge;
-var truncate = utils.truncate;
-var urlencode = utils.urlencode;
-var uuid4 = utils.uuid4;
-var htmlTreeAsString = utils.htmlTreeAsString;
-var parseUrl = utils.parseUrl;
-var isString = utils.isString;
-var fill = utils.fill;
+var isError = utils.isError,
+    isObject = utils.isObject;
 
-var wrapConsoleMethod = _dereq_(3).wrapMethod;
+var wrapConsoleMethod = _dereq_(2).wrapMethod;
 
 var dsnKeys = 'source protocol user pass host port path'.split(' '),
     dsnPattern = /^(?:(\w+):)?\/\/(?:(\w+)(:\w+)?@)?([\w\.-]+)(?::(\d+))?(\/.*)/;
@@ -124,6 +83,13 @@ function now() {
     return +new Date();
 }
 
+// This is to be defensive in environments where window does not exist (see https://github.com/getsentry/raven-js/pull/785)
+var _window = typeof window !== 'undefined' ? window
+            : typeof global !== 'undefined' ? global
+            : typeof self !== 'undefined' ? self
+            : {};
+var _document = _window.document;
+var _navigator = _window.navigator;
 
 // First, check for JSON support
 // If there is no JSON, we no-op the core features of Raven
@@ -131,8 +97,10 @@ function now() {
 function Raven() {
     this._hasJSON = !!(typeof JSON === 'object' && JSON.stringify);
     // Raven can run in contexts where there's no document (react-native)
-    this._hasDocument = typeof document !== 'undefined';
+    this._hasDocument = !isUndefined(_document);
+    this._hasNavigator = !isUndefined(_navigator);
     this._lastCapturedException = null;
+    this._lastData = null;
     this._lastEventId = null;
     this._globalServer = null;
     this._globalKey = null;
@@ -148,14 +116,15 @@ function Raven() {
         collectWindowErrors: true,
         maxMessageLength: 0,
         stackTraceLimit: 50,
-        autoBreadcrumbs: true
+        autoBreadcrumbs: true,
+        sampleRate: 1
     };
     this._ignoreOnError = 0;
     this._isRavenInstalled = false;
     this._originalErrorStackTraceLimit = Error.stackTraceLimit;
     // capture references to window.console *and* all its methods first
     // before the console plugin has a chance to monkey patch
-    this._originalConsole = window.console || {};
+    this._originalConsole = _window.console || {};
     this._originalConsoleMethods = {};
     this._plugins = [];
     this._startTime = now();
@@ -163,8 +132,9 @@ function Raven() {
     this._breadcrumbs = [];
     this._lastCapturedEvent = null;
     this._keypressTimeout;
-    this._location = window.location;
+    this._location = _window.location;
     this._lastHref = this._location && this._location.href;
+    this._resetBackoff();
 
     for (var method in this._originalConsole) {  // eslint-disable-line guard-for-in
       this._originalConsoleMethods[method] = this._originalConsole[method];
@@ -182,7 +152,7 @@ Raven.prototype = {
     // webpack (using a build step causes webpack #1617). Grunt verifies that
     // this value matches package.json during build.
     //   See: https://github.com/getsentry/raven-js/issues/465
-    VERSION: '3.5.1',
+    VERSION: '3.13.1',
 
     debug: false,
 
@@ -198,41 +168,39 @@ Raven.prototype = {
     config: function(dsn, options) {
         var self = this;
 
-        if (this._globalServer) {
+        if (self._globalServer) {
                 this._logDebug('error', 'Error: Raven has already been configured');
-            return this;
+            return self;
         }
-        if (!dsn) return this;
+        if (!dsn) return self;
+
+        var globalOptions = self._globalOptions;
 
         // merge in options
         if (options) {
             each(options, function(key, value){
                 // tags and extra are special and need to be put into context
-                if (key === 'tags' || key === 'extra') {
+                if (key === 'tags' || key === 'extra' || key === 'user') {
                     self._globalContext[key] = value;
                 } else {
-                    self._globalOptions[key] = value;
+                    globalOptions[key] = value;
                 }
             });
         }
 
-        var uri = this._parseDSN(dsn),
-            lastSlash = uri.path.lastIndexOf('/'),
-            path = uri.path.substr(1, lastSlash);
-
-        this._dsn = dsn;
+        self.setDSN(dsn);
 
         // "Script error." is hard coded into browsers for errors that it can't read.
         // this is the result of a script being pulled in from an external domain and CORS.
-        this._globalOptions.ignoreErrors.push(/^Script error\.?$/);
-        this._globalOptions.ignoreErrors.push(/^Javascript error: Script error\.? on line 0$/);
+        globalOptions.ignoreErrors.push(/^Script error\.?$/);
+        globalOptions.ignoreErrors.push(/^Javascript error: Script error\.? on line 0$/);
 
         // join regexp rules into one big rule
-        this._globalOptions.ignoreErrors = joinRegExp(this._globalOptions.ignoreErrors);
-        this._globalOptions.ignoreUrls = this._globalOptions.ignoreUrls.length ? joinRegExp(this._globalOptions.ignoreUrls) : false;
-        this._globalOptions.whitelistUrls = this._globalOptions.whitelistUrls.length ? joinRegExp(this._globalOptions.whitelistUrls) : false;
-        this._globalOptions.includePaths = joinRegExp(this._globalOptions.includePaths);
-        this._globalOptions.maxBreadcrumbs = Math.max(0, Math.min(this._globalOptions.maxBreadcrumbs || 100, 100)); // default and hard limit is 100
+        globalOptions.ignoreErrors = joinRegExp(globalOptions.ignoreErrors);
+        globalOptions.ignoreUrls = globalOptions.ignoreUrls.length ? joinRegExp(globalOptions.ignoreUrls) : false;
+        globalOptions.whitelistUrls = globalOptions.whitelistUrls.length ? joinRegExp(globalOptions.whitelistUrls) : false;
+        globalOptions.includePaths = joinRegExp(globalOptions.includePaths);
+        globalOptions.maxBreadcrumbs = Math.max(0, Math.min(globalOptions.maxBreadcrumbs || 100, 100)); // default and hard limit is 100
 
         var autoBreadcrumbDefaults = {
             xhr: true,
@@ -241,27 +209,18 @@ Raven.prototype = {
             location: true
         };
 
-        var autoBreadcrumbs = this._globalOptions.autoBreadcrumbs;
+        var autoBreadcrumbs = globalOptions.autoBreadcrumbs;
         if ({}.toString.call(autoBreadcrumbs) === '[object Object]') {
             autoBreadcrumbs = objectMerge(autoBreadcrumbDefaults, autoBreadcrumbs);
         } else if (autoBreadcrumbs !== false) {
             autoBreadcrumbs = autoBreadcrumbDefaults;
         }
-        this._globalOptions.autoBreadcrumbs = autoBreadcrumbs;
+        globalOptions.autoBreadcrumbs = autoBreadcrumbs;
 
-        this._globalKey = uri.user;
-        this._globalSecret = uri.pass && uri.pass.substr(1);
-        this._globalProject = uri.path.substr(lastSlash + 1);
-
-        this._globalServer = this._getGlobalServer(uri);
-
-        this._globalEndpoint = this._globalServer +
-            '/' + path + 'api/' + this._globalProject + '/store/';
-
-        TraceKit.collectWindowErrors = !!this._globalOptions.collectWindowErrors;
+        TraceKit.collectWindowErrors = !!globalOptions.collectWindowErrors;
 
         // return for chaining
-        return this;
+        return self;
     },
 
     /*
@@ -274,22 +233,48 @@ Raven.prototype = {
      */
     install: function() {
         var self = this;
-        if (this.isSetup() && !this._isRavenInstalled) {
+        if (self.isSetup() && !self._isRavenInstalled) {
             TraceKit.report.subscribe(function () {
                 self._handleOnErrorStackInfo.apply(self, arguments);
             });
-            this._instrumentTryCatch();
+            self._instrumentTryCatch();
             if (self._globalOptions.autoBreadcrumbs)
-                this._instrumentBreadcrumbs();
+                self._instrumentBreadcrumbs();
 
             // Install all of the plugins
-            this._drainPlugins();
+            self._drainPlugins();
 
-            this._isRavenInstalled = true;
+            self._isRavenInstalled = true;
         }
 
-        Error.stackTraceLimit = this._globalOptions.stackTraceLimit;
+        Error.stackTraceLimit = self._globalOptions.stackTraceLimit;
         return this;
+    },
+
+    /*
+     * Set the DSN (can be called multiple time unlike config)
+     *
+     * @param {string} dsn The public Sentry DSN
+     */
+    setDSN: function(dsn) {
+        var self = this,
+            uri = self._parseDSN(dsn),
+          lastSlash = uri.path.lastIndexOf('/'),
+          path = uri.path.substr(1, lastSlash);
+
+        self._dsn = dsn;
+        self._globalKey = uri.user;
+        self._globalSecret = uri.pass && uri.pass.substr(1);
+        self._globalProject = uri.path.substr(lastSlash + 1);
+
+        self._globalServer = self._getGlobalServer(uri);
+
+        self._globalEndpoint = self._globalServer +
+            '/' + path + 'api/' + self._globalProject + '/store/';
+
+        // Reset backoff state since we may be pointing at a
+        // new project/server
+        this._resetBackoff();
     },
 
     /*
@@ -343,16 +328,16 @@ Raven.prototype = {
             if (func.__raven__) {
                 return func;
             }
+
+            // If this has already been wrapped in the past, return that
+            if (func.__raven_wrapper__ ){
+                return func.__raven_wrapper__ ;
+            }
         } catch (e) {
-            // Just accessing the __raven__ prop in some Selenium environments
+            // Just accessing custom props in some Selenium environments
             // can cause a "Permission denied" exception (see raven-js#495).
             // Bail on wrapping and return the function as-is (defers to window.onerror).
             return func;
-        }
-
-        // If this has already been wrapped in the past, return that
-        if (func.__raven_wrapper__ ){
-            return func.__raven_wrapper__ ;
         }
 
         function wrapped() {
@@ -368,6 +353,10 @@ Raven.prototype = {
             while(i--) args[i] = deep ? self.wrap(options, arguments[i]) : arguments[i];
 
             try {
+                // Attempt to invoke user-land function
+                // NOTE: If you are a Sentry user, and you are seeing this stack frame, it
+                //       means Raven caught an error invoking your application code. This is
+                //       expected behavior and NOT indicative of a bug with Raven.js.
                 return func.apply(this, args);
             } catch(e) {
                 self._ignoreNextOnError();
@@ -418,7 +407,12 @@ Raven.prototype = {
      */
     captureException: function(ex, options) {
         // If not an Error is passed through, recall as a message instead
-        if (!isError(ex)) return this.captureMessage(ex, options);
+        if (!isError(ex)) {
+            return this.captureMessage(ex, objectMerge({
+                trimHeadFrames: 1,
+                stacktrace: true // if we fall back to captureMessage, default to attempting a new trace
+            }, options));
+        }
 
         // Store the raw exception object for potential debugging and introspection
         this._lastCapturedException = ex;
@@ -455,12 +449,43 @@ Raven.prototype = {
             return;
         }
 
+        options = options || {};
+
+        var data = objectMerge({
+            message: msg + ''  // Make sure it's actually a string
+        }, options);
+
+        if (this._globalOptions.stacktrace || (options && options.stacktrace)) {
+            var ex;
+            // create a stack trace from this point; just trim
+            // off extra frames so they don't include this function call (or
+            // earlier Raven.js library fn calls)
+            try {
+                throw new Error(msg);
+            } catch (ex1) {
+                ex = ex1;
+            }
+
+            // null exception name so `Error` isn't prefixed to msg
+            ex.name = null;
+
+            options = objectMerge({
+                // fingerprint on msg, not stack trace (legacy behavior, could be
+                // revisited)
+                fingerprint: msg,
+                trimHeadFrames: (options.trimHeadFrames || 0) + 1
+            }, options);
+
+            var stack = TraceKit.computeStackTrace(ex);
+            var frames = this._prepareFrames(stack, options);
+            data.stacktrace = {
+                // Sentry expects frames oldest to newest
+                frames: frames.reverse()
+            }
+        }
+
         // Fire away!
-        this._send(
-            objectMerge({
-                message: msg + ''  // Make sure it's actually a string
-            }, options)
-        );
+        this._send(data);
 
         return this;
     },
@@ -470,14 +495,25 @@ Raven.prototype = {
             timestamp: now() / 1000
         }, obj);
 
+        if (isFunction(this._globalOptions.breadcrumbCallback)) {
+            var result = this._globalOptions.breadcrumbCallback(crumb);
+
+            if (isObject(result) && !isEmptyObject(result)) {
+                crumb = result;
+            } else if (result === false) {
+                return this;
+            }
+        }
+
         this._breadcrumbs.push(crumb);
         if (this._breadcrumbs.length > this._globalOptions.maxBreadcrumbs) {
             this._breadcrumbs.shift();
         }
+        return this;
     },
 
     addPlugin: function(plugin /*arg1, arg2, ... argN*/) {
-        var pluginArgs = Array.prototype.slice.call(arguments, 1);
+        var pluginArgs = [].slice.call(arguments, 1);
 
         this._plugins.push([plugin, pluginArgs]);
         if (this._isRavenInstalled) {
@@ -587,6 +623,22 @@ Raven.prototype = {
     },
 
     /*
+     * Set the breadcrumbCallback option
+     *
+     * @param {function} callback The callback to run which allows filtering
+     *                            or mutating breadcrumbs
+     * @return {Raven}
+     */
+    setBreadcrumbCallback: function(callback) {
+        var original = this._globalOptions.breadcrumbCallback;
+        this._globalOptions.breadcrumbCallback = isFunction(callback)
+          ? function (data) { return callback(data, original); }
+          : callback;
+
+        return this;
+    },
+
+    /*
      * Set the shouldSendCallback option
      *
      * @param {function} callback The callback to run which allows
@@ -656,14 +708,14 @@ Raven.prototype = {
         // TODO: remove window dependence?
 
         // Attempt to initialize Raven on load
-        var RavenConfig = window.RavenConfig;
+        var RavenConfig = _window.RavenConfig;
         if (RavenConfig) {
             this.config(RavenConfig.dsn, RavenConfig.config).install();
         }
     },
 
     showReportDialog: function (options) {
-        if (!window.document) // doesn't work without a document (React native)
+        if (!_document) // doesn't work without a document (React native)
             return;
 
         options = options || {};
@@ -691,10 +743,10 @@ Raven.prototype = {
 
         var globalServer = this._getGlobalServer(this._parseDSN(dsn));
 
-        var script = document.createElement('script');
+        var script = _document.createElement('script');
         script.async = true;
         script.src = globalServer + '/api/embed/error-page/' + qs;
-        (document.head || document.body).appendChild(script);
+        (_document.head || _document.body).appendChild(script);
     },
 
     /**** Private functions ****/
@@ -718,11 +770,11 @@ Raven.prototype = {
 
         eventType = 'raven' + eventType.substr(0,1).toUpperCase() + eventType.substr(1);
 
-        if (document.createEvent) {
-            evt = document.createEvent('HTMLEvents');
+        if (_document.createEvent) {
+            evt = _document.createEvent('HTMLEvents');
             evt.initEvent(eventType, true, true);
         } else {
-            evt = document.createEventObject();
+            evt = _document.createEventObject();
             evt.eventType = eventType;
         }
 
@@ -730,14 +782,14 @@ Raven.prototype = {
             evt[key] = options[key];
         }
 
-        if (document.createEvent) {
+        if (_document.createEvent) {
             // IE9 if standards
-            document.dispatchEvent(evt);
+            _document.dispatchEvent(evt);
         } else {
             // IE8 regardless of Quirks or Standards
             // IE9 if quirks
             try {
-                document.fireEvent('on' + evt.eventType.toLowerCase(), evt);
+                _document.fireEvent('on' + evt.eventType.toLowerCase(), evt);
             } catch(e) {
                 // Do nothing
             }
@@ -765,14 +817,14 @@ Raven.prototype = {
                 return;
 
             self._lastCapturedEvent = evt;
-            var elem = evt.target;
 
+            // try/catch both:
+            // - accessing evt.target (see getsentry/raven-js#838, #768)
+            // - `htmlTreeAsString` because it's complex, and just accessing the DOM incorrectly
+            //   can throw an exception in some circumstances.
             var target;
-
-            // try/catch htmlTreeAsString because it's particularly complicated, and
-            // just accessing the DOM incorrectly can throw an exception in some circumstances.
             try {
-                target = htmlTreeAsString(elem);
+                target = htmlTreeAsString(evt.target);
             } catch (e) {
                 target = '<unknown>';
             }
@@ -796,15 +848,21 @@ Raven.prototype = {
         // TODO: if somehow user switches keypress target before
         //       debounce timeout is triggered, we will only capture
         //       a single breadcrumb from the FIRST target (acceptable?)
-
         return function (evt) {
-            var target = evt.target,
-                tagName = target && target.tagName;
+            var target;
+            try {
+                target = evt.target;
+            } catch (e) {
+                // just accessing event properties can throw an exception in some rare circumstances
+                // see: https://github.com/getsentry/raven-js/issues/838
+                return;
+            }
+            var tagName = target && target.tagName;
 
             // only consider keypress events on actual input elements
             // this will disregard keypresses targeting body (e.g. tabbing
             // through elements, hotkeys, etc)
-            if (!tagName || tagName !== 'INPUT' && tagName !== 'TEXTAREA')
+            if (!tagName || tagName !== 'INPUT' && tagName !== 'TEXTAREA' && !target.isContentEditable)
                 return;
 
             // record first keypress in a series, but ignore subsequent
@@ -815,7 +873,7 @@ Raven.prototype = {
             }
             clearTimeout(timeout);
             self._keypressTimeout = setTimeout(function () {
-               self._keypressTimeout = null;
+                self._keypressTimeout = null;
             }, debounceDuration);
         };
     },
@@ -887,7 +945,7 @@ Raven.prototype = {
         var autoBreadcrumbs = this._globalOptions.autoBreadcrumbs;
 
         function wrapEventTarget(global) {
-            var proto = window[global] && window[global].prototype;
+            var proto = _window[global] && _window[global].prototype;
             if (proto && proto.hasOwnProperty && proto.hasOwnProperty('addEventListener')) {
                 fill(proto, 'addEventListener', function(orig) {
                     return function (evtName, fn, capture, secure) { // preserve arity
@@ -901,30 +959,55 @@ Raven.prototype = {
 
                         // More breadcrumb DOM capture ... done here and not in `_instrumentBreadcrumbs`
                         // so that we don't have more than one wrapper function
-                        var before;
+                        var before,
+                            clickHandler,
+                            keypressHandler;
+
                         if (autoBreadcrumbs && autoBreadcrumbs.dom && (global === 'EventTarget' || global === 'Node')) {
-                            if (evtName === 'click'){
-                                before = self._breadcrumbEventHandler(evtName);
-                            } else if (evtName === 'keypress') {
-                                before = self._keypressEventHandler();
-                            }
+                            // NOTE: generating multiple handlers per addEventListener invocation, should
+                            //       revisit and verify we can just use one (almost certainly)
+                            clickHandler = self._breadcrumbEventHandler('click');
+                            keypressHandler = self._keypressEventHandler();
+                            before = function (evt) {
+                                // need to intercept every DOM event in `before` argument, in case that
+                                // same wrapped method is re-used for different events (e.g. mousemove THEN click)
+                                // see #724
+                                if (!evt) return;
+
+                                var eventType;
+                                try {
+                                    eventType = evt.type
+                                } catch (e) {
+                                    // just accessing event properties can throw an exception in some rare circumstances
+                                    // see: https://github.com/getsentry/raven-js/issues/838
+                                    return;
+                                }
+                                if (eventType === 'click')
+                                    return clickHandler(evt);
+                                else if (eventType === 'keypress')
+                                    return keypressHandler(evt);
+                            };
                         }
                         return orig.call(this, evtName, self.wrap(fn, undefined, before), capture, secure);
                     };
                 }, wrappedBuiltIns);
                 fill(proto, 'removeEventListener', function (orig) {
                     return function (evt, fn, capture, secure) {
-                        fn = fn && (fn.__raven_wrapper__ ? fn.__raven_wrapper__  : fn);
+                        try {
+                            fn = fn && (fn.__raven_wrapper__ ? fn.__raven_wrapper__  : fn);
+                        } catch (e) {
+                            // ignore, accessing __raven_wrapper__ will throw in some Selenium environments
+                        }
                         return orig.call(this, evt, fn, capture, secure);
                     };
                 }, wrappedBuiltIns);
             }
         }
 
-        fill(window, 'setTimeout', wrapTimeFn, wrappedBuiltIns);
-        fill(window, 'setInterval', wrapTimeFn, wrappedBuiltIns);
-        if (window.requestAnimationFrame) {
-            fill(window, 'requestAnimationFrame', function (orig) {
+        fill(_window, 'setTimeout', wrapTimeFn, wrappedBuiltIns);
+        fill(_window, 'setInterval', wrapTimeFn, wrappedBuiltIns);
+        if (_window.requestAnimationFrame) {
+            fill(_window, 'requestAnimationFrame', function (orig) {
                 return function (cb) {
                     return orig(self.wrap(cb));
                 };
@@ -936,15 +1019,6 @@ Raven.prototype = {
         var eventTargets = ['EventTarget', 'Window', 'Node', 'ApplicationCache', 'AudioTrackList', 'ChannelMergerNode', 'CryptoOperation', 'EventSource', 'FileReader', 'HTMLUnknownElement', 'IDBDatabase', 'IDBRequest', 'IDBTransaction', 'KeyOperation', 'MediaController', 'MessagePort', 'ModalWindow', 'Notification', 'SVGElementInstance', 'Screen', 'TextTrack', 'TextTrackCue', 'TextTrackList', 'WebSocket', 'WebSocketWorker', 'Worker', 'XMLHttpRequest', 'XMLHttpRequestEventTarget', 'XMLHttpRequestUpload'];
         for (var i = 0; i < eventTargets.length; i++) {
             wrapEventTarget(eventTargets[i]);
-        }
-
-        var $ = window.jQuery || window.$;
-        if ($ && $.fn && $.fn.ready) {
-            fill($.fn, 'ready', function (orig) {
-                return function (fn) {
-                    return orig.call(this, self.wrap(fn));
-                };
-            }, wrappedBuiltIns);
         }
     },
 
@@ -972,7 +1046,7 @@ Raven.prototype = {
             }
         }
 
-        if (autoBreadcrumbs.xhr && 'XMLHttpRequest' in window) {
+        if (autoBreadcrumbs.xhr && 'XMLHttpRequest' in _window) {
             var xhrproto = XMLHttpRequest.prototype;
             fill(xhrproto, 'open', function(origOpen) {
                 return function (method, url) { // preserve arity
@@ -1029,17 +1103,54 @@ Raven.prototype = {
             }, wrappedBuiltIns);
         }
 
+        if (autoBreadcrumbs.xhr && 'fetch' in _window) {
+            fill(_window, 'fetch', function(origFetch) {
+                return function (fn, t) { // preserve arity
+                    // Make a copy of the arguments to prevent deoptimization
+                    // https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#32-leaking-arguments
+                    var args = new Array(arguments.length);
+                    for(var i = 0; i < args.length; ++i) {
+                        args[i] = arguments[i];
+                    }
+
+                    var method = 'GET';
+
+                    if (args[1] && args[1].method) {
+                        method = args[1].method;
+                    }
+
+                    var fetchData = {
+                        method: method,
+                        url: args[0],
+                        status_code: null
+                    };
+
+                    self.captureBreadcrumb({
+                        type: 'http',
+                        category: 'fetch',
+                        data: fetchData
+                    });
+
+                    return origFetch.apply(this, args).then(function (response) {
+                        fetchData.status_code = response.status;
+
+                        return response;
+                    });
+                };
+            }, wrappedBuiltIns);
+        }
+
         // Capture breadcrumbs from any click that is unhandled / bubbled up all the way
         // to the document. Do this before we instrument addEventListener.
         if (autoBreadcrumbs.dom && this._hasDocument) {
-            if (document.addEventListener) {
-                document.addEventListener('click', self._breadcrumbEventHandler('click'), false);
-                document.addEventListener('keypress', self._keypressEventHandler(), false);
+            if (_document.addEventListener) {
+                _document.addEventListener('click', self._breadcrumbEventHandler('click'), false);
+                _document.addEventListener('keypress', self._keypressEventHandler(), false);
             }
             else {
                 // IE8 Compatibility
-                document.attachEvent('onclick', self._breadcrumbEventHandler('click'));
-                document.attachEvent('onkeypress', self._keypressEventHandler());
+                _document.attachEvent('onclick', self._breadcrumbEventHandler('click'));
+                _document.attachEvent('onkeypress', self._keypressEventHandler());
             }
         }
 
@@ -1047,13 +1158,13 @@ Raven.prototype = {
         // NOTE: in Chrome App environment, touching history.pushState, *even inside
         //       a try/catch block*, will cause Chrome to output an error to console.error
         // borrowed from: https://github.com/angular/angular.js/pull/13945/files
-        var chrome = window.chrome;
+        var chrome = _window.chrome;
         var isChromePackagedApp = chrome && chrome.app && chrome.app.runtime;
-        var hasPushState = !isChromePackagedApp && window.history && history.pushState;
+        var hasPushState = !isChromePackagedApp && _window.history && history.pushState;
         if (autoBreadcrumbs.location && hasPushState) {
             // TODO: remove onpopstate handler on uninstall()
-            var oldOnPopState = window.onpopstate;
-            window.onpopstate = function () {
+            var oldOnPopState = _window.onpopstate;
+            _window.onpopstate = function () {
                 var currentHref = self._location.href;
                 self._captureUrlChange(self._lastHref, currentHref);
 
@@ -1079,7 +1190,7 @@ Raven.prototype = {
             }, wrappedBuiltIns);
         }
 
-        if (autoBreadcrumbs.console && 'console' in window && console.log) {
+        if (autoBreadcrumbs.console && 'console' in _window && console.log) {
             // console
             var consoleMethodCallback = function (msg, data) {
                 self.captureBreadcrumb({
@@ -1158,17 +1269,7 @@ Raven.prototype = {
     },
 
     _handleStackInfo: function(stackInfo, options) {
-        var self = this;
-        var frames = [];
-
-        if (stackInfo.stack && stackInfo.stack.length) {
-            each(stackInfo.stack, function(i, stack) {
-                var frame = self._normalizeFrame(stack);
-                if (frame) {
-                    frames.push(frame);
-                }
-            });
-        }
+        var frames = this._prepareFrames(stackInfo, options);
 
         this._triggerEvent('handle', {
             stackInfo: stackInfo,
@@ -1180,10 +1281,33 @@ Raven.prototype = {
             stackInfo.message,
             stackInfo.url,
             stackInfo.lineno,
-            frames.slice(0, this._globalOptions.stackTraceLimit),
+            frames,
             options
         );
     },
+
+    _prepareFrames: function(stackInfo, options) {
+        var self = this;
+        var frames = [];
+        if (stackInfo.stack && stackInfo.stack.length) {
+            each(stackInfo.stack, function(i, stack) {
+                var frame = self._normalizeFrame(stack);
+                if (frame) {
+                    frames.push(frame);
+                }
+            });
+
+            // e.g. frames captured via captureMessage throw
+            if (options && options.trimHeadFrames) {
+                for (var j = 0; j < options.trimHeadFrames && j < frames.length; j++) {
+                    frames[j].in_app = false;
+                }
+            }
+        }
+        frames = frames.slice(0, this._globalOptions.stackTraceLimit);
+        return frames;
+    },
+
 
     _normalizeFrame: function(frame) {
         if (!frame.url) return;
@@ -1210,7 +1334,6 @@ Raven.prototype = {
 
     _processException: function(type, message, fileurl, lineno, frames, options) {
         var stacktrace;
-
         if (!!this._globalOptions.ignoreErrors.test && this._globalOptions.ignoreErrors.test(message)) return;
 
         message += '';
@@ -1266,25 +1389,99 @@ Raven.prototype = {
     },
 
     _getHttpData: function() {
-        if (!this._hasDocument || !document.location || !document.location.href) {
-            return;
+        if (!this._hasNavigator && !this._hasDocument) return;
+        var httpData = {};
+
+        if (this._hasNavigator && _navigator.userAgent) {
+            httpData.headers = {
+              'User-Agent': navigator.userAgent
+            };
         }
 
-        var httpData = {
-            headers: {
-                'User-Agent': navigator.userAgent
+        if (this._hasDocument) {
+            if (_document.location && _document.location.href) {
+                httpData.url = _document.location.href;
             }
-        };
-
-        httpData.url = document.location.href;
-
-        if (document.referrer) {
-            httpData.headers.Referer = document.referrer;
+            if (_document.referrer) {
+                if (!httpData.headers) httpData.headers = {};
+                httpData.headers.Referer = _document.referrer;
+            }
         }
 
         return httpData;
     },
 
+    _resetBackoff: function() {
+        this._backoffDuration = 0;
+        this._backoffStart = null;
+    },
+
+    _shouldBackoff: function() {
+        return this._backoffDuration && now() - this._backoffStart < this._backoffDuration;
+    },
+
+    /**
+     * Returns true if the in-process data payload matches the signature
+     * of the previously-sent data
+     *
+     * NOTE: This has to be done at this level because TraceKit can generate
+     *       data from window.onerror WITHOUT an exception object (IE8, IE9,
+     *       other old browsers). This can take the form of an "exception"
+     *       data object with a single frame (derived from the onerror args).
+     */
+    _isRepeatData: function (current) {
+        var last = this._lastData;
+
+        if (!last ||
+            current.message !== last.message || // defined for captureMessage
+            current.culprit !== last.culprit)   // defined for captureException/onerror
+            return false;
+
+        // Stacktrace interface (i.e. from captureMessage)
+        if (current.stacktrace || last.stacktrace) {
+            return isSameStacktrace(current.stacktrace, last.stacktrace);
+        }
+        // Exception interface (i.e. from captureException/onerror)
+        else if (current.exception || last.exception) {
+            return isSameException(current.exception, last.exception);
+        }
+
+        return true;
+    },
+
+    _setBackoffState: function(request) {
+        // If we are already in a backoff state, don't change anything
+        if (this._shouldBackoff()) {
+            return;
+        }
+
+        var status = request.status;
+
+        // 400 - project_id doesn't exist or some other fatal
+        // 401 - invalid/revoked dsn
+        // 429 - too many requests
+        if (!(status === 400 || status === 401 || status === 429))
+            return;
+
+        var retry;
+        try {
+            // If Retry-After is not in Access-Control-Expose-Headers, most
+            // browsers will throw an exception trying to access it
+            retry = request.getResponseHeader('Retry-After');
+            retry = parseInt(retry, 10) * 1000; // Retry-After is returned in seconds
+        } catch (e) {
+            /* eslint no-empty:0 */
+        }
+
+
+        this._backoffDuration = retry
+            // If Sentry server returned a Retry-After value, use it
+            ? retry
+            // Otherwise, double the last backoff duration (starts at 1 sec)
+            : this._backoffDuration * 2 || 1000;
+
+        this._backoffStart = now();
+    },
 
     _send: function(data) {
         var globalOptions = this._globalOptions;
@@ -1298,6 +1495,9 @@ Raven.prototype = {
         if (httpData) {
             baseData.request = httpData;
         }
+
+        // HACK: delete `trimHeadFrames` to prevent from appearing in outbound payload
+        if (data.trimHeadFrames) delete data.trimHeadFrames;
 
         data = objectMerge(baseData, data);
 
@@ -1347,24 +1547,52 @@ Raven.prototype = {
             return;
         }
 
-        this._sendProcessedPayload(data);
+        // Backoff state: Sentry server previously responded w/ an error (e.g. 429 - too many requests),
+        // so drop requests until "cool-off" period has elapsed.
+        if (this._shouldBackoff()) {
+            this._logDebug('warn', 'Raven dropped error due to backoff: ', data);
+            return;
+        }
+
+        if (typeof globalOptions.sampleRate === 'number') {
+            if (Math.random() < globalOptions.sampleRate) {
+                this._sendProcessedPayload(data);
+            }
+        } else {
+            this._sendProcessedPayload(data);
+        }
+    },
+
+    _getUuid: function () {
+      return uuid4();
     },
 
     _sendProcessedPayload: function(data, callback) {
         var self = this;
         var globalOptions = this._globalOptions;
 
+        if (!this.isSetup()) return;
+
         // Send along an event_id if not explicitly passed.
         // This event_id can be used to reference the error within Sentry itself.
         // Set lastEventId after we know the error should actually be sent
-        this._lastEventId = data.event_id || (data.event_id = uuid4());
+        this._lastEventId = data.event_id || (data.event_id = this._getUuid());
 
         // Try and clean up the packet before sending by truncating long values
         data = this._trimPacket(data);
 
-        this._logDebug('debug', 'Raven about to send:', data);
+        // ideally duplicate error testing should occur *before* dataCallback/shouldSendCallback,
+        // but this would require copying an un-truncated copy of the data packet, which can be
+        // arbitrarily deep (extra_data) -- could be worthwhile? will revisit
+        if (!this._globalOptions.allowDuplicates && this._isRepeatData(data)) {
+            this._logDebug('warn', 'Raven dropped repeat event: ', data);
+            return;
+        }
 
-        if (!this.isSetup()) return;
+        // Store outbound payload after trim
+        this._lastData = data;
+
+        this._logDebug('debug', 'Raven about to send:', data);
 
         var auth = {
             sentry_version: '7',
@@ -1392,6 +1620,8 @@ Raven.prototype = {
             data: data,
             options: globalOptions,
             onSuccess: function success() {
+                self._resetBackoff();
+
                 self._triggerEvent('success', {
                     data: data,
                     src: url
@@ -1399,6 +1629,12 @@ Raven.prototype = {
                 callback && callback();
             },
             onError: function failure(error) {
+                self._logDebug('error', 'Raven transport failed to send: ', error);
+
+                if (error.request) {
+                    self._setBackoffState(error.request);
+                }
+
                 self._triggerEvent('failure', {
                     data: data,
                     src: url
@@ -1420,22 +1656,18 @@ Raven.prototype = {
         if (!hasCORS) return;
 
         var url = opts.url;
-        function handler() {
-            if (request.status === 200) {
-                if (opts.onSuccess) {
-                    opts.onSuccess();
-                }
-            } else if (opts.onError) {
-                opts.onError(new Error('Sentry error code: ' + request.status));
-            }
-        }
 
         if ('withCredentials' in request) {
             request.onreadystatechange = function () {
                 if (request.readyState !== 4) {
                     return;
+                } else if (request.status === 200) {
+                    opts.onSuccess && opts.onSuccess();
+                } else if (opts.onError) {
+                    var err = new Error('Sentry error code: ' + request.status);
+                    err.request = request;
+                    opts.onError(err);
                 }
-                handler();
             };
         } else {
             request = new XDomainRequest();
@@ -1444,7 +1676,16 @@ Raven.prototype = {
             url = url.replace(/^https?:/, '');
 
             // onreadystatechange not supported by XDomainRequest
-            request.onload = handler;
+            if (opts.onSuccess) {
+                request.onload = opts.onSuccess;
+            }
+            if (opts.onError) {
+                request.onerror = function () {
+                    var err = new Error('Sentry error code: XDomainRequest');
+                    err.request = request;
+                    opts.onError(err);
+                }
+            }
         }
 
         // NOTE: auth is intentionally sent as part of query string (NOT as custom
@@ -1473,46 +1714,12 @@ Raven.prototype = {
     }
 };
 
-// Deprecations
-Raven.prototype.setUser = Raven.prototype.setUserContext;
-Raven.prototype.setReleaseContext = Raven.prototype.setRelease;
-
-module.exports = Raven;
-
-},{"1":1,"2":2,"3":3,"6":6,"7":7}],5:[function(_dereq_,module,exports){
-/**
- * Enforces a single instance of the Raven client, and the
- * main entry point for Raven. If you are a consumer of the
- * Raven library, you SHOULD load this file (vs raven.js).
- **/
-
-'use strict';
-
-var RavenConstructor = _dereq_(4);
-
-var _Raven = window.Raven;
-
-var Raven = new RavenConstructor();
-
-/*
- * Allow multiple versions of Raven to be installed.
- * Strip Raven from the global context and returns the instance.
+/*------------------------------------------------
+ * utils
  *
- * @return {Raven}
+ * conditionally exported for test via Raven.utils
+ =================================================
  */
-Raven.noConflict = function () {
-	window.Raven = _Raven;
-	return Raven;
-};
-
-Raven.afterLoad();
-
-module.exports = Raven;
-
-},{"4":4}],6:[function(_dereq_,module,exports){
-/*eslint no-extra-parens:0*/
-'use strict';
-
 var objectPrototype = Object.prototype;
 
 function isUndefined(what) {
@@ -1527,23 +1734,10 @@ function isString(what) {
     return objectPrototype.toString.call(what) === '[object String]';
 }
 
-function isObject(what) {
-    return typeof what === 'object' && what !== null;
-}
 
 function isEmptyObject(what) {
     for (var _ in what) return false;  // eslint-disable-line guard-for-in, no-unused-vars
     return true;
-}
-
-// Sorta yanked from https://github.com/joyent/node/blob/aa3b4b4/lib/util.js#L560
-// with some tiny modifications
-function isError(what) {
-    var toString = objectPrototype.toString.call(what);
-    return isObject(what) &&
-        toString === '[object Error]' ||
-        toString === '[object Exception]' || // Firefox NS_ERROR_FAILURE Exceptions
-        what instanceof Error;
 }
 
 function each(obj, callback) {
@@ -1638,7 +1832,7 @@ function parseUrl(url) {
     };
 }
 function uuid4() {
-    var crypto = window.crypto || window.msCrypto;
+    var crypto = _window.crypto || _window.msCrypto;
 
     if (!isUndefined(crypto) && crypto.getRandomValues) {
         // Use window.crypto API if available
@@ -1678,6 +1872,7 @@ function uuid4() {
  * @returns {string}
  */
 function htmlTreeAsString(elem) {
+    /* eslint no-extra-parens:0*/
     var MAX_TRAVERSE_HEIGHT = 5,
         MAX_OUTPUT_LEN = 80,
         out = [],
@@ -1732,7 +1927,7 @@ function htmlElementAsString(elem) {
 
     className = elem.className;
     if (className && isString(className)) {
-        classes = className.split(' ');
+        classes = className.split(/\s+/);
         for (i = 0; i < classes.length; i++) {
             out.push('.' + classes[i]);
         }
@@ -1746,6 +1941,58 @@ function htmlElementAsString(elem) {
         }
     }
     return out.join('');
+}
+
+/**
+ * Returns true if either a OR b is truthy, but not both
+ */
+function isOnlyOneTruthy(a, b) {
+    return !!(!!a ^ !!b);
+}
+
+/**
+ * Returns true if the two input exception interfaces have the same content
+ */
+function isSameException(ex1, ex2) {
+    if (isOnlyOneTruthy(ex1, ex2))
+        return false;
+
+    ex1 = ex1.values[0];
+    ex2 = ex2.values[0];
+
+    if (ex1.type !== ex2.type ||
+        ex1.value !== ex2.value)
+        return false;
+
+    return isSameStacktrace(ex1.stacktrace, ex2.stacktrace);
+}
+
+/**
+ * Returns true if the two input stack trace interfaces have the same content
+ */
+function isSameStacktrace(stack1, stack2) {
+    if (isOnlyOneTruthy(stack1, stack2))
+        return false;
+
+    var frames1 = stack1.frames;
+    var frames2 = stack2.frames;
+
+    // Exit early if frame count differs
+    if (frames1.length !== frames2.length)
+        return false;
+
+    // Iterate through every frame; bail out if anything differs
+    var a, b;
+    for (var i = 0; i < frames1.length; i++) {
+        a = frames1[i];
+        b = frames2[i];
+        if (a.filename !== b.filename ||
+            a.lineno !== b.lineno ||
+            a.colno !== b.colno ||
+            a['function'] !== b['function'])
+            return false;
+    }
+    return true;
 }
 
 /**
@@ -1763,37 +2010,106 @@ function fill(obj, name, replacement, track) {
     }
 }
 
-module.exports = {
-    isUndefined: isUndefined,
-    isFunction: isFunction,
-    isString: isString,
-    isObject: isObject,
-    isEmptyObject: isEmptyObject,
-    isError: isError,
-    each: each,
-    objectMerge: objectMerge,
-    truncate: truncate,
-    hasKey: hasKey,
-    joinRegExp: joinRegExp,
-    urlencode: urlencode,
-    uuid4: uuid4,
-    htmlTreeAsString: htmlTreeAsString,
-    htmlElementAsString: htmlElementAsString,
-    parseUrl: parseUrl,
-    fill: fill
+if (typeof __DEV__ !== 'undefined' && __DEV__) {
+    Raven.utils = {
+        isUndefined: isUndefined,
+        isFunction: isFunction,
+        isString: isString,
+        isObject: isObject,
+        isEmptyObject: isEmptyObject,
+        isError: isError,
+        each: each,
+        objectMerge: objectMerge,
+        truncate: truncate,
+        hasKey: hasKey,
+        joinRegExp: joinRegExp,
+        urlencode: urlencode,
+        uuid4: uuid4,
+        htmlTreeAsString: htmlTreeAsString,
+        htmlElementAsString: htmlElementAsString,
+        parseUrl: parseUrl,
+        fill: fill
+    };
 };
 
-},{}],7:[function(_dereq_,module,exports){
+// Deprecations
+Raven.prototype.setUser = Raven.prototype.setUserContext;
+Raven.prototype.setReleaseContext = Raven.prototype.setRelease;
+
+module.exports = Raven;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"1":1,"2":2,"5":5,"6":6,"7":7}],4:[function(_dereq_,module,exports){
+(function (global){
+/**
+ * Enforces a single instance of the Raven client, and the
+ * main entry point for Raven. If you are a consumer of the
+ * Raven library, you SHOULD load this file (vs raven.js).
+ **/
+
 'use strict';
 
-var utils = _dereq_(6);
+var RavenConstructor = _dereq_(3);
 
-var hasKey = utils.hasKey;
-var isString = utils.isString;
-var isUndefined = utils.isUndefined;
+// This is to be defensive in environments where window does not exist (see https://github.com/getsentry/raven-js/pull/785)
+var _window = typeof window !== 'undefined' ? window
+            : typeof global !== 'undefined' ? global
+            : typeof self !== 'undefined' ? self
+            : {};
+var _Raven = _window.Raven;
+
+var Raven = new RavenConstructor();
 
 /*
- TraceKit - Cross brower stack traces - github.com/occ/TraceKit
+ * Allow multiple versions of Raven to be installed.
+ * Strip Raven from the global context and returns the instance.
+ *
+ * @return {Raven}
+ */
+Raven.noConflict = function () {
+    _window.Raven = _Raven;
+    return Raven;
+};
+
+Raven.afterLoad();
+
+module.exports = Raven;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"3":3}],5:[function(_dereq_,module,exports){
+'use strict';
+
+function isObject(what) {
+    return typeof what === 'object' && what !== null;
+}
+
+// Sorta yanked from https://github.com/joyent/node/blob/aa3b4b4/lib/util.js#L560
+// with some tiny modifications
+function isError(what) {
+    var toString = {}.toString.call(what);
+    return isObject(what) &&
+        toString === '[object Error]' ||
+        toString === '[object Exception]' || // Firefox NS_ERROR_FAILURE Exceptions
+        what instanceof Error;
+}
+
+module.exports = {
+    isObject: isObject,
+    isError: isError
+};
+},{}],6:[function(_dereq_,module,exports){
+(function (global){
+'use strict';
+
+var utils = _dereq_(5);
+
+/*
+ TraceKit - Cross brower stack traces
+
+ This was originally forked from github.com/occ/TraceKit, but has since been
+ largely re-written and is now maintained as part of raven-js.  Tests for
+ this are in test/vendor.
+
  MIT license
 */
 
@@ -1802,19 +2118,26 @@ var TraceKit = {
     debug: false
 };
 
+// This is to be defensive in environments where window does not exist (see https://github.com/getsentry/raven-js/pull/785)
+var _window = typeof window !== 'undefined' ? window
+            : typeof global !== 'undefined' ? global
+            : typeof self !== 'undefined' ? self
+            : {};
+
 // global reference to slice
 var _slice = [].slice;
 var UNKNOWN_FUNCTION = '?';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Error_types
-var ERROR_TYPES_RE = /^(?:Uncaught (?:exception: )?)?((?:Eval|Internal|Range|Reference|Syntax|Type|URI)Error): ?(.*)$/;
+var ERROR_TYPES_RE = /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI|)Error): )?(.*)$/;
 
 function getLocationHref() {
-    if (typeof document === 'undefined')
+    if (typeof document === 'undefined' || typeof document.location === 'undefined')
         return '';
 
     return document.location.href;
 }
+
 
 /**
  * TraceKit.report: cross-browser processing of unhandled exceptions
@@ -1900,7 +2223,7 @@ TraceKit.report = (function reportModuleWrapper() {
           return;
         }
         for (var i in handlers) {
-            if (hasKey(handlers, i)) {
+            if (handlers.hasOwnProperty(i)) {
                 try {
                     handlers[i].apply(null, [stack].concat(_slice.call(arguments, 2)));
                 } catch (inner) {
@@ -1933,7 +2256,9 @@ TraceKit.report = (function reportModuleWrapper() {
         if (lastExceptionStack) {
             TraceKit.computeStackTrace.augmentStackTraceWithInitialElement(lastExceptionStack, url, lineNo, message);
             processLastException();
-        } else if (ex) {
+        } else if (ex && utils.isError(ex)) {
+            // non-string `ex` arg; attempt to extract stack trace
+
             // New chrome and blink send along a real error object
             // Let's just report that like a normal error.
             // See: https://mikewest.org/2013/08/debugging-runtime-errors-with-window-onerror
@@ -1949,7 +2274,7 @@ TraceKit.report = (function reportModuleWrapper() {
             var name = undefined;
             var msg = message; // must be new var or will modify original `arguments`
             var groups;
-            if (isString(message)) {
+            if ({}.toString.call(message) === '[object String]') {
                 var groups = message.match(ERROR_TYPES_RE);
                 if (groups) {
                     name = groups[1];
@@ -1980,8 +2305,8 @@ TraceKit.report = (function reportModuleWrapper() {
         if (_onErrorHandlerInstalled) {
             return;
         }
-        _oldOnerrorHandler = window.onerror;
-        window.onerror = traceKitWindowOnError;
+        _oldOnerrorHandler = _window.onerror;
+        _window.onerror = traceKitWindowOnError;
         _onErrorHandlerInstalled = true;
     }
 
@@ -1990,7 +2315,7 @@ TraceKit.report = (function reportModuleWrapper() {
         if (!_onErrorHandlerInstalled) {
             return;
         }
-        window.onerror = _oldOnerrorHandler;
+        _window.onerror = _oldOnerrorHandler;
         _onErrorHandlerInstalled = false;
         _oldOnerrorHandler = undefined;
     }
@@ -2030,7 +2355,7 @@ TraceKit.report = (function reportModuleWrapper() {
         // slow slow IE to see if onerror occurs or not before reporting
         // this exception; otherwise, we will end up with an incomplete
         // stack trace
-        window.setTimeout(function () {
+        setTimeout(function () {
             if (lastException === ex) {
                 processLastException();
             }
@@ -2164,10 +2489,10 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
      * @return {?Object.<string, *>} Stack trace information.
      */
     function computeStackTraceFromStackProp(ex) {
-        if (isUndefined(ex.stack) || !ex.stack) return;
+        if (typeof ex.stack === 'undefined' || !ex.stack) return;
 
         var chrome = /^\s*at (.*?) ?\(((?:file|https?|blob|chrome-extension|native|eval|<anonymous>).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i,
-            gecko = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|\[native).*?)(?::(\d+))?(?::(\d+))?\s*$/i,
+            gecko = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|resource|\[native).*?)(?::(\d+))?(?::(\d+))?\s*$/i,
             winjs = /^\s*at (?:((?:\[object object\])?.+) )?\(?((?:file|ms-appx|https?|blob):.*?):(\d+)(?::(\d+))?\)?\s*$/i,
             lines = ex.stack.split('\n'),
             stack = [],
@@ -2216,7 +2541,7 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
             return null;
         }
 
-        if (!stack[0].column && !isUndefined(ex.columnNumber)) {
+        if (!stack[0].column && typeof ex.columnNumber !== 'undefined') {
             // FireFox uses this awesome columnNumber property for its top frame
             // Also note, Firefox's column number is 0-based and everything else expects 1-based,
             // so adding 1
@@ -2226,153 +2551,6 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
         return {
             'name': ex.name,
             'message': ex.message,
-            'url': getLocationHref(),
-            'stack': stack
-        };
-    }
-
-    /**
-     * Computes stack trace information from the stacktrace property.
-     * Opera 10 uses this property.
-     * @param {Error} ex
-     * @return {?Object.<string, *>} Stack trace information.
-     */
-    function computeStackTraceFromStacktraceProp(ex) {
-        // Access and store the stacktrace property before doing ANYTHING
-        // else to it because Opera is not very good at providing it
-        // reliably in other circumstances.
-        var stacktrace = ex.stacktrace;
-        if (isUndefined(ex.stacktrace) || !ex.stacktrace) return;
-
-        var opera10Regex = / line (\d+).*script (?:in )?(\S+)(?:: in function (\S+))?$/i,
-          opera11Regex = / line (\d+), column (\d+)\s*(?:in (?:<anonymous function: ([^>]+)>|([^\)]+))\((.*)\))? in (.*):\s*$/i,
-          lines = stacktrace.split('\n'),
-          stack = [],
-          parts;
-
-        for (var line = 0; line < lines.length; line += 2) {
-            var element = null;
-            if ((parts = opera10Regex.exec(lines[line]))) {
-                element = {
-                    'url': parts[2],
-                    'line': +parts[1],
-                    'column': null,
-                    'func': parts[3],
-                    'args':[]
-                };
-            } else if ((parts = opera11Regex.exec(lines[line]))) {
-                element = {
-                    'url': parts[6],
-                    'line': +parts[1],
-                    'column': +parts[2],
-                    'func': parts[3] || parts[4],
-                    'args': parts[5] ? parts[5].split(',') : []
-                };
-            }
-
-            if (element) {
-                if (!element.func && element.line) {
-                    element.func = UNKNOWN_FUNCTION;
-                }
-
-                stack.push(element);
-            }
-        }
-
-        if (!stack.length) {
-            return null;
-        }
-
-        return {
-            'name': ex.name,
-            'message': ex.message,
-            'url': getLocationHref(),
-            'stack': stack
-        };
-    }
-
-    /**
-     * NOT TESTED.
-     * Computes stack trace information from an error message that includes
-     * the stack trace.
-     * Opera 9 and earlier use this method if the option to show stack
-     * traces is turned on in opera:config.
-     * @param {Error} ex
-     * @return {?Object.<string, *>} Stack information.
-     */
-    function computeStackTraceFromOperaMultiLineMessage(ex) {
-        // Opera includes a stack trace into the exception message. An example is:
-        //
-        // Statement on line 3: Undefined variable: undefinedFunc
-        // Backtrace:
-        //   Line 3 of linked script file://localhost/Users/andreyvit/Projects/TraceKit/javascript-client/sample.js: In function zzz
-        //         undefinedFunc(a);
-        //   Line 7 of inline#1 script in file://localhost/Users/andreyvit/Projects/TraceKit/javascript-client/sample.html: In function yyy
-        //           zzz(x, y, z);
-        //   Line 3 of inline#1 script in file://localhost/Users/andreyvit/Projects/TraceKit/javascript-client/sample.html: In function xxx
-        //           yyy(a, a, a);
-        //   Line 1 of function script
-        //     try { xxx('hi'); return false; } catch(ex) { TraceKit.report(ex); }
-        //   ...
-
-        var lines = ex.message.split('\n');
-        if (lines.length < 4) {
-            return null;
-        }
-
-        var lineRE1 = /^\s*Line (\d+) of linked script ((?:file|https?|blob)\S+)(?:: in function (\S+))?\s*$/i,
-            lineRE2 = /^\s*Line (\d+) of inline#(\d+) script in ((?:file|https?|blob)\S+)(?:: in function (\S+))?\s*$/i,
-            lineRE3 = /^\s*Line (\d+) of function script\s*$/i,
-            stack = [],
-            scripts = document.getElementsByTagName('script'),
-            parts;
-
-        for (var line = 2; line < lines.length; line += 2) {
-            var item = null;
-            if ((parts = lineRE1.exec(lines[line]))) {
-                item = {
-                    'url': parts[2],
-                    'func': parts[3],
-                    'args': [],
-                    'line': +parts[1],
-                    'column': null
-                };
-            } else if ((parts = lineRE2.exec(lines[line]))) {
-                item = {
-                    'url': parts[3],
-                    'func': parts[4],
-                    'args': [],
-                    'line': +parts[1],
-                    'column': null // TODO: Check to see if inline#1 (+parts[2]) points to the script number or column number.
-                };
-                var relativeLine = (+parts[1]); // relative to the start of the <SCRIPT> block
-            } else if ((parts = lineRE3.exec(lines[line]))) {
-                var url = window.location.href.replace(/#.*$/, '');
-                item = {
-                    'url': url,
-                    'func': '',
-                    'args': [],
-                    'line': parts[1],
-                    'column': null
-                };
-            }
-
-            if (item) {
-                if (!item.func) {
-                    item.func = UNKNOWN_FUNCTION;
-                }
-
-                stack.push(item);
-            }
-        }
-
-        if (!stack.length) {
-            return null; // could not parse multiline exception message as Opera stack trace
-        }
-
-        return {
-            'name': ex.name,
-            'message': lines[0],
             'url': getLocationHref(),
             'stack': stack
         };
@@ -2503,32 +2681,7 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
         depth = (depth == null ? 0 : +depth);
 
         try {
-            // This must be tried first because Opera 10 *destroys*
-            // its stacktrace property if you try to access the stack
-            // property first!!
-            stack = computeStackTraceFromStacktraceProp(ex);
-            if (stack) {
-                return stack;
-            }
-        } catch (e) {
-            if (TraceKit.debug) {
-                throw e;
-            }
-        }
-
-        try {
             stack = computeStackTraceFromStackProp(ex);
-            if (stack) {
-                return stack;
-            }
-        } catch (e) {
-            if (TraceKit.debug) {
-                throw e;
-            }
-        }
-
-        try {
-            stack = computeStackTraceFromOperaMultiLineMessage(ex);
             if (stack) {
                 return stack;
             }
@@ -2548,7 +2701,6 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
                 throw e;
             }
         }
-
         return {
             'name': ex.name,
             'message': ex.message,
@@ -2564,5 +2716,55 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
 
 module.exports = TraceKit;
 
-},{"6":6}]},{},[5])(5)
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"5":5}],7:[function(_dereq_,module,exports){
+'use strict';
+
+/*
+ json-stringify-safe
+ Like JSON.stringify, but doesn't throw on circular references.
+
+ Originally forked from https://github.com/isaacs/json-stringify-safe
+ version 5.0.1 on 3/8/2017 and modified for IE8 compatibility.
+ Tests for this are in test/vendor.
+
+ ISC license: https://github.com/isaacs/json-stringify-safe/blob/master/LICENSE
+*/
+
+exports = module.exports = stringify
+exports.getSerialize = serializer
+
+function indexOf(haystack, needle) {
+  for (var i = 0; i < haystack.length; ++i) {
+    if (haystack[i] === needle) return i;
+  }
+  return -1;
+}
+
+function stringify(obj, replacer, spaces, cycleReplacer) {
+  return JSON.stringify(obj, serializer(replacer, cycleReplacer), spaces)
+}
+
+function serializer(replacer, cycleReplacer) {
+  var stack = [], keys = []
+
+  if (cycleReplacer == null) cycleReplacer = function(key, value) {
+    if (stack[0] === value) return '[Circular ~]'
+    return '[Circular ~.' + keys.slice(0, indexOf(stack, value)).join('.') + ']'
+  }
+
+  return function(key, value) {
+    if (stack.length > 0) {
+      var thisPos = indexOf(stack, this);
+      ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
+      ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key)
+      if (~indexOf(stack, value)) value = cycleReplacer.call(this, key, value)
+    }
+    else stack.push(value)
+
+    return replacer == null ? value : replacer.call(this, key, value)
+  }
+}
+
+},{}]},{},[4])(4)
 });

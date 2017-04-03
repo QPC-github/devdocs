@@ -15,7 +15,7 @@
     @el = $('._app')
     @localStorage = new LocalStorageStore
     @appCache = new app.AppCache if app.AppCache.isEnabled()
-    @settings = new app.Settings @localStorage
+    @settings = new app.Settings
     @db = new app.DB()
 
     @docs = new app.collections.Docs
@@ -54,10 +54,11 @@
           release: @config.release
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/]
+          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /Electron\.app/]
           tags:
             mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
+            electron: (!!window.process?.versions?.electron).toString()
           shouldSendCallback: =>
             try
               if @isInjectionError()
@@ -104,9 +105,10 @@
     @trigger 'ready'
     @router.start()
     @hideLoading()
-    @welcomeBack() unless @doc
-    @removeEvent 'ready bootError'
-    try navigator.mozApps?.getSelf().onsuccess = -> app.mozApp = true catch
+    setTimeout =>
+      @welcomeBack() unless @doc
+      @removeEvent 'ready bootError'
+    , 50
     return
 
   initDoc: (doc) ->
@@ -117,12 +119,7 @@
   migrateDocs: ->
     for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
       needsSaving = true
-      doc = @disabledDocs.findBy('slug', 'codeigniter~3') if slug == 'codeigniter~3.0'
-      doc = @disabledDocs.findBy('slug', 'node~4_lts') if slug == 'node~4.2_lts'
-      doc = @disabledDocs.findBy('slug', 'xslt_xpath') if slug == 'xpath'
-      doc = @disabledDocs.findBy('slug', 'angular~2_typescript') if slug == 'angular~2.0_typescript'
-      doc = @disabledDocs.findBy('slug', "angularjs~#{match[1]}") if match = /^angular~(1\.\d)$/.exec(slug)
-      doc ||= @disabledDocs.findBy('slug_without_version', slug)
+      doc = @disabledDocs.findBy('slug_without_version', slug)
       if doc
         @disabledDocs.remove(doc)
         @docs.add(doc)
@@ -185,13 +182,11 @@
   showLoading: ->
     document.body.classList.remove '_noscript'
     document.body.classList.add '_loading'
-    document.body.insertAdjacentHTML 'beforeend', '<div id="fontLoader" aria-hidden="true" style="position: absolute; top: 0; height: 0; overflow: hidden; visibility: hidden;"><b>Preload</b> <em>all <b>fonts</b></em></div>' # Chrome
     return
 
   hideLoading: ->
     document.body.classList.remove '_booting'
     document.body.classList.remove '_loading'
-    try $.remove document.getElementById('fontLoader')
     return
 
   indexHost: ->
@@ -208,7 +203,6 @@
     return if @quotaExceeded
     @quotaExceeded = true
     new app.views.Notif 'QuotaExceeded', autoHide: null
-    Raven.captureMessage 'QuotaExceededError', level: 'warning'
     return
 
   onCookieBlocked: (key, value, actual) ->

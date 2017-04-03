@@ -2,7 +2,7 @@ module Docs
   class Sqlite < FileScraper
     self.name = 'SQLite'
     self.type = 'sqlite'
-    self.release = '3.16.0'
+    self.release = '3.17.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/sqlite/'
     self.base_url = 'https://sqlite.org/'
     self.root_path = 'docs.html'
@@ -44,8 +44,8 @@ module Docs
 
     private
 
-    def parse(html)
-      html.gsub! %r{(<h2[^>]*>[^<]+)</h1>}, '\1</h2>'
+    def parse(response)
+      response.body.gsub! %r{(<h2[^>]*>[^<]+)</h1>}, '\1</h2>'
       super
     end
   end

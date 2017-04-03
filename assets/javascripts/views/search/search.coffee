@@ -41,7 +41,7 @@ class app.views.Search extends app.View
     return
 
   autoFocus: =>
-    unless app.isMobile()
+    unless app.isMobile() or $.isAndroid() or $.isIOS()
       @input.focus() unless document.activeElement is @input
     return
 
@@ -49,14 +49,6 @@ class app.views.Search extends app.View
     @el.reset()
     @onInput()
     @autoFocus()
-    return
-
-  disable: ->
-    @input.setAttribute('disabled', 'disabled')
-    return
-
-  enable: ->
-    @input.removeAttribute('disabled')
     return
 
   onReady: =>
@@ -130,7 +122,7 @@ class app.views.Search extends app.View
     if event.target is @resetLink
       $.stopEvent(event)
       @reset()
-      @focus()
+      app.document.onEscape()
     return
 
   onSubmit: (event) ->
@@ -143,7 +135,8 @@ class app.views.Search extends app.View
 
   afterRoute: (name, context) =>
     @delay @searchUrl if context.hash
-    @autoFocus()
+    @delay @autoFocus
+    return
 
   extractHashValue: ->
     if (value = @getHashValue())?

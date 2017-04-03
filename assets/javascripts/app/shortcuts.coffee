@@ -2,7 +2,7 @@ class app.Shortcuts
   $.extend @prototype, Events
 
   constructor: ->
-    @isWindows = $.isWindows()
+    @isMac = $.isMac()
     @start()
 
   start: ->
@@ -14,6 +14,9 @@ class app.Shortcuts
     $.off document, 'keydown', @onKeydown
     $.off document, 'keypress', @onKeypress
     return
+
+  swapArrowKeysBehavior: ->
+    app.settings.get('arrowScroll')
 
   showTip: ->
     app.showTip('KeyNav')
@@ -40,7 +43,9 @@ class app.Shortcuts
       event.preventDefault() if result is false
     return
 
-  handleKeydownEvent: (event) ->
+  handleKeydownEvent: (event, _force) ->
+    return @handleKeydownAltEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     if not event.target.form and (48 <= event.which <= 57 or 65 <= event.which <= 90)
       @trigger 'typing'
       return
@@ -86,21 +91,26 @@ class app.Shortcuts
       when 13
         @trigger 'superEnter'
       when 37
-        unless @isWindows
+        if @isMac
           @trigger 'superLeft'
           false
       when 38
         @trigger 'pageTop'
         false
       when 39
-        unless @isWindows
+        if @isMac
           @trigger 'superRight'
           false
       when 40
         @trigger 'pageBottom'
         false
+      when 188
+        @trigger 'preferences'
+        false
 
-  handleKeydownShiftEvent: (event) ->
+  handleKeydownShiftEvent: (event, _force) ->
+    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     if not event.target.form and 65 <= event.which <= 90
       @trigger 'typing'
       return
@@ -118,19 +128,21 @@ class app.Shortcuts
           @trigger 'altDown'
           false
 
-  handleKeydownAltEvent: (event) ->
+  handleKeydownAltEvent: (event, _force) ->
+    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     switch event.which
       when 9
         @trigger 'altRight', event
       when 37
-        if @isWindows
+        unless @isMac
           @trigger 'superLeft'
           false
       when 38
         @trigger 'altUp'
         false
       when 39
-        if @isWindows
+        unless @isMac
           @trigger 'superRight'
           false
       when 40

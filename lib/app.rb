@@ -70,14 +70,14 @@ class App < Sinatra::Application
     BetterErrors.application_root = File.expand_path('..', __FILE__)
     BetterErrors.editor = :sublime
 
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' *; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' *; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
   end
 
   configure :production do
     set :static, false
     set :cdn_origin, 'https://cdn.devdocs.io'
     set :docs_origin, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -184,7 +184,7 @@ class App < Sinatra::Application
     end
 
     def app_size
-      @app_size ||= cookies[:size].nil? ? '18rem' : "#{cookies[:size]}px"
+      @app_size ||= cookies[:size].nil? ? '20rem' : "#{cookies[:size]}px"
     end
 
     def app_layout
@@ -229,12 +229,13 @@ class App < Sinatra::Application
   end
 
   get '/' do
+    return redirect "/#q=#{params[:q]}" if params[:q]
     return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
     response.headers['Content-Security-Policy'] = settings.csp if settings.csp
     erb :index
   end
 
-  %w(offline about news help).each do |page|
+  %w(settings offline about news help).each do |page|
     get "/#{page}" do
       if supports_js_redirection?
         redirect_via_js "/#{page}"
@@ -280,6 +281,27 @@ class App < Sinatra::Application
     CODE
   end
 
+  %w(/maxcdn /maxcdn/).each do |path|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '#{path}' do
+        410
+      end
+    CODE
+  end
+
+  {
+    '/css-data-types/'    => '/css-values-units/',
+    '/css-at-rules/'      => '/?q=css%20%40',
+    '/html/article'       => '/html/element/article',
+    '/http-status-codes/' => '/http-status/'
+  }.each do |path, url|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '#{path}' do
+        redirect '#{url}', 301
+      end
+    CODE
+  end
+
   get %r{\A/feed(?:\.atom)?\z} do
     content_type 'application/atom+xml'
     settings.news_feed
@@ -287,6 +309,8 @@ class App < Sinatra::Application
 
   DOC_REDIRECTS = {
     'iojs' => 'node',
+    'node_lts' => 'node~6_lts',
+    'node~4.2_lts' => 'node~4_lts',
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
     'xpath' => 'xslt_xpath',
@@ -309,8 +333,18 @@ class App < Sinatra::Application
       return redirect "/angularjs/api#{rest}", 301
     end
 
-    if rest && doc == 'dom' && rest.start_with?('/windowtimers')
-      return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}"
+    if rest && doc == 'dom'
+      if rest.start_with?('/windowtimers')
+        return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}", 301
+      end
+
+      if rest.start_with?('/window.')
+        return redirect "/dom#{rest.sub('window.', 'window/')}", 301
+      end
+
+      if rest.start_with?('/element.')
+        return redirect "/dom#{rest.sub('element.', 'element/')}", 301
+      end
     end
 
     return 404 unless @doc = find_doc(doc)

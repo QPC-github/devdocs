@@ -126,7 +126,7 @@ module Docs
           (options[:only] ||= []).concat initial_paths + (root_path? ? [root_path] : ['', '/'])
         end
 
-        options.merge!(additional_options) if respond_to?(:additional_options, true)
+        options.merge!(additional_options)
         options.freeze
       end
     end
@@ -172,7 +172,7 @@ module Docs
 
     def process_response(response)
       data = {}
-      html, title = parse(response.body)
+      html, title = parse(response)
       context = pipeline_context(response)
       context[:html_title] = title
       pipeline.call(html, context, data)
@@ -183,8 +183,8 @@ module Docs
       options.merge url: response.url
     end
 
-    def parse(string)
-      parser = Parser.new(string)
+    def parse(response)
+      parser = Parser.new(response.body)
       [parser.html, parser.title]
     end
 
@@ -197,18 +197,30 @@ module Docs
       @pipeline = nil
     end
 
+    def additional_options
+      {}
+    end
+
     module FixInternalUrlsBehavior
       def self.included(base)
         base.extend ClassMethods
       end
 
+      def self.prepended(base)
+        class << base
+          prepend ClassMethods
+        end
+      end
+
       module ClassMethods
-        attr_reader :internal_urls
+        def internal_urls
+          @internal_urls
+        end
 
         def store_pages(store)
           instrument 'info.doc', msg: 'Building internal urls...'
           with_internal_urls do
-            instrument 'info.doc', msg: 'Building pages...'
+            instrument 'info.doc', msg: 'Continuing...'
             super
           end
         end
@@ -226,7 +238,7 @@ module Docs
       def fetch_internal_urls
         result = []
         build_pages do |page|
-          result << base_url.subpath_to(page[:response_url]) if page[:entries].present?
+          result << page[:subpath] if page[:entries].present?
         end
         result
       end
@@ -240,16 +252,15 @@ module Docs
 
       def additional_options
         if self.class.internal_urls
-          {
+          super.merge! \
             only: self.class.internal_urls.to_set,
             only_patterns: nil,
             skip: nil,
             skip_patterns: nil,
             skip_links: nil,
             fixed_internal_urls: true
-          }
         else
-          {}
+          super
         end
       end
 

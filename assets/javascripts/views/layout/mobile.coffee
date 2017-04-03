@@ -2,9 +2,10 @@ class app.views.Mobile extends app.View
   @className: '_mobile'
 
   @elements:
-    body:     'body'
-    content:  '._container'
-    sidebar:  '._sidebar'
+    body:      'body'
+    content:   '._container'
+    sidebar:   '._sidebar'
+    docPicker: '._settings ._sidebar'
 
   @routes:
     after: 'afterRoute'
@@ -32,56 +33,62 @@ class app.views.Mobile extends app.View
     super
 
   init: ->
-    FastClick.attach @body
+    window.FastClick?.attach @body
 
-    $.on @body, 'click', @onClick
-    $.on $('._home-btn'), 'click', @onClickHome
-    $.on $('._menu-btn'), 'click', @onClickMenu
     $.on $('._search'), 'touchend', @onTapSearch
 
-    @back = $('._back-btn')
+    @toggleSidebar = $('button[data-toggle-sidebar]')
+    @toggleSidebar.removeAttribute('hidden')
+    $.on @toggleSidebar, 'click', @onClickToggleSidebar
+
+    @back = $('button[data-back]')
+    @back.removeAttribute('hidden')
     $.on @back, 'click', @onClickBack
 
-    @forward = $('._forward-btn')
+    @forward = $('button[data-forward]')
+    @forward.removeAttribute('hidden')
     $.on @forward, 'click', @onClickForward
+
+    @docPickerTab = $('button[data-tab="doc-picker"]')
+    @docPickerTab.removeAttribute('hidden')
+    $.on @docPickerTab, 'click', @onClickDocPickerTab
+
+    @settingsTab = $('button[data-tab="settings"]')
+    @settingsTab.removeAttribute('hidden')
+    $.on @settingsTab, 'click', @onClickSettingsTab
 
     app.document.sidebar.search
       .on 'searching', @showSidebar
-      .on 'clear', @hideSidebar
 
     @activate()
     return
 
   showSidebar: =>
     if @isSidebarShown()
-      @body.scrollTop = 0
+      window.scrollTo 0, 0
       return
 
-    @contentTop = @body.scrollTop
+    @contentTop = window.scrollY
     @content.style.display = 'none'
     @sidebar.style.display = 'block'
 
     if selection = @findByClass app.views.ListSelect.activeClass
-      $.scrollTo selection, @body, 'center'
+      scrollContainer = if window.scrollY is @body.scrollTop then @body else document.documentElement
+      $.scrollTo selection, scrollContainer, 'center'
     else
-      @body.scrollTop = @findByClass(app.views.ListFold.activeClass) and @sidebarTop or 0
+      window.scrollTo 0, @findByClass(app.views.ListFold.activeClass) and @sidebarTop or 0
     return
 
   hideSidebar: =>
     return unless @isSidebarShown()
-    @sidebarTop = @body.scrollTop
+    @sidebarTop = window.scrollY
     @sidebar.style.display = 'none'
     @content.style.display = 'block'
-    @body.scrollTop = @contentTop or 0
+    window.scrollTo 0, @contentTop or 0
     return
 
   isSidebarShown: ->
     @sidebar.style.display isnt 'none'
-
-  onClick: (event) =>
-    if event.target.hasAttribute 'data-pick-docs'
-      @showSidebar()
-    return
 
   onClickBack: =>
     history.back()
@@ -89,20 +96,46 @@ class app.views.Mobile extends app.View
   onClickForward: =>
     history.forward()
 
-  onClickHome: =>
-    app.shortcuts.trigger 'escape'
-    @hideSidebar()
-    return
-
-  onClickMenu: =>
+  onClickToggleSidebar: =>
     if @isSidebarShown() then @hideSidebar() else @showSidebar()
     return
 
-  onTapSearch: =>
-    @body.scrollTop = 0
+  onClickDocPickerTab: (event) =>
+    $.stopEvent(event)
+    @showDocPicker()
+    return
 
-  afterRoute: =>
+  onClickSettingsTab: (event) =>
+    $.stopEvent(event)
+    @showSettings()
+    return
+
+  showDocPicker: ->
+    window.scrollTo 0, 0
+    @docPickerTab.classList.add 'active'
+    @settingsTab.classList.remove 'active'
+    @docPicker.style.display = 'block'
+    @content.style.display = 'none'
+    return
+
+  showSettings: ->
+    window.scrollTo 0, 0
+    @docPickerTab.classList.remove 'active'
+    @settingsTab.classList.add 'active'
+    @docPicker.style.display = 'none'
+    @content.style.display = 'block'
+    return
+
+  onTapSearch: =>
+    window.scrollTo 0, 0
+
+  afterRoute: (route) =>
     @hideSidebar()
+
+    if route is 'settings'
+      @showDocPicker()
+    else
+      @content.style.display = 'block'
 
     if page.canGoBack()
       @back.removeAttribute('disabled')
