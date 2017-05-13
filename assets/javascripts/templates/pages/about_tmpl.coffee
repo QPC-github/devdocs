@@ -2,10 +2,10 @@ app.templates.aboutPage = -> """
   <nav class="_toc" role="directory">
     <h3 class="_toc-title">Table of Contents</h3>
     <ul class="_toc-list">
-      <li><a href="#credits">Credits</a>
-      <li><a href="#faq">FAQ</a>
       <li><a href="#copyright">Copyright</a>
       <li><a href="#plugins">Plugins</a>
+      <li><a href="#faq">FAQ</a>
+      <li><a href="#credits">Credits</a>
       <li><a href="#privacy">Privacy Policy</a>
     </ul>
   </nav>
@@ -26,24 +26,24 @@ app.templates.aboutPage = -> """
   <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
     <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
-  <h2 class="_block-heading" id="credits">Credits</h2>
+  <h2 class="_block-heading" id="copyright">Copyright and License</h2>
+  <p class="_note">
+    <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
+    This software is licensed under the terms of the Mozilla Public License v2.0.<br>
+    You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
+    For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
+    and <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
 
-  <p><strong>Special thanks to:</strong>
+  <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
-    <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
-    <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="http://out.devdocs.io/s/shopify">Shopify</a>, <a href="http://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="http://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
-    <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
-    <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
-    <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
+    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
+    <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
+    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
+    <li><a href="https://atom.io/packages/devdocs">Atom package</a>
+    <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code extension</a>
+    <li><a href="https://github.com/yannickglt/alfred-devdocs">Alfred workflow</a>
+    <li><a href="https://github.com/search?q=topic%3Adevdocs&type=Repositories">More…</a>
   </ul>
-
-  <table class="_credits">
-    <tr>
-      <th>Documentation
-      <th>Copyright
-      <th>License
-    #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
-  </table>
 
   <h2 class="_block-heading" id="faq">Questions & Answers</h2>
   <dl>
@@ -56,22 +56,26 @@ app.templates.aboutPage = -> """
   </dl>
   <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
 
-  <h2 class="_block-heading" id="copyright">Copyright and License</h2>
-  <p class="_note">
-    <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
-    This software is licensed under the terms of the Mozilla Public License v2.0.<br>
-    You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
-    For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
-    and <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
+  <h2 class="_block-heading" id="credits">Credits</h2>
 
-  <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
+  <p><strong>Special thanks to:</strong>
   <ul>
-    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
-    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text plugin</a>
-    <li><a href="https://atom.io/packages/devdocs">Atom plugin</a>
-    <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
-    <li><a href="https://github.com/xuchunyang/DevDocs.el">Emacs Package</a>
+    <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
+    <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="http://out.devdocs.io/s/shopify">Shopify</a>, <a href="http://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="http://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
+    <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
+    <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
+    <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
   </ul>
+
+  <div class="_table">
+    <table class="_credits">
+      <tr>
+        <th>Documentation
+        <th>Copyright
+        <th>License
+      #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
+    </table>
+  </div>
 
   <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
   <ul>
@@ -151,7 +155,7 @@ credits = [
     'https://github.com/clojure/clojure/blob/master/epl-v10.html'
   ], [
     'CMake',
-    '2000-2016 Kitware, Inc.<br>&copy; 2000-2011 Insight Software Consortium',
+    '2000-2017 Kitware, Inc. and Contributors',
     'BSD',
     'https://cmake.org/licensing/'
   ], [
@@ -191,7 +195,7 @@ credits = [
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
     'D3.js',
-    '2010-2016 Michael Bostock',
+    '2010-2017 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
   ], [
@@ -366,7 +370,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Modernizr',
-    '2009-2016 The Modernizr team',
+    '2009-2017 The Modernizr team',
     'MIT',
     'https://modernizr.com/license/'
   ], [
@@ -409,6 +413,11 @@ credits = [
     '2008-2017 NumPy Developers',
     'NumPy',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
+  ], [
+    'OpenJDK',
+    '1993-2017, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
+    'GPLv2',
+    'http://openjdk.java.net/legal/gplv2+ce.html'
   ], [
     'OpenTSDB',
     '2010-2016 The OpenTSDB Authors',
@@ -501,7 +510,7 @@ credits = [
     'https://raw.githubusercontent.com/rethinkdb/docs/master/LICENSE'
   ], [
     'Ruby',
-    '1993-2016 Yukihiro Matsumoto',
+    '1993-2017 Yukihiro Matsumoto',
     'Ruby',
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [
@@ -591,7 +600,7 @@ credits = [
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
     'webpack',
-    '2012-2016 Tobias Koppers',
+    'JS Foundation and other contributors',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [

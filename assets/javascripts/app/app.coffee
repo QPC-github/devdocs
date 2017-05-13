@@ -54,7 +54,7 @@
           release: @config.release
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /Electron\.app/]
+          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /EvalError/]
           tags:
             mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
@@ -72,6 +72,7 @@
               $.extend(data.user ||= {}, app.settings.dump())
               data.user.docs = data.user.docs.split('/') if data.user.docs
               data.user.lastIDBTransaction = app.lastIDBTransaction if app.lastIDBTransaction
+              data.tags.scriptCount = document.scripts.length
             data
         .install()
       @previousErrorHandler = onerror
@@ -92,8 +93,6 @@
     for doc in @DOCS
       (if docs.indexOf(doc.slug) >= 0 then @docs else @disabledDocs).add(doc)
     @migrateDocs()
-    @docs.sort()
-    @disabledDocs.sort()
     @docs.load @start.bind(@), @onBootError.bind(@), readCache: true, writeCache: true
     delete @DOCS
     return
@@ -112,7 +111,7 @@
     return
 
   initDoc: (doc) ->
-    @entries.add type.toEntry() for type in doc.types.all()
+    doc.entries.add type.toEntry() for type in doc.types.all()
     @entries.add doc.entries.all()
     return
 

@@ -20,14 +20,14 @@ Unless you wish to contribute to the project, I recommend using the hosted versi
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 2.4.0, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
+DevDocs requires Ruby 2.4.1, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
 ```
 git clone https://github.com/Thibaut/devdocs.git && cd devdocs
 gem install bundler
 bundle install
-thor docs:download --default
-rackup
+bundle exec thor docs:download --default
+bundle exec rackup
 ```
 
 Finally, point your browser at [localhost:9292](http://localhost:9292) (the first request will take a few seconds to compile the assets). You're all set.
@@ -129,6 +129,8 @@ thor test:app       # Run "App" tests
 thor assets:compile # Compile assets (not required in development mode)
 thor assets:clean   # Clean old assets
 ```
+
+If multiple versions of Ruby are installed on your system, commands must be run through `bundle exec`.
 
 ## Contributing
 

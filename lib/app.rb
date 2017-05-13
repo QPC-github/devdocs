@@ -290,9 +290,12 @@ class App < Sinatra::Application
   end
 
   {
+    '/tips'               => '/help',
     '/css-data-types/'    => '/css-values-units/',
     '/css-at-rules/'      => '/?q=css%20%40',
     '/html/article'       => '/html/element/article',
+    'html-html5/'         => 'html-elements/',
+    'html-standard/'      => 'html-elements/',
     '/http-status-codes/' => '/http-status/'
   }.each do |path, url|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
@@ -302,7 +305,7 @@ class App < Sinatra::Application
     CODE
   end
 
-  get %r{\A/feed(?:\.atom)?\z} do
+  get %r{/feed(?:\.atom)?} do
     content_type 'application/atom+xml'
     settings.news_feed
   end
@@ -322,7 +325,7 @@ class App < Sinatra::Application
     'codeigniter~3.0' => 'codeigniter~3'
   }
 
-  get %r{\A/([\w~\.%]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
+  get %r{/([\w~\.%]+)(\-[\w\-]+)?(/.*)?} do |doc, type, rest|
     doc.sub! '%7E', '~'
 
     if DOC_REDIRECTS.key?(doc)
