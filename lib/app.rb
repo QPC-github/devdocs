@@ -21,27 +21,17 @@ class App < Sinatra::Application
     set :cdn_origin, ''
 
     set :assets_prefix, 'assets'
-    set :assets_path, -> { File.join(public_folder, assets_prefix) }
-    set :assets_manifest_path, -> { File.join(assets_path, 'manifest.json') }
+    set :assets_path, File.join(public_folder, assets_prefix)
+    set :assets_manifest_path, File.join(assets_path, 'manifest.json')
     set :assets_compile, %w(*.png docs.js docs.json application.js application.css application-dark.css)
 
     require 'yajl/json_gem'
     set :docs_prefix, 'docs'
-    set :docs_origin, -> { File.join('', docs_prefix) }
-    set :docs_path, -> { File.join(public_folder, docs_prefix) }
-    set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
+    set :docs_origin, File.join('', docs_prefix)
+    set :docs_path, File.join(public_folder, docs_prefix)
+    set :docs_manifest_path, File.join(docs_path, 'docs.json')
     set :default_docs, %w(css dom dom_events html http javascript)
-    set :docs, -> {
-      Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
-        doc['full_name'] = doc['name'].dup
-        doc['full_name'] << " #{doc['version']}" if doc['version']
-        doc['slug_without_version'] = doc['slug'].split('~').first
-        [doc['slug'], doc]
-      }]
-    }
-
-    set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
-    set :news, -> { JSON.parse(File.read(news_path)) }
+    set :news_path, File.join(root, assets_prefix, 'javascripts', 'news.json')
 
     set :csp, false
 
@@ -103,12 +93,39 @@ class App < Sinatra::Application
   end
 
   configure :test do
-    set :docs_manifest_path, -> { File.join(root, 'test', 'files', 'docs.json') }
+    set :docs_manifest_path, File.join(root, 'test', 'files', 'docs.json')
+  end
+
+  def self.parse_docs
+    Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
+      doc['full_name'] = doc['name'].dup
+      doc['full_name'] << " #{doc['version']}" if doc['version']
+      doc['slug_without_version'] = doc['slug'].split('~').first
+      [doc['slug'], doc]
+    }]
+  end
+
+  def self.parse_news
+    JSON.parse(File.read(news_path))
+  end
+
+  configure :development, :test do
+    set :docs, -> { parse_docs }
+    set :news, -> { parse_news }
+  end
+
+  configure :production do
+    set :docs, parse_docs
+    set :news, parse_news
   end
 
   helpers do
     include Sinatra::Cookies
     include Sprockets::Helpers
+
+    def memoized_cookies
+      @memoized_cookies ||= cookies.to_hash
+    end
 
     def canonical_origin
       "http://#{request.host_with_port}"
@@ -126,7 +143,7 @@ class App < Sinatra::Application
 
     def docs
       @docs ||= begin
-        cookie = cookies[:docs]
+        cookie = memoized_cookies['docs']
 
         if cookie.nil?
           settings.default_docs
@@ -168,6 +185,21 @@ class App < Sinatra::Application
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
 
+    def manifest_asset_urls
+      @@manifest_asset_urls ||= [
+        javascript_path('application', asset_host: false),
+        stylesheet_path('application'),
+        stylesheet_path('application-dark'),
+        image_path('icons.png'),
+        image_path('icons@2x.png'),
+        image_path('docs-1.png'),
+        image_path('docs-1@2x.png'),
+        image_path('docs-2.png'),
+        image_path('docs-2@2x.png'),
+        asset_path('docs.js')
+      ]
+    end
+
     def main_stylesheet_path
       stylesheet_paths[dark_theme? ? :dark : :default]
     end
@@ -177,22 +209,22 @@ class App < Sinatra::Application
     end
 
     def stylesheet_paths
-      @stylesheet_paths ||= {
+      @@stylesheet_paths ||= {
         default: stylesheet_path('application'),
         dark: stylesheet_path('application-dark')
       }
     end
 
     def app_size
-      @app_size ||= cookies[:size].nil? ? '20rem' : "#{cookies[:size]}px"
+      @app_size ||= memoized_cookies['size'].nil? ? '20rem' : "#{memoized_cookies['size']}px"
     end
 
     def app_layout
-      cookies[:layout]
+      memoized_cookies['layout']
     end
 
     def app_theme
-      @app_theme ||= cookies[:dark].nil? ? 'default' : 'dark'
+      @app_theme ||= memoized_cookies['dark'].nil? ? 'default' : 'dark'
     end
 
     def dark_theme?
@@ -205,7 +237,7 @@ class App < Sinatra::Application
     end
 
     def supports_js_redirection?
-      browser.modern? && !cookies.empty?
+      browser.modern? && !memoized_cookies.empty?
     end
   end
 

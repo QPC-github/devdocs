@@ -95,7 +95,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Ansible',
-    '2012-2016 Michael DeHaan<br>&copy; 2016 Red Hat, Inc.',
+    '2012-2017 Michael DeHaan<br>&copy; 2017 Red Hat, Inc.',
     'GPLv3',
     'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
   ], [
@@ -140,9 +140,9 @@ credits = [
     'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE.txt'
   ], [
     'Chai',
-    '2011-2015 Jake Luer',
+    '2016 Chai.js Assertion Library',
     'MIT',
-    'https://github.com/chaijs/chai/blob/master/README.md#license'
+    'https://raw.githubusercontent.com/chaijs/chai/master/LICENSE'
   ], [
     'Chef&trade;',
     'Chef Software, Inc.',
@@ -219,18 +219,23 @@ credits = [
     'GPLv2',
     'https://api.drupal.org/api/drupal/LICENSE.txt'
   ], [
-    'Ember.js',
-    '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
+    'Electron',
+    '2013-2017 GitHub Inc.',
     'MIT',
-    'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
+    'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [
     'Elixir',
     '2012-2017 Plataformatec',
     'Apache',
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
+    'Ember.js',
+    '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
+  ], [
     'Erlang',
-    '1999-2016 Ericsson AB',
+    '2010-2017 Ericsson AB',
     'Apache',
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
@@ -238,6 +243,11 @@ credits = [
     '2016 StrongLoop, IBM, and other expressjs.com contributors.',
     'CC BY-SA',
     'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
+  ], [
+    'Falcon',
+    '2012-2016 by Rackspace Hosting, Inc. and other contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
   ], [
     'Fish',
     '2005-2009 Axel Liljencrantz',
@@ -284,6 +294,16 @@ credits = [
     'MIT',
     'https://github.com/influxdata/docs.influxdata.com/blob/master/LICENSE'
   ], [
+    'Jasmine',
+    '2008-2017 Pivotal Labs',
+    'MIT',
+    'https://raw.githubusercontent.com/jasmine/jasmine/master/MIT.LICENSE'
+  ], [
+    'Jest',
+    '2014-present Facebook Inc.',
+    'BSD',
+    'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
+  ], [
     'jQuery',
     'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
     'MIT',
@@ -324,6 +344,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Liquid',
+    '2005, 2006 Tobias Luetke',
+    'MIT',
+    'https://raw.githubusercontent.com/Shopify/liquid/master/LICENSE'
+  ], [
     'Lo-Dash',
     '2012-2016 The Dojo Foundation',
     'MIT',
@@ -355,9 +380,9 @@ credits = [
     'https://raw.githubusercontent.com/matplotlib/matplotlib/master/LICENSE/LICENSE'
   ], [
     'Meteor',
-    '2011-2016 Meteor Development Group',
+    '2011-2017 Meteor Development Group, Inc.',
     'MIT',
-    'https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt'
+    'https://raw.githubusercontent.com/meteor/meteor/master/LICENSE'
   ], [
     'Minitest',
     'Ryan Davis, seattle.rb',
@@ -390,7 +415,7 @@ credits = [
     'http://nginx.org/LICENSE'
   ], [
     'nginx / Lua Module',
-    '2009-2016 Xiaozhe Wang (chaoslawful)<br>&copy; 2009-2016 Yichun "agentzh" Zhang (章亦春), CloudFlare Inc.',
+    '2009-2016 Xiaozhe Wang (chaoslawful)<br>&copy; 2009-2017 Yichun "agentzh" Zhang (章亦春), OpenResty Inc.',
     'BSD',
     'https://github.com/openresty/lua-nginx-module#copyright-and-license'
   ], [
@@ -440,7 +465,7 @@ credits = [
     'http://perldoc.perl.org/index-licence.html'
   ], [
     'Phalcon',
-    '2011-2016 Phalcon Framework Team',
+    '2011-2017 Phalcon Framework Team',
     'CC BY',
     'https://docs.phalconphp.com/en/latest/reference/license.html'
   ], [
