@@ -16,11 +16,11 @@ class app.views.ListFocus extends app.View
     super
     @focusOnNextFrame = $.framify(@focus, @)
 
-  focus: (el) ->
+  focus: (el, options = {}) ->
     if el and not el.classList.contains @constructor.activeClass
       @blur()
       el.classList.add @constructor.activeClass
-      $.trigger el, 'focus'
+      $.trigger el, 'focus' unless options.silent is true
     return
 
   blur: =>
@@ -40,7 +40,7 @@ class app.views.ListFocus extends app.View
         $.click(next)
         @findNext cursor
       else if next.tagName is 'DIV' # sub-list
-        if cursor.className.indexOf('open') >= 0
+        if cursor.className.indexOf(' open') >= 0
           @findFirst(next) or @findNext(next)
         else
           @findNext(next)
@@ -118,5 +118,5 @@ class app.views.ListFocus extends app.View
   onClick: (event) =>
     return if event.which isnt 1 or event.metaKey or event.ctrlKey
     if event.target.tagName is 'A'
-      @focus event.target
+      @focus event.target, silent: true
     return

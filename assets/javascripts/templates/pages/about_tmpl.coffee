@@ -100,7 +100,7 @@ credits = [
     'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
   ], [
     'Apache HTTP Server<br>Apache Pig',
-    '2016 The Apache Software Foundation<br>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.',
+    '2017 The Apache Software Foundation<br>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.',
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
@@ -210,7 +210,7 @@ credits = [
     'https://raw.githubusercontent.com/docker/docker/master/LICENSE'
   ], [
     'Dojo',
-    '2005-2015 The Dojo Foundation',
+    '2005-2017 JS Foundation',
     'BSD + AFL',
     'http://dojotoolkit.org/license.html'
   ], [
@@ -268,6 +268,11 @@ credits = [
     'Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
+  ], [
+    'Godot',
+    '2014-2017 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
   ], [
     'Grunt',
     'GruntJS Team',
@@ -355,7 +360,7 @@ credits = [
     'https://raw.githubusercontent.com/lodash/lodash/master/LICENSE.txt'
   ], [
     'Lua',
-    '1994–2015 Lua.org, PUC-Rio',
+    '1994–2017 Lua.org, PUC-Rio',
     'MIT',
     'http://www.lua.org/license.html'
   ], [
@@ -455,14 +460,14 @@ credits = [
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
     'pandas',
-    '2011-2012 Lambda Foundry, Inc. and PyData Development Team<br>&copy; 2008-2011 AQR Capital Management, LLC<br>&copy; 2008-2014 the pandas development team',
+    '2008-2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
     'BSD',
     'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
   ], [
     'Perl',
     '1993-2016 Larry Wall and others',
     'GPLv1',
-    'http://perldoc.perl.org/index-licence.html'
+    'https://perldoc.perl.org/index-licence.html'
   ], [
     'Phalcon',
     '2011-2017 Phalcon Framework Team',
@@ -485,7 +490,7 @@ credits = [
     'https://secure.php.net/manual/en/copyright.php'
   ], [
     'PHPUnit',
-    '2005-2016 Sebastian Bergmann',
+    '2005-2017 Sebastian Bergmann',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -520,7 +525,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Redux',
-    '2015-2016 Dan Abramov',
+    '2015-2017 Dan Abramov',
     'MIT',
     'https://raw.githubusercontent.com/reactjs/redux/master/LICENSE.md'
   ], [
@@ -585,7 +590,7 @@ credits = [
     'https://raw.githubusercontent.com/statsmodels/statsmodels/master/LICENSE.txt'
   ], [
     'Symfony',
-    '2004-2016 Fabien Potencier',
+    '2004-2017 Fabien Potencier',
     'MIT',
     'https://symfony.com/doc/current/contributing/code/license.html'
   ], [
@@ -602,7 +607,7 @@ credits = [
     'Twig',
     '2009-2017 The Twig Team',
     'BSD',
-    'http://twig.sensiolabs.org/license'
+    'https://twig.sensiolabs.org/license'
   ], [
     'TypeScript',
     'Microsoft and other contributors',

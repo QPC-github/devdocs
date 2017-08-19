@@ -118,7 +118,10 @@
   migrateDocs: ->
     for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
       needsSaving = true
-      doc = @disabledDocs.findBy('slug_without_version', slug)
+      doc = @disabledDocs.findBy('slug', 'webpack') if slug == 'webpack~2'
+      doc = @disabledDocs.findBy('slug', 'angular') if slug == 'angular~4_typescript'
+      doc = @disabledDocs.findBy('slug', 'angular~2') if slug == 'angular~2_typescript'
+      doc ||= @disabledDocs.findBy('slug_without_version', slug)
       if doc
         @disabledDocs.remove(doc)
         @docs.add(doc)
@@ -184,6 +187,7 @@
     return
 
   hideLoading: ->
+    document.body.classList.add '_overlay-scrollbars' if $.overlayScrollbarsEnabled()
     document.body.classList.remove '_booting'
     document.body.classList.remove '_loading'
     return

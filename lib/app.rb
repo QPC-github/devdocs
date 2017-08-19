@@ -99,7 +99,7 @@ class App < Sinatra::Application
   def self.parse_docs
     Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
       doc['full_name'] = doc['name'].dup
-      doc['full_name'] << " #{doc['version']}" if doc['version']
+      doc['full_name'] << " #{doc['version']}" if doc['version'] && !doc['version'].empty?
       doc['slug_without_version'] = doc['slug'].split('~').first
       [doc['slug'], doc]
     }]
@@ -322,13 +322,16 @@ class App < Sinatra::Application
   end
 
   {
-    '/tips'               => '/help',
-    '/css-data-types/'    => '/css-values-units/',
-    '/css-at-rules/'      => '/?q=css%20%40',
-    '/html/article'       => '/html/element/article',
-    'html-html5/'         => 'html-elements/',
-    'html-standard/'      => 'html-elements/',
-    '/http-status-codes/' => '/http-status/'
+    '/tips'                   => '/help',
+    '/css-data-types/'        => '/css-values-units/',
+    '/css-at-rules/'          => '/?q=css%20%40',
+    '/dom/window/setinterval' => '/dom/windoworworkerglobalscope/setinterval',
+    '/html/article'           => '/html/element/article',
+    '/html-html5/'            => 'html-elements/',
+    '/html-standard/'         => 'html-elements/',
+    '/http-status-codes/'     => '/http-status/',
+    '/ruby/bignum'            => '/ruby~2.3/bignum',
+    '/ruby/fixnum'            => '/ruby~2.3/fixnum',
   }.each do |path, url|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
       get '#{path}' do
@@ -349,12 +352,15 @@ class App < Sinatra::Application
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
     'xpath' => 'xslt_xpath',
-    'angular~2.0_typescript' => 'angular~2_typescript',
+    'angular~4_typescript' => 'angular',
+    'angular~2_typescript' => 'angular~2',
+    'angular~2.0_typescript' => 'angular~2',
     'angular~1.5' => 'angularjs~1.5',
     'angular~1.4' => 'angularjs~1.4',
     'angular~1.3' => 'angularjs~1.3',
     'angular~1.2' => 'angularjs~1.2',
-    'codeigniter~3.0' => 'codeigniter~3'
+    'codeigniter~3.0' => 'codeigniter~3',
+    'webpack~2' => 'webpack'
   }
 
   get %r{/([\w~\.%]+)(\-[\w\-]+)?(/.*)?} do |doc, type, rest|
@@ -373,12 +379,24 @@ class App < Sinatra::Application
         return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}", 301
       end
 
+      if rest.start_with?('/window/url.')
+        return redirect "/dom#{rest.sub('window/url.', 'url/')}", 301
+      end
+
       if rest.start_with?('/window.')
         return redirect "/dom#{rest.sub('window.', 'window/')}", 301
       end
 
       if rest.start_with?('/element.')
         return redirect "/dom#{rest.sub('element.', 'element/')}", 301
+      end
+
+      if rest.start_with?('/event.')
+        return redirect "/dom#{rest.sub('event.', 'event/')}", 301
+      end
+
+      if rest.start_with?('/document.')
+        return redirect "/dom#{rest.sub('document.', 'document/')}", 301
       end
     end
 

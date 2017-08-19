@@ -9,6 +9,7 @@ class app.views.Settings extends app.View
     backBtn: 'button[data-back]'
 
   @events:
+    change: 'onChange'
     submit: 'onSubmit'
     click: 'onClick'
 
@@ -22,7 +23,7 @@ class app.views.Settings extends app.View
   activate: ->
     if super
       @render()
-      app.el.classList.remove(SIDEBAR_HIDDEN_LAYOUT)
+      document.body.classList.remove(SIDEBAR_HIDDEN_LAYOUT)
       app.appCache?.on 'progress', @onAppCacheProgress
     return
 
@@ -30,7 +31,7 @@ class app.views.Settings extends app.View
     if super
       @resetClass()
       @docPicker.detach()
-      app.el.classList.add(SIDEBAR_HIDDEN_LAYOUT) if app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)
+      document.body.classList.add(SIDEBAR_HIDDEN_LAYOUT) if app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)
       app.appCache?.off 'progress', @onAppCacheProgress
     return
 
@@ -50,6 +51,10 @@ class app.views.Settings extends app.View
       disabledDocs.uninstall ->
         app.db.migrate()
         app.reload()
+    return
+
+  onChange: =>
+    @addClass('_dirty')
     return
 
   onEnter: =>

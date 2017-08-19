@@ -13,6 +13,7 @@
   @media #{$mediumScreen} { margin-left: $sidebarMediumWidth; }
 
   ._sidebar-hidden & { margin-left: 0; }
+  body:not(._native-scrollbars) & { -webkit-margin-end: -1px; }
 }
 
 ._content {
@@ -26,37 +27,19 @@
   -webkit-overflow-scrolling: touch;
   @extend %border-box;
 
-  -webkit-padding-start: .625rem;
-  -webkit-padding-end: .75rem;
-
-  @media (-moz-overlay-scrollbars) { padding-left: .625rem; }
-  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
-  @supports (-ms-overflow-style: none) { margin-left: 0; }
-
   ._sidebar-hidden &:before {
     content: '';
     display: block;
     margin-top: $headerHeight;
   }
 
-  &::-webkit-scrollbar { -webkit-appearance: none; }
-  &::-webkit-scrollbar:vertical { width: 14px; }
-  &::-webkit-scrollbar:horizontal { height: 14px }
-  &::-webkit-scrollbar-button { display: none; }
-  &::-webkit-scrollbar-track,
-  &::-webkit-scrollbar-corner { background: $contentBackground; }
-  &::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: $scrollbarColor;
-    background-clip: padding-box;
-    border: 5px solid $contentBackground;
-    border-radius: 10px;
+  ._overlay-scrollbars & { padding-left: .625rem; }
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
+  @supports (-ms-overflow-style: none) { margin-left: 0; }
 
-    &:hover,
-    &:active {
-      background-color: $scrollbarColorHover;
-      border-width: 4px;
-    }
+  body:not(._native-scrollbars) & {
+    -webkit-padding-start: .625rem;
+    -webkit-padding-end: .75rem;
   }
 }
 
@@ -161,18 +144,14 @@
 ._lined-heading,
 %lined-heading {
   display: flex;
-  justify-content: center;
   align-items: center;
 
   > * { margin: 0 .3125rem; }
 
   &:after {
     content: '';
-    display: inline-block;
-    vertical-align: middle;
     flex-grow: 1;
     height: 1px;
-    line-height: 0;
     margin-top: .25rem;
     margin-left: 1rem;
     background: $boxBorderLight;

@@ -1,4 +1,4 @@
-<div class="_app<%= " #{app_layout}" if app_layout %>" role="application">
+<div class="_app" role="application">
   <header class="_header" role="banner">
     <button type="button" aria-label="Toggle navigation" class="_header-btn" data-toggle-sidebar hidden>
       <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
@@ -30,7 +30,7 @@
     <div class="_list" role="navigation">
       <% unless @doc %>
       <% App.docs.each do |slug, doc| %>
-      <a href="/<%= slug %>/" class="_list-item"><span class="_list-arrow"></span><%= doc['full_name'] %></a>
+      <a href="/<%= slug %>/" class="_list-item"><%= doc['full_name'] %></a>
       <% end %>
       <% end %>
     </div>
@@ -40,24 +40,25 @@
   </div>
   <form class="_settings" id="settings">
     <div class="_header">
-      <button type="button" aria-label="Back" class="_settings-btn" data-back>
+      <button type="button" aria-label="Back" class="_settings-btn _settings-btn-back" data-back>
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg> Back
+      </button>
+      <button type="submit" class="_settings-btn _settings-btn-save">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg> Apply
       </button>
       <nav class="_settings-tabs">
         <button type="button" class="_settings-tab active" data-tab="doc-picker" hidden>Docs</button><button type="button" class="_settings-tab" data-tab="settings" hidden>Settings</button>
       </nav>
     </div>
     <div class="_sidebar" tabindex="-1"></div>
-    <div class="_sidebar-footer">
-      <button type="submit" class="_settings-btn">
-        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg> Apply
-      </button>
-    </div>
   </form>
 </div>
+<svg style="display:none">
+  <symbol id="dir-icon"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+</svg>
 <style data-size="<%= app_size %>" data-resizer>
   ._container { margin-left: <%= app_size %>; }
-  ._header, ._list, ._sidebar-footer { width: <%= app_size %>; }
+  ._header, ._list { width: <%= app_size %>; }
   ._list-hover.clone { min-width: <%= app_size %>; }
   ._notice, ._path, ._resizer { left: <%= app_size %>; }
 </style>
