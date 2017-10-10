@@ -1,6 +1,9 @@
 notif = (title, html) ->
   html = html.replace /<a /g, '<a class="_notif-link" '
-  """<h5 class="_notif-title">#{title}</h5>#{html}<button type="button" class="_notif-close" title="Close">Close</a>"""
+  """ <h5 class="_notif-title">#{title}</h5>
+      #{html}
+      <button type="button" class="_notif-close" title="Close"><svg><use xlink:href="#icon-close"/></svg>Close</a>
+  """
 
 textNotif = (title, message) ->
   notif title, """<p class="_notif-text">#{message}"""
@@ -26,6 +29,10 @@ app.templates.notifCookieBlocked = ->
 app.templates.notifInvalidLocation = ->
   textNotif """ DevDocs must be loaded from #{app.config.production_host} """,
             """ Otherwise things are likely to break. """
+
+app.templates.notifImportInvalid = ->
+  textNotif """ Oops, an error occured. """,
+            """ The file you selected is invalid. """
 
 app.templates.notifNews = (news) ->
   notif 'Changelog', """<div class="_notif-content _notif-news">#{app.templates.newsList(news, years: false)}</div>"""
@@ -55,8 +62,8 @@ app.templates.notifUpdates = (docs, disabledDocs) ->
 app.templates.notifShare = ->
   textNotif """ Hi there! """,
             """ Like DevDocs? Help us reach more developers by sharing the link with your friends on
-                <a href="http://out.devdocs.io/s/tw" target="_blank" rel="noopener">Twitter</a>, <a href="http://out.devdocs.io/s/fb" target="_blank" rel="noopener">Facebook</a>,
-                <a href="http://out.devdocs.io/s/re" target="_blank" rel="noopener">Reddit</a>, etc.<br>Thanks :) """
+                <a href="https://out.devdocs.io/s/tw" target="_blank" rel="noopener">Twitter</a>, <a href="https://out.devdocs.io/s/fb" target="_blank" rel="noopener">Facebook</a>,
+                <a href="https://out.devdocs.io/s/re" target="_blank" rel="noopener">Reddit</a>, etc.<br>Thanks :) """
 
 app.templates.notifUpdateDocs = ->
   textNotif """ Documentation updates available. """,

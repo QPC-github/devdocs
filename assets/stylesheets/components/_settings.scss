@@ -69,10 +69,6 @@
 ._setting-native-scrollbar { display: none; }
 @supports (-webkit-margin-end: 1px) { ._setting-native-scrollbar { display: block; } }
 
-._reset-link {
-  color: $textColorRed;
-}
-
 //
 // Settings buttons
 //
@@ -91,13 +87,10 @@
   @extend %border-box;
 
   > svg {
-    display: inline-block;
-    vertical-align: top;
     width: 1.5rem;
     height: 1.5rem;
     margin-right: .125rem;
-    fill: currentColor;
-    pointer-events: none;
+    @extend %svg-icon;
   }
 }
 

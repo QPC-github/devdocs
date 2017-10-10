@@ -11,9 +11,9 @@ app.templates.aboutPage = -> """
   </nav>
 
   <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
-  <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
+  <p>DevDocs combines multiple API documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
   <ul>
-    <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
+    <li>Created and maintained by <a href="https://thibaut.me">Thibaut Courouble</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
   </ul>
@@ -23,7 +23,7 @@ app.templates.aboutPage = -> """
     <li>Watch the repository on <a href="https://github.com/Thibaut/devdocs/subscription">GitHub</a>
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
-  <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
+  <p class="_note _note-green">If you like DevDocs, please spread the word and consider supporting my work on
     <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
@@ -60,11 +60,10 @@ app.templates.aboutPage = -> """
 
   <p><strong>Special thanks to:</strong>
   <ul>
-    <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
-    <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="http://out.devdocs.io/s/shopify">Shopify</a>, <a href="http://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="http://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
+    <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://sentry.io/">Sentry</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
+    <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://out.devdocs.io/s/shopify">Shopify</a>, <a href="https://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="https://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
     <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
-    <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
-    <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
+    <li><a href="https://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
   </ul>
 
   <div class="_table">
@@ -125,7 +124,7 @@ credits = [
     'https://raw.githubusercontent.com/bottlepy/bottle/master/LICENSE'
   ], [
     'Bower',
-    '2016 Bower contributors',
+    '2017 Bower contributors',
     'MIT',
     'https://github.com/bower/bower.github.io/blob/1057905c18d899106f91372e6cca7ef54a91d60f/package.json#L20'
   ], [
@@ -194,6 +193,11 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
+    'D',
+    '1999-2017 The D Language Foundation',
+    'Boost',
+    'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
+  ], [
     'D3.js',
     '2010-2017 Michael Bostock',
     'BSD',
@@ -205,9 +209,9 @@ credits = [
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
     'Docker',
-    '2013-2016 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
+    '2017 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
     'Apache',
-    'https://raw.githubusercontent.com/docker/docker/master/LICENSE'
+    'https://raw.githubusercontent.com/docker/docker.github.io/master/LICENSE'
   ], [
     'Dojo',
     '2005-2017 JS Foundation',
@@ -240,7 +244,7 @@ credits = [
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
     'Express',
-    '2016 StrongLoop, IBM, and other expressjs.com contributors.',
+    '2017 StrongLoop, IBM, and other expressjs.com contributors.',
     'CC BY-SA',
     'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
   ], [
@@ -424,13 +428,18 @@ credits = [
     'BSD',
     'https://github.com/openresty/lua-nginx-module#copyright-and-license'
   ], [
+    'Nim',
+    '2006-2017 Andreas Rumpf',
+    'MIT',
+    'https://github.com/nim-lang/Nim#license'
+  ], [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
   ], [
     'Nokogiri',
-    '2008-2016 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha, John Shahid',
+    '2008-2017 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha, John Shahid',
     'MIT',
     'https://raw.githubusercontent.com/sparklemotion/nokogiri/master/LICENSE.txt'
   ], [
@@ -565,7 +574,7 @@ credits = [
     'http://scikit-image.org/docs/dev/license.html'
   ], [
     'scikit-learn',
-    '2007-2016 The scikit-learn developers',
+    '2007-2017 The scikit-learn developers',
     'BSD',
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
@@ -628,6 +637,11 @@ credits = [
     '2013-2017 Evan You, Vue.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
+  ], [
+    'Vulkan',
+    '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',
+    'CC BY',
+    'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'webpack',
     'JS Foundation and other contributors',

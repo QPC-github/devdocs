@@ -74,13 +74,18 @@ class App < Sinatra::Application
     use Rack::Deflater
     use Rack::Static,
       root: 'public',
-      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp /mathml.css),
+      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /mathml.css /manifest.json),
       header_rules: [
-        [:all,           {'Cache-Control' => 'no-cache, max-age=0'}],
-        ['/assets',      {'Cache-Control' => 'public, max-age=604800'}],
-        ['/favicon.ico', {'Cache-Control' => 'public, max-age=86400'}],
-        ['/mathml.css',  {'Cache-Control' => 'public, max-age=604800'}],
-        ['/images',      {'Cache-Control' => 'public, max-age=86400'}] ]
+        [:all,              { 'Cache-Control' => 'no-cache, max-age=0'    }],
+        ['/assets',         { 'Cache-Control' => 'public, max-age=604800' }],
+        ['/docs',           { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/images',         { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/favicon.ico',    { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/robots.txt',     { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/opensearch.xml', { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/mathml.css',     { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/manifest.json',  { 'Cache-Control' => 'public, max-age=86400'  }]
+      ]
 
     sprockets.js_compressor = Uglifier.new output: { beautify: true, indent_level: 0 }
     sprockets.css_compressor = :sass
@@ -190,8 +195,6 @@ class App < Sinatra::Application
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
         stylesheet_path('application-dark'),
-        image_path('icons.png'),
-        image_path('icons@2x.png'),
         image_path('docs-1.png'),
         image_path('docs-1@2x.png'),
         image_path('docs-2.png'),
@@ -301,7 +304,7 @@ class App < Sinatra::Application
     '/s/jetbrains/python' => 'https://www.jetbrains.com/pycharm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/jetbrains/c'      => 'https://www.jetbrains.com/clion/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/jetbrains/web'    => 'https://www.jetbrains.com/webstorm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
-    '/s/code-school'      => 'http://www.codeschool.com/?utm_campaign=devdocs&utm_content=homepage&utm_source=devdocs&utm_medium=sponsorship',
+    '/s/code-school'      => 'https://www.codeschool.com/?utm_campaign=devdocs&utm_content=homepage&utm_source=devdocs&utm_medium=sponsorship',
     '/s/tw'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search%3A',
     '/s/fb'               => 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io',
     '/s/re'               => 'https://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search&resubmit=true'

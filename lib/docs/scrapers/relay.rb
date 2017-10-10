@@ -1,7 +1,7 @@
 module Docs
-  class Relay < React
-    self.type = 'react'
-    self.release = '1.1.0'
+  class Relay < UrlScraper
+    self.type = 'simple'
+    self.release = '1.4.1'
     self.base_url = 'https://facebook.github.io/relay/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
@@ -9,8 +9,9 @@ module Docs
       code: 'https://github.com/facebook/relay'
     }
 
-    options[:root_title] = 'Relay Documentation'
-    options[:only_patterns] = nil
+    html_filters.push 'relay/entries', 'relay/clean_html'
+
+    options[:container] = '.documentationContent'
     options[:skip] = %w(videos.html graphql-further-reading.html)
 
     options[:attribution] = <<-HTML
