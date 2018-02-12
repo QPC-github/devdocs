@@ -17,6 +17,8 @@ module Docs
         end
 
         css('.bd-example', '.responsive-utilities-test').each do |node|
+          next unless node.previous_element
+
           if node.previous_element['class'].try(:include?, 'bd-example')
             node.remove
           else
@@ -26,7 +28,7 @@ module Docs
             node.remove_attribute('data-example-id')
             prev = node.previous_element
             prev = prev.previous_element until prev['id']
-            node.inner_html = %(<a href="#{current_url}/##{prev['id']}">Open example on getbootstrap.com</a>)
+            node.inner_html = %(<a href="#{current_url}##{prev['id']}">Open example on getbootstrap.com</a>)
           end
         end
 

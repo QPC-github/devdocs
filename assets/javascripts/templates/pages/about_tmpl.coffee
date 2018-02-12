@@ -23,12 +23,10 @@ app.templates.aboutPage = -> """
     <li>Watch the repository on <a href="https://github.com/Thibaut/devdocs/subscription">GitHub</a>
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
-  <p class="_note _note-green">If you like DevDocs, please spread the word and consider supporting my work on
-    <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
-    <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
+    <strong>Copyright 2013&ndash;2018 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
     You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
     For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
@@ -89,7 +87,7 @@ app.templates.aboutPage = -> """
 
 credits = [
   [ 'Angular<br>Angular.js',
-    '2010-2017 Google, Inc.',
+    '2010-2018 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -108,13 +106,23 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
   ], [
+    'Babel',
+    '2018 Sebastian McKenzie',
+    'MIT',
+    'https://raw.githubusercontent.com/babel/website/master/LICENSE'
+  ], [
     'Backbone.js',
     '2010-2016 Jeremy Ashkenas, DocumentCloud',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
+    'Bluebird',
+    '2013-2017 Petka Antonov',
+    'MIT',
+    'https://raw.githubusercontent.com/petkaantonov/bluebird/master/LICENSE'
+  ], [
     'Bootstrap',
-    '2011-2017 Twitter, Inc.<br>2011-2017 The Bootstrap Authors',
+    '2011-2018 Twitter, Inc.<br>2011-2018 The Bootstrap Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -229,7 +237,7 @@ credits = [
     'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [
     'Elixir',
-    '2012-2017 Plataformatec',
+    '2012 Plataformatec',
     'Apache',
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
@@ -242,6 +250,11 @@ credits = [
     '2010-2017 Ericsson AB',
     'Apache',
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
+  ], [
+    'ESLint',
+    'JS Foundation and other contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/eslint/eslint/master/LICENSE'
   ], [
     'Express',
     '2017 StrongLoop, IBM, and other expressjs.com contributors.',
@@ -293,6 +306,11 @@ credits = [
     'MIT',
     'http://haxe.org/foundation/open-source.html'
   ], [
+    'Homebrew',
+    '2009-present Homebrew contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/Homebrew/brew/master/LICENSE.txt'
+  ], [
     'Immutable.js',
     '2014-2016 Facebook, Inc.',
     'BSD',
@@ -307,6 +325,11 @@ credits = [
     '2008-2017 Pivotal Labs',
     'MIT',
     'https://raw.githubusercontent.com/jasmine/jasmine/master/MIT.LICENSE'
+  ], [
+    'Jekyll',
+    '2008-2018 Tom Preston-Werner and Jekyll contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
     'Jest',
     '2014-present Facebook Inc.',
@@ -332,6 +355,11 @@ credits = [
     '2009-2016 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
+  ], [
+    'JSDoc',
+    '2011-2017 the contributors to the JSDoc 3 documentation project',
+    'CC BY-SA',
+    'https://raw.githubusercontent.com/jsdoc3/jsdoc3.github.com/master/LICENSE'
   ], [
     'Knockout.js',
     'Steven Sanderson, the Knockout.js team, and other contributors',
@@ -509,7 +537,7 @@ credits = [
     'https://www.postgresql.org/about/licence/'
   ], [
     'Python',
-    '2001-2017 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    '2001-2018 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [
@@ -524,9 +552,9 @@ credits = [
     'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
   ], [
     'React, React Native, Flow, Relay',
-    '2013-2017 Facebook Inc.',
+    '2013-present Facebook Inc.',
     'CC BY',
-    'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
+    'https://raw.githubusercontent.com/reactjs/reactjs.org/master/LICENSE-DOCS.md'
   ], [
     'Redis',
     '2009-2017 Salvatore Sanfilippo',
@@ -579,7 +607,7 @@ credits = [
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
     'Sinon',
-    '2010-2017 Christian Johansen',
+    '2010-2018 Christian Johansen',
     'BSD',
     'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
   ], [

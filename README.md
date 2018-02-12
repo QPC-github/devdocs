@@ -10,8 +10,6 @@ Keep track of development news:
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
-DevDocs is free and open source. If you like it, please consider supporting my work on [Gratipay](https://gratipay.com/devdocs/). Thanks!
-
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 
 ## Quick Start
@@ -140,7 +138,7 @@ DevDocs's own documentation is available on the [wiki](https://github.com/Thibau
 
 ## Copyright / License
 
-Copyright 2013-2017 Thibaut Courouble and [other contributors](https://github.com/Thibaut/devdocs/graphs/contributors)
+Copyright 2013-2018 Thibaut Courouble and [other contributors](https://github.com/Thibaut/devdocs/graphs/contributors)
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/Thibaut/devdocs/blob/master/LICENSE) files.
 
