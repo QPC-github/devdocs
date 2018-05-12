@@ -20,7 +20,7 @@ app.templates.helpPage = ->
     </ul>
   </nav>
 
-  <h1 class="_lined-heading">User Guide</h2>
+  <h1 class="_lined-heading">User Guide</h1>
 
   <h2 class="_block-heading" id="managing-documentations">Managing Documentations</h2>
   <p>
@@ -151,5 +151,5 @@ app.templates.helpPage = ->
       #{("<tr><td class=\"_code\">#{key}<td class=\"_code\">#{value}" for key, value of aliases_two).join('')}
     </table>
   </div>
-  <p>Feel free to suggest new aliases on <a href="https://github.com/Thibaut/devdocs/issues/new">GitHub</a>.
+  <p>Feel free to suggest new aliases on <a href="https://github.com/freeCodeCamp/devdocs/issues/new">GitHub</a>.
 """
