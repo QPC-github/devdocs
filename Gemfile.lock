@@ -1,5 +1,5 @@
 GEM
-  remote: https://ruby.taobao.org/
+  remote: https://gems.ruby-china.com/
   specs:
     activesupport (5.2.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -166,4 +166,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.1
+   1.17.1
