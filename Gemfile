@@ -7,11 +7,15 @@ gem 'thor'
 gem 'pry', '~> 0.11.0'
 gem 'activesupport', '~> 5.2', require: false
 gem 'yajl-ruby', require: false
+gem 'html-pipeline'
+gem 'typhoeus'
+gem 'nokogiri'
 
 group :app do
   gem 'rack'
   gem 'sinatra'
   gem 'sinatra-contrib'
+  gem 'rack-ssl-enforcer'
   gem 'thin'
   gem 'sprockets'
   gem 'sprockets-helpers'
@@ -31,14 +35,12 @@ group :development do
 end
 
 group :docs do
-  gem 'typhoeus'
-  gem 'nokogiri'
-  gem 'html-pipeline'
   gem 'image_optim'
   gem 'image_optim_pack', platforms: :ruby
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
+  gem 'net-sftp', '>= 2.1.3.rc2', require: false
 end
 
 group :test do

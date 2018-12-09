@@ -102,7 +102,7 @@ credits = [
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
     'Async',
-    '2010-2017 Caolan McMahon',
+    '2010-2018 Caolan McMahon',
     'MIT',
     'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
   ], [
@@ -115,6 +115,11 @@ credits = [
     '2010-2016 Jeremy Ashkenas, DocumentCloud',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
+  ], [
+    'Bash',
+    '2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.',
+    'GFDL',
+    'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Bluebird',
     '2013-2017 Petka Antonov',
@@ -162,7 +167,7 @@ credits = [
     'https://github.com/clojure/clojure/blob/master/epl-v10.html'
   ], [
     'CMake',
-    '2000-2017 Kitware, Inc. and Contributors',
+    '2000-2018 Kitware, Inc. and Contributors',
     'BSD',
     'https://cmake.org/licensing/'
   ], [
@@ -187,7 +192,7 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/coffeescript/master/LICENSE'
   ], [
     'Cordova',
-    '2012-2017 The Apache Software Foundation',
+    '2012-2018 The Apache Software Foundation',
     'Apache',
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
@@ -210,6 +215,11 @@ credits = [
     '2010-2018 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
+  ], [
+    'Dart',
+    '2012 the Dart project authors',
+    'CC BY-SA',
+    'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Django',
     'Django Software Foundation and individual contributors',
@@ -291,10 +301,20 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
   ], [
+    'Graphite',
+    '2008-2012 Chris Davis<br>&copy; 2011-2016 The Graphite Project',
+    'Apache',
+    'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
+  ], [
     'Grunt',
     'GruntJS Team',
     'MIT',
     'https://github.com/gruntjs/grunt-docs/blob/master/package.json#L10'
+  ], [
+    'Handlebars',
+    '2011-2017 Yehuda Katz',
+    'MIT',
+    'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
   ], [
     'Haskell',
     'The University of Glasgow',
@@ -302,7 +322,7 @@ credits = [
     'https://www.haskell.org/ghc/license'
   ], [
     'Haxe',
-    '2005-2016 Haxe Foundation',
+    '2005-2018 Haxe Foundation',
     'MIT',
     'https://haxe.org/foundation/open-source.html'
   ], [
@@ -352,7 +372,7 @@ credits = [
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
     'Julia',
-    '2009-2016 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    '2009-2018 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
@@ -366,6 +386,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
+    'Koa',
+    '2018 Koa contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
+  ], [
     'Kotlin',
     '2010-2018 JetBrains s.r.o.',
     'Apache',
@@ -375,6 +400,11 @@ credits = [
     'Taylor Otwell',
     'MIT',
     'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt'
+  ], [
+    'Leaflet',
+    '2010-2018 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
+    'BSD',
+    'https://raw.githubusercontent.com/Leaflet/Leaflet/master/LICENSE'
   ], [
     'Less',
     '2009-2016 The Core Less Team',
@@ -412,7 +442,7 @@ credits = [
     'https://daringfireball.net/projects/markdown/license'
   ], [
     'Matplotlib',
-    '2012-2017 Matplotlib Development Team. All rights reserved.',
+    '2012-2018 Matplotlib Development Team. All rights reserved.',
     'Custom',
     'https://raw.githubusercontent.com/matplotlib/matplotlib/master/LICENSE/LICENSE'
   ], [
@@ -536,6 +566,16 @@ credits = [
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
+    'Puppeteer',
+    '2017 Google Inc',
+    'Apache',
+    'https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/LICENSE'
+  ], [
+    'Pygame',
+    'Pygame Developpers',
+    'LGPLv2.1',
+    'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
+  ], [
     'Python',
     '2001-2018 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
@@ -546,6 +586,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/kriskowal/q/master/LICENSE'
   ], [
+    'Qt',
+    '2012-2018 The Qt Company Ltd',
+    'GFDL',
+    'https://doc.qt.io/qt-5/licensing.html'
+  ], [
     'Ramda',
     '2013-2016 Scott Sauyet and Michael Hurley',
     'MIT',
@@ -553,8 +598,8 @@ credits = [
   ], [
     'React, React Native, Flow, Relay',
     '2013-present Facebook Inc.',
-    'CC BY',
-    'https://raw.githubusercontent.com/reactjs/reactjs.org/master/LICENSE-DOCS.md'
+    'MIT',
+    'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
   ], [
     'Redis',
     '2009-2018 Salvatore Sanfilippo',
@@ -602,7 +647,7 @@ credits = [
     'http://scikit-image.org/docs/dev/license.html'
   ], [
     'scikit-learn',
-    '2007-2017 The scikit-learn developers',
+    '2007-2018 The scikit-learn developers',
     'BSD',
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
@@ -641,10 +686,15 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Terraform',
+    '2018 HashiCorp',
+    'MPL',
+    'https://raw.githubusercontent.com/hashicorp/terraform-website/master/LICENSE.md'
+  ], [
     'Twig',
-    '2009-2017 The Twig Team',
+    '2009-2018 The Twig Team',
     'BSD',
-    'https://twig.sensiolabs.org/license'
+    'https://twig.symfony.com/license'
   ], [
     'TypeScript',
     'Microsoft and other contributors',
@@ -652,7 +702,7 @@ credits = [
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
     'Underscore.js',
-    '2009-2017 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2018 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [

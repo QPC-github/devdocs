@@ -64,14 +64,10 @@ Another driving factor is performance and the fact that everything happens in th
 
 DevDocs being a developer tool, the browser requirements are high:
 
-1. On the desktop:
-  * Recent version of Chrome, Firefox, or Opera
-  * Safari 8+
-  * IE / Edge 10+
-2. On mobile:
-  * iOS 8+
-  * Android 4.1+
-  * Windows Phone 8+
+* Recent versions of Firefox, Chrome, or Opera
+* Safari 9.1+
+* Edge 16+
+* iOS 10+
 
 This allows the code to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a lot more fun!
 
@@ -133,7 +129,7 @@ If multiple versions of Ruby are installed on your system, commands must be run 
 
 ## Contributing
 
-Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/CONTRIBUTING.md).
+Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/.github/CONTRIBUTING.md).
 
 DevDocs's own documentation is available on the [wiki](https://github.com/freeCodeCamp/devdocs/wiki).
 
