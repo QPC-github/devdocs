@@ -35,10 +35,21 @@ class DocsCLI < Thor
     end
 
     output = names.join("\n")
-
+    
     require 'tty-pager'
     TTY::Pager.new.page(output)
   end
+
+  desc 'listdl', 'List download url for available documentations'
+  def listdl
+    names = Docs.all_versions;
+    names.map! do |doc|
+      "http://dl.devdocs.io/#{doc.path}.tar.gz"
+    end
+    output = names.sort!.join("\n")
+    puts output
+  end
+
 
   desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'
   option :version, type: :string
