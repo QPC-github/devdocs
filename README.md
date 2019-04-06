@@ -96,6 +96,7 @@ Modifications made to each document include:
 * replacing all external (not scraped) URLs with their fully qualified counterpart
 * replacing all internal (scraped) URLs with their unqualified and relative counterpart
 * adding content, such as a title and link to the original document
+* ensuring correct syntax highlighting using [Prism](http://prismjs.com/)
 
 These modifications are applied via a set of filters using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. Each scraper includes filters specific to itself, one of which is tasked with figuring out the pages' metadata.
 
@@ -169,6 +170,8 @@ DevDocs's own documentation is available on the [wiki](https://github.com/freeCo
 * [Desktop application](https://github.com/egoist/devdocs-desktop)
 * [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
 * [GNOME Application](https://github.com/hardpixel/devdocs-desktop) GTK3 application with search integrated in headerbar
+* [macOS Application](https://github.com/dteoh/devdocs-macos)
+* [Android Application](https://github.com/Merith-TK/devdocs_webapp_kotlin) is a fully working, advanced WebView with AppCache enabled
 
 ## Copyright / License
 
