@@ -4,7 +4,7 @@ module Docs
     self.type = 'sphinx'
     self.root_path = 'index.html'
     self.links = {
-      home: 'http://www.numpy.org/',
+      home: 'https://www.numpy.org/',
       code: 'https://github.com/numpy/numpy'
     }
 
@@ -21,12 +21,27 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2017 NumPy Developers<br>
-      Licensed under the NumPy License.
+      &copy; 2005&ndash;2019 NumPy Developers<br>
+      Licensed under the 3-clause BSD License.
     HTML
 
+    version '1.17' do
+      self.release = '1.17.0'
+      self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
+    end
+
+    version '1.16' do
+      self.release = '1.16.1'
+      self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
+    end
+
+    version '1.15' do
+      self.release = '1.15.4'
+      self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
+    end
+
     version '1.14' do
-      self.release = '1.14.2'
+      self.release = '1.14.5'
       self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
     end
 
@@ -48,6 +63,11 @@ module Docs
     version '1.10' do
       self.release = '1.10.4'
       self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
+    end
+
+    def get_latest_version(opts)
+      html = fetch('https://docs.scipy.org/doc/', opts)
+      html.scan(/Numpy ([0-9.]+) Reference Guide/)[0][0]
     end
   end
 end

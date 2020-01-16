@@ -5,11 +5,14 @@ class app.Settings
     'manualUpdate'
     'fastScroll'
     'arrowScroll'
+    'analyticsConsent'
     'docs'
-    'dark'
+    'dark' # legacy
+    'theme'
     'layout'
     'size'
     'tips'
+    'autoInstall'
   ]
 
   INTERNAL_KEYS = [
@@ -19,6 +22,8 @@ class app.Settings
     'news'
   ]
 
+  LAYOUTS: ['_max-width', '_sidebar-hidden', '_native-scrollbars']
+
   @defaults:
     count: 0
     hideDisabled: false
@@ -26,18 +31,30 @@ class app.Settings
     news: 0
     manualUpdate: false
     schema: 1
+    analyticsConsent: false
+    theme: 'auto'
 
   constructor: ->
-    @store = new CookieStore
+    @store = new CookiesStore
     @cache = {}
+    @autoSupported = window.matchMedia('(prefers-color-scheme)').media != 'not all'
+    if @autoSupported
+      @darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      @darkModeQuery.addListener => @setTheme(@get('theme'))
+
 
   get: (key) ->
     return @cache[key] if @cache.hasOwnProperty(key)
     @cache[key] = @store.get(key) ? @constructor.defaults[key]
+    if key == 'theme' and @cache[key] == 'auto' and !@darkModeQuery
+      @cache[key] = 'default'
+    else
+      @cache[key]
 
   set: (key, value) ->
     @store.set(key, value)
     delete @cache[key]
+    @setTheme(value) if key == 'theme'
     return
 
   del: (key) ->
@@ -63,6 +80,8 @@ class app.Settings
     return
 
   setLayout: (name, enable) ->
+    @toggleLayout(name, enable)
+
     layout = (@store.get('layout') || '').split(' ')
     $.arrayDelete(layout, '')
 
@@ -103,4 +122,38 @@ class app.Settings
   reset: ->
     @store.reset()
     @cache = {}
+    return
+
+  initLayout: ->
+    if @get('dark') is 1
+      @set('theme', 'dark')
+      @del 'dark'
+    @setTheme(@get('theme'))
+    @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
+    @initSidebarWidth()
+    return
+
+  setTheme: (theme) ->
+    if theme is 'auto'
+      theme = if @darkModeQuery.matches then 'dark' else 'default'
+    classList = document.documentElement.classList
+    classList.remove('_theme-default', '_theme-dark')
+    classList.add('_theme-' + theme)
+    @updateColorMeta()
+    return
+
+  updateColorMeta: ->
+    color = getComputedStyle(document.documentElement).getPropertyValue('--headerBackground').trim()
+    $('meta[name=theme-color]').setAttribute('content', color)
+    return
+
+  toggleLayout: (layout, enable) ->
+    classList = document.body.classList
+    classList.toggle(layout, enable) unless app.router?.isSettings
+    classList.toggle('_overlay-scrollbars', $.overlayScrollbarsEnabled())
+    return
+
+  initSidebarWidth: ->
+    size = @get('size')
+    document.documentElement.style.setProperty('--sidebarWidth', size + 'px') if size
     return

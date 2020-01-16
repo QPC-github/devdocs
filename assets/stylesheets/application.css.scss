@@ -1,7 +1,6 @@
-//= depend_on docs-1.png
-//= depend_on docs-1@2x.png
-//= depend_on docs-2.png
-//= depend_on docs-2@2x.png
+//= depend_on sprites/docs.png
+//= depend_on sprites/docs@2x.png
+//= depend_on sprites/docs.json
 
 /*!
  * Copyright 2013-2019 Thibaut Courouble and other contributors
@@ -30,7 +29,8 @@
         'components/path',
         'components/notice',
         'components/prism',
-        'components/mobile';
+        'components/mobile',
+        'components/environment';
 
 @import 'pages/simple',
         'pages/angular',
@@ -46,6 +46,7 @@
         'pages/coffeescript',
         'pages/cordova',
         'pages/crystal',
+        'pages/cypress',
         'pages/d',
         'pages/d3',
         'pages/dart',
@@ -59,6 +60,7 @@
         'pages/github',
         'pages/go',
         'pages/graphite',
+        'pages/gnuplot',
         'pages/haskell',
         'pages/jekyll',
         'pages/jquery',
@@ -69,13 +71,16 @@
         'pages/liquid',
         'pages/love',
         'pages/lua',
+        'pages/mariadb',
         'pages/mdn',
         'pages/meteor',
+        'pages/mkdocs',
         'pages/modernizr',
         'pages/moment',
         'pages/nginx',
         'pages/node',
         'pages/npm',
+        'pages/octave',
         'pages/openjdk',
         'pages/perl',
         'pages/phalcon',
@@ -89,11 +94,14 @@
         'pages/ramda',
         'pages/rdoc',
         'pages/react_native',
+        'pages/reactivex',
         'pages/redis',
         'pages/rethinkdb',
         'pages/rfc',
         'pages/rubydoc',
         'pages/rust',
+        'pages/rxjs',
+        'pages/scala',
         'pages/sinon',
         'pages/socketio',
         'pages/sphinx',
@@ -106,5 +114,6 @@
         'pages/underscore',
         'pages/vue',
         'pages/webpack',
+        'pages/wordpress',
         'pages/yard',
         'pages/yii';

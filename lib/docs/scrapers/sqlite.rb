@@ -2,7 +2,7 @@ module Docs
   class Sqlite < FileScraper
     self.name = 'SQLite'
     self.type = 'sqlite'
-    self.release = '3.25.2'
+    self.release = '3.30.1'
     self.base_url = 'https://sqlite.org/'
     self.root_path = 'docs.html'
     self.initial_paths = %w(keyword_index.html)
@@ -37,9 +37,15 @@ module Docs
       requirements.html
       session/intro.html
       syntax.html
+      src/doc/trunk/doc/lemon.html
     )
 
     options[:attribution] = 'SQLite is in the Public Domain.'
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://sqlite.org/chronology.html', opts)
+      doc.at_css('#chrontab > tbody > tr > td:last-child > a').content
+    end
 
     private
 
