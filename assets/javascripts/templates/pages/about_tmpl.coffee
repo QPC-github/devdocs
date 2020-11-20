@@ -22,7 +22,7 @@ app.templates.aboutPage = -> """
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
-    <strong>Copyright 2013&ndash;2019 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
+    <strong>Copyright 2013&ndash;2020 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
     You may obtain a copy of the source code at <a href="https://github.com/freeCodeCamp/devdocs">github.com/freeCodeCamp/devdocs</a>.<br>
     For more information, see the <a href="https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
@@ -82,8 +82,13 @@ app.templates.aboutPage = -> """
 """
 
 credits = [
-  [ 'Angular<br>Angular.js',
-    '2010-2019 Google, Inc.',
+  [ 'Angular.js',
+    '2010-2020 Google, Inc.',
+    'CC BY 3.0',
+    'https://creativecommons.org/licenses/by/3.0/'
+  ], [
+    'Angular',
+    '2010-2020 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -118,12 +123,12 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Bluebird',
-    '2013-2017 Petka Antonov',
+    '2013-2018 Petka Antonov',
     'MIT',
     'https://raw.githubusercontent.com/petkaantonov/bluebird/master/LICENSE'
   ], [
     'Bootstrap',
-    '2011-2019 Twitter, Inc.<br>2011-2019 The Bootstrap Authors',
+    '2011-2020 Twitter, Inc.<br>2011-2020 The Bootstrap Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -178,7 +183,7 @@ credits = [
     'https://raw.githubusercontent.com/Codeception/CodeceptJS/master/LICENSE'
   ], [
     'CodeIgniter',
-    '2014-2018 British Columbia Institute of Technology',
+    '2014-2020 British Columbia Institute of Technology',
     'MIT',
     'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
   ], [
@@ -198,12 +203,12 @@ credits = [
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
     'CSS<br>DOM<br>HTTP<br>HTML<br>JavaScript<br>SVG<br>XPath',
-    '2005-2017 Mozilla Developer Network and individual contributors',
+    '2005-2020 Mozilla and individual contributors',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'Crystal',
-    '2012-2019 Manas Technology Solutions',
+    '2012-2020 Manas Technology Solutions',
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
@@ -253,7 +258,7 @@ credits = [
     'https://api.drupal.org/api/drupal/LICENSE.txt'
   ], [
     'Electron',
-    '2013-2018 GitHub Inc.',
+    'GitHub Inc.',
     'MIT',
     'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [
@@ -261,6 +266,11 @@ credits = [
     '2012 Plataformatec',
     'Apache',
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
+  ], [
+    'Elisp',
+    '1990-1996, 1998-2019 Free Software Foundation, Inc.',
+    'GPLv3',
+    'https://www.gnu.org/licenses/gpl-3.0.html'
   ], [
     'Ember.js',
     '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
@@ -288,7 +298,7 @@ credits = [
     'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
   ], [
     'Falcon',
-    '2012-2016 by Rackspace Hosting, Inc. and other contributors',
+    '2019 by Falcon contributors',
     'Apache',
     'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
   ], [
@@ -323,7 +333,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Godot',
-    '2014-2019 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
+    '2014-2020 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
     'MIT',
     'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
   ], [
@@ -373,12 +383,12 @@ credits = [
     'https://raw.githubusercontent.com/jasmine/jasmine/master/MIT.LICENSE'
   ], [
     'Jekyll',
-    '2008-2018 Tom Preston-Werner and Jekyll contributors',
+    '2020 Jekyll Core Team and contributors',
     'MIT',
     'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
     'Jest',
-    'Facebook, Inc. and its affiliates.',
+    '2020 Facebook, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [
@@ -418,7 +428,7 @@ credits = [
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
     'Kotlin',
-    '2010-2019 JetBrains s.r.o.',
+    '2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors',
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
   ], [
@@ -433,7 +443,7 @@ credits = [
     'https://raw.githubusercontent.com/Leaflet/Leaflet/master/LICENSE'
   ], [
     'Less',
-    '2009-2016 The Core Less Team',
+    '2009-2020 The Core Less Team',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -448,7 +458,7 @@ credits = [
     'https://raw.githubusercontent.com/lodash/lodash/master/LICENSE'
   ], [
     'Lua',
-    '1994–2017 Lua.org, PUC-Rio',
+    '1994–2020 Lua.org, PUC-Rio',
     'MIT',
     'http://www.lua.org/license.html'
   ], [
@@ -493,7 +503,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Modernizr',
-    '2009-2017 The Modernizr team',
+    '2009-2020 The Modernizr team',
     'MIT',
     'https://modernizr.com/license/'
   ], [
@@ -508,7 +518,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2019 Igor Sysoev<br>&copy; 2011-2019 Nginx, Inc.',
+    '2002-2020 Igor Sysoev<br>&copy; 2011-2020 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
@@ -548,7 +558,7 @@ credits = [
     'https://octave.org/doc/interpreter/'
   ], [
     'OpenJDK',
-    '1993-2017, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
+    '1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
     'GPLv2',
     'http://openjdk.java.net/legal/gplv2+ce.html'
   ], [
@@ -603,7 +613,7 @@ credits = [
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
     'PostgreSQL',
-    '1996-2019 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2020 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
@@ -621,6 +631,11 @@ credits = [
     '2001-2020 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
+  ], [
+    'PyTorch',
+    '2019 Torch Contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/pytorch/pytorch/master/LICENSE'
   ], [
     'Q',
     '2009-2017 Kristopher Michael Kowal',
@@ -748,7 +763,7 @@ credits = [
     'http://tcl.tk/software/tcltk/license.html'
   ], [
     'TensorFlow',
-    '2018 The TensorFlow Authors',
+    '2019 The TensorFlow Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -768,7 +783,7 @@ credits = [
     'https://twig.symfony.com/license'
   ], [
     'TypeScript',
-    '2012-2019 Microsoft',
+    '2012-2020 Microsoft',
     'Apache',
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
@@ -821,5 +836,10 @@ credits = [
     '2008-2017 by Yii Software LLC',
     'BSD',
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
+  ], [
+    'Spring Boot',
+    '2002-2020 Pivotal, Inc. All Rights Reserved.',
+    'Apache License 2.0',
+    'https://raw.githubusercontent.com/spring-projects/spring-boot/master/LICENSE.txt'
   ]
 ]

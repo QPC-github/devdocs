@@ -25,6 +25,12 @@ and put it in `/path/to/devdocs/docs/`
 Go to https://docs.djangoproject.com/, select the version from the
 bubble in the bottom-right corner, then download the HTML version from the sidebar.
 
+```sh
+mkdir --parent docs/django\~$VERSION/; \
+curl https://media.djangoproject.com/docs/django-docs-$VERSION-en.zip | \
+bsdtar --extract --file - --directory=docs/django\~$VERSION/
+```
+
 ## Erlang
 
 Go to https://www.erlang.org/downloads and download the HTML documentation file.
@@ -32,7 +38,28 @@ Go to https://www.erlang.org/downloads and download the HTML documentation file.
 ## Gnu
 
 ### GCC
+Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
+
+```sh
+# GCC manual
+mkdir docs/gcc~${VERSION}; \
+curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gcc-html.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}
+
+# GCC CPP manual
+mkdir docs/gcc~${VERSION}_cpp; \
+curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/cpp-html.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}_cpp
+```
+
 ### GNU Fortran
+Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of Fortran manual or run the following commands to download the tarball:
+
+```sh
+mkdir docs/gnu_fortran~$VERSION; \
+curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
+```
 
 ## Gnuplot
 
@@ -76,6 +103,24 @@ $GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
 ## NumPy
 
 ## OpenJDK
+
+https://packages.debian.org/sid/openjdk-11-doc
+
+```sh
+mkdir docs/openjdk~11
+curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-11/openjdk-11-doc_11.0.9.1+1-1_all.deb
+bsdtar --extract --to-stdout --file openjdk-11-doc_11.0.9.1+1-1_all.deb data.tar.xz | \
+bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~11/ ./usr/share/doc/openjdk-11-jre-headless/api/
+```
+
+https://packages.debian.org/sid/openjdk-8-doc
+
+```sh
+mkdir docs/openjdk~8
+curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-doc_8u272-b10-1_all.deb
+bsdtar --extract --to-stdout --file openjdk-8-doc_8u272-b10-1_all.deb data.tar.xz | \
+bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/ ./usr/share/doc/openjdk-8-jre-headless/api/
+```
 
 ## Perl
 
