@@ -17,7 +17,7 @@ group :app do
   gem 'sinatra'
   gem 'sinatra-contrib'
   gem 'rack-ssl-enforcer'
-  gem 'thin'
+  gem 'thin', '~> 1.8.0'
   gem 'sprockets'
   gem 'sprockets-helpers'
   gem 'erubi'
