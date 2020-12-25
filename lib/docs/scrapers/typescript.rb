@@ -1,34 +1,37 @@
 module Docs
   class Typescript < UrlScraper
+    include MultipleBaseUrls
+
     self.name = 'TypeScript'
     self.type = 'simple'
-    self.release = '4.0.5'
-    self.base_url = 'https://www.typescriptlang.org/docs/handbook'
-    self.root_path = 'index.html'
+    self.release = '4.1.3'
+    self.base_urls = [
+      'https://www.typescriptlang.org/docs/handbook/',
+      'https://www.typescriptlang.org/'
+    ]
+
+    def initial_urls
+      [ 'https://www.typescriptlang.org/docs/handbook/',
+        'https://www.typescriptlang.org/tsconfig' ]
+    end
+
     self.links = {
       home: 'https://www.typescriptlang.org',
       code: 'https://github.com/Microsoft/TypeScript'
     }
 
-    html_filters.push 'typescript/entries', 'typescript/clean_html'
+    html_filters.push 'typescript/entries', 'typescript/clean_html', 'title'
+
+    options[:container] = 'main'
 
     options[:skip] = [
-      '/react-&-webpack.html',
-      '/asp-net-core.html',
-      '/gulp.html',
-      '/dom-manipulation.html',
-      '/migrating-from-javascript.html',
-      '/babel-with-typescript.html',
-      '/intro.html'
+      'react-&-webpack.html'
     ]
 
     options[:skip_patterns] = [
       /2/,
-      /typescript-/,
       /release-notes/,
-      /introduction/,
-      /tutorials/,
-      /intro.html/
+      /play\//
     ]
 
     options[:attribution] = <<-HTML
@@ -39,5 +42,6 @@ module Docs
     def get_latest_version(opts)
       get_latest_github_release('Microsoft', 'TypeScript', opts)
     end
+
   end
 end

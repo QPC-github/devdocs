@@ -20,6 +20,12 @@ Click the “API docs” link under the “Stable channel” header on
 https://www.dartlang.org/tools/sdk/archive. Rename the expanded ZIP to `dart~2`
 and put it in `/path/to/devdocs/docs/`
 
+Or run the following commands in your terminal:
+
+```sh
+curl https://storage.googleapis.com/dart-archive/channels/stable/release/$RELEASE/api-docs/dartdocs-gen-api-zip > dartApi.zip; \
+unzip dartApi.zip; mv gen-dartdocs docs/dart~$VERSION
+```
 ## Django
 
 Go to https://docs.djangoproject.com/, select the version from the
@@ -121,8 +127,6 @@ curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-
 bsdtar --extract --to-stdout --file openjdk-8-doc_8u272-b10-1_all.deb data.tar.xz | \
 bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/ ./usr/share/doc/openjdk-8-jre-headless/api/
 ```
-
-## Perl
 
 ## PHP
 

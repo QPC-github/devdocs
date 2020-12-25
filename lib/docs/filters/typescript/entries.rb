@@ -3,8 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
 
       def get_name
-        return 'Typescript' if current_url == root_url
-        return at_css('h2').content
+        at_css('h1') ? at_css('h1').content : at_css('h2').content
       end
 
       def get_type
@@ -12,13 +11,19 @@ module Docs
       end
 
       def additional_entries
-        entries = []
+        base_url.path == '/' ? tsconfig_entries : handbook_entries
+      end
 
-        css('h2').each do |node|
-            entries << [node.content, node['id'], name]
+      def tsconfig_entries
+        css('h3 > code').each_with_object [] do |node, entries|
+          entries << [node.content, node.parent['id']]
         end
+      end
 
-        entries
+      def handbook_entries
+        css('h2').each_with_object [] do |node, entries|
+          entries << [node.content, node['id']]
+        end
       end
 
     end

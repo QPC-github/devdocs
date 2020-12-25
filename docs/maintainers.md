@@ -6,7 +6,7 @@ This document is intended for [DevDocs maintainers](#list-of-maintainers).
 
 - PRs should be approved by at least one maintainer before being merged.
 
-- PRs that add or update documentations should always be merged locally, and the app deployed, before the merge is pushed to GitHub.
+- PRs that add or update documentations should always be built and tested locally, and the doc files uploaded by the `thor docs:upload` command, before the PR is merged on GitHub.
 
   This workflow is required because there is a dependency between the local and production environments. The `thor docs:download` command downloads documentations from production files uploaded by the `thor docs:upload` command. If a PR adding a new documentation is merged and pushed to GitHub before the files have been uploaded to production, the `thor docs:download` will fail for the new documentation and the docker container will not build properly until the new documentation is deployed to production.
 
@@ -88,11 +88,20 @@ If any issue arises, run `heroku rollback` to rollback to the previous version o
 
 If this is your first deploy, make sure another maintainer is around to assist. 
 
-## List of maintainers
+## List of maintainers in alphabetical order
 
-- [Jed Fox](https://github.com/j-f1)
+The following people (used to) maintain DevDocs:
+
 - [Ahmad Abdolsaheb](https://github.com/ahmadabdolsaheb)
+- [Jasper van Merle](https://github.com/jmerle)
+- [Jed Fox](https://github.com/j-f1)
 - [Mrugesh Mohapatra](https://github.com/raisedadead)
+- [Oliver Eyton-Williams](https://github.com/ojeytonwilliams)
+- [Simon Legner](https://github.com/simon04)
 - [Thibaut Courouble](https://github.com/thibaut)
 
+To reach out, please ping [@freeCodeCamp/devdocs](https://github.com/orgs/freeCodeCamp/teams/devdocs).
+
 Interested in helping maintain DevDocs? Come talk to us on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) :)
+
+In addition, we appreciate the major contributions made by [these great people](https://github.com/freeCodeCamp/devdocs/graphs/contributors).

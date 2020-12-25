@@ -27,6 +27,18 @@ module Docs
           end
         end
 
+        # Fix notable trait sections
+        css('.method, .rust.trait').each do |node|
+          traitSection = node.at_css('.notable-traits')
+
+          if traitSection
+            traitSectionContent = traitSection.css('.notable-traits-tooltiptext')
+            traitSection.css('.notable-traits-tooltip').remove
+            traitSection.add_child(traitSectionContent)
+            node.after(traitSection)
+          end
+        end
+
         css('.rusttest', '.test-arrow', 'hr').remove
 
         css('.docblock.attributes').each do |node|
@@ -71,19 +83,6 @@ module Docs
         doc.first_element_child.name = 'h1' if doc.first_element_child.name = 'h2'
         at_css('h1').content = 'Rust Documentation' if root_page?
 
-        css('.table-display').each do |node|
-          node.css('td').each do |td|
-            node.before(td.children)
-          end
-          node.remove
-        end
-
-        css('.important-traits').to_a.each_with_index do |node, index|
-          content = node.at_css('.content.hidden .content')
-          node.at_css('.content.hidden').replace(content) if content
-          node.parent.after(node) if node.parent.name.in?(%(h2 h3 h4))
-        end
-
         css('code.content').each do |node|
           node.name = 'pre'
           node.css('.fmt-newline').each do |line|
@@ -96,6 +95,10 @@ module Docs
         css('.since + .srclink').each do |node|
           node.previous_element.before(node)
         end
+
+        css('.sidebar').remove
+
+        css('.collapse-toggle').remove
 
         doc
       end

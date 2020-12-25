@@ -188,7 +188,7 @@ credits = [
     'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
   ], [
     'CoffeeScript',
-    '2009-2018 Jeremy Ashkenas',
+    '2009-2020 Jeremy Ashkenas',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/coffeescript/master/LICENSE'
   ], [
@@ -218,7 +218,7 @@ credits = [
     'https://raw.githubusercontent.com/cypress-io/cypress-documentation/develop/LICENSE.md'
   ], [
     'D',
-    '1999-2019 The D Language Foundation',
+    '1999-2020 The D Language Foundation',
     'Boost',
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
@@ -307,6 +307,11 @@ credits = [
     'GPLv2',
     'https://fishshell.com/docs/current/license.html'
   ], [
+    'Flask',
+    '2007-2020 Pallets',
+    'BSD',
+    'https://github.com/pallets/flask/blob/master/LICENSE.rst'
+  ], [
     'GCC<br>GNU Fortran',
     'Free Software Foundation',
     'GFDL',
@@ -342,15 +347,30 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
   ], [
+    'Groovy',
+    '2003-2020 The Apache Software Foundation',
+    'Apache',
+    'https://github.com/apache/groovy-website/blob/asf-site/LICENSE'
+  ], [
     'Grunt',
     'GruntJS Team',
     'MIT',
     'https://github.com/gruntjs/grunt-docs/blob/master/package.json#L10'
   ], [
+    'GTK',
+    'The GNOME Project',
+    'LGPLv2.1+',
+    'https://gitlab.gnome.org/GNOME/gtk/-/blob/master/COPYING'
+  ], [
     'Handlebars',
     '2011-2017 Yehuda Katz',
     'MIT',
     'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
+  ], [
+    'HAProxy',
+    '2020 Willy Tarreau, HAProxy contributors',
+    'GPLv2',
+    'https://raw.githubusercontent.com/haproxy/haproxy/master/LICENSE'
   ], [
     'Haskell',
     'The University of Glasgow',
@@ -378,7 +398,7 @@ credits = [
     'https://github.com/influxdata/docs.influxdata.com/blob/master/LICENSE'
   ], [
     'Jasmine',
-    '2008-2017 Pivotal Labs',
+    '2008-2019 Pivotal Labs',
     'MIT',
     'https://raw.githubusercontent.com/jasmine/jasmine/master/MIT.LICENSE'
   ], [
@@ -391,6 +411,11 @@ credits = [
     '2020 Facebook, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
+  ], [
+    'Jinja',
+    '2007-2020 Pallets',
+    'BSD',
+    'https://github.com/pallets/jinja/blob/master/LICENSE.rst'
   ], [
     'jQuery',
     'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
@@ -408,7 +433,7 @@ credits = [
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
     'Julia',
-    '2009-2019 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    '2009-2020 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
@@ -423,7 +448,7 @@ credits = [
     'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
     'Koa',
-    '2018 Koa contributors',
+    '2020 Koa contributors',
     'MIT',
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
@@ -463,7 +488,7 @@ credits = [
     'http://www.lua.org/license.html'
   ], [
     'L&Ouml;VE',
-    '2006-2016 L&Ouml;VE Development Team',
+    '2006-2020 L&Ouml;VE Development Team',
     'GFDL',
     'http://www.gnu.org/copyleft/fdl.html'
   ], [
@@ -528,7 +553,7 @@ credits = [
     'https://github.com/openresty/lua-nginx-module#copyright-and-license'
   ], [
     'Nim',
-    '2006-2017 Andreas Rumpf',
+    '2006-2020 Andreas Rumpf',
     'MIT',
     'https://github.com/nim-lang/Nim#license'
   ], [
@@ -568,17 +593,17 @@ credits = [
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
     'Padrino',
-    '2010-2019 Padrino',
+    '2010-2020 Padrino',
     'MIT',
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
     'pandas',
-    '2008-2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
+    '2008-2020, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
     'BSD',
     'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
   ], [
     'Perl',
-    '1993-2016 Larry Wall and others',
+    '1993-2020 Larry Wall and others',
     'GPLv1',
     'https://perldoc.perl.org/index-licence.html'
   ], [
@@ -608,7 +633,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Pony',
-    '2016-2018, The Pony Developers & 2014-2015, Causality Ltd.',
+    '2016-2020, The Pony Developers & 2014-2015, Causality Ltd.',
     'BSD',
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
@@ -668,7 +693,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Redux',
-    '2015-2017 Dan Abramov',
+    '2015-2020 Dan Abramov',
     'MIT',
     'https://raw.githubusercontent.com/reactjs/redux/master/LICENSE.md'
   ], [
@@ -708,7 +733,7 @@ credits = [
     'https://raw.githubusercontent.com/saltstack/salt/develop/LICENSE'
   ], [
     'Sass',
-    '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
+    '2006-2020 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
@@ -718,12 +743,12 @@ credits = [
     'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
   ], [
     'scikit-image',
-    '2011 the scikit-image team',
+    '2019 the scikit-image team',
     'BSD',
     'http://scikit-image.org/docs/dev/license.html'
   ], [
     'scikit-learn',
-    '2007-2018 The scikit-learn developers',
+    '2007-2020 The scikit-learn developers',
     'BSD',
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
@@ -778,7 +803,7 @@ credits = [
     'https://raw.githubusercontent.com/python-trio/trio/master/LICENSE.MIT'
   ], [
     'Twig',
-    '2009-2018 The Twig Team',
+    '2009-2020 The Twig Team',
     'BSD',
     'https://twig.symfony.com/license'
   ], [
@@ -788,7 +813,7 @@ credits = [
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
     'Underscore.js',
-    '2009-2018 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2020 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
@@ -821,6 +846,11 @@ credits = [
     'JS Foundation and other contributors',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
+  ], [
+    'Werkzeug',
+    '2007-2020 Pallets',
+    'BSD',
+    'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [
     'Wordpress',
     '2003-2019 WordPress Foundation',
