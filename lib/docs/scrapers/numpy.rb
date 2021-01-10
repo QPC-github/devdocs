@@ -17,13 +17,24 @@ module Docs
 
     options[:skip_patterns] = [
       /.*(?<!\.html)\z/,
+      /\Arelease\/.*-notes.html\Z/,
       /\Agenerated\/numpy\.chararray\.[\w\-]+.html\z/ # duplicate
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2019 NumPy Developers<br>
+      &copy; 2005&ndash;2020 NumPy Developers<br>
       Licensed under the 3-clause BSD License.
     HTML
+
+    version '1.19' do
+      self.release = '1.19.0'
+      self.base_url = "https://numpy.org/doc/#{self.version}/"
+    end
+
+    version '1.18' do
+      self.release = '1.18.5'
+      self.base_url = "https://numpy.org/doc/#{self.version}/"
+    end
 
     version '1.17' do
       self.release = '1.17.0'
@@ -66,8 +77,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      html = fetch('https://docs.scipy.org/doc/', opts)
-      html.scan(/Numpy ([0-9.]+) Reference Guide/)[0][0]
+      get_latest_github_release('numpy', 'numpy', opts)
     end
   end
 end

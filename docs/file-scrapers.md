@@ -108,6 +108,24 @@ $GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
 
 ## NumPy
 
+```sh
+mkdir --parent docs/numpy~$VERSION/; \
+curl https://numpy.org/doc/$VERSION/numpy-html.zip | \
+bsdtar --extract --file=- --directory=docs/numpy~$VERSION/
+```
+
+## OCaml
+
+Download from https://www.ocaml.org/docs/ the HTML reference:
+https://ocaml.org/releases/4.11/ocaml-4.11-refman-html.tar.gz
+and extract it as `/path/to/devdocs/docs/ocaml`:
+
+```sh
+cd /path/to/devdocs/docs
+wget https://ocaml.org/releases/4.11/ocaml-4.11-refman-html.tar.gz
+tar xf ocaml-4.10-refman-html.tar.gz --transform 's/htmlman/ocaml/'
+```
+
 ## OpenJDK
 
 https://packages.debian.org/sid/openjdk-11-doc
@@ -129,7 +147,14 @@ bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/
 ```
 
 ## PHP
+Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `/path/to/devdocs/docs/`.
 
+Or run the following commands in your terminal:
+
+```sh
+curl https://www.php.net/distributions/manual/php_manual_en.tar.gz > php.tar; \
+tar -xf php.tar; mv php-chunked-xhtml/ path/to/devdocs/docs/php/
+```
 ## Python
 
 ### Versions 3.6+
@@ -156,6 +181,18 @@ tar xj --strip-components=1
 ### Ruby / Minitest
 ### Ruby on Rails
 ### Ruby
+Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
+`./configure && make html` in your terminal (while your are in the ruby directory) and move
+`.ext/html` to `path/to/devdocs/docs/ruby~$VERSION/`.
+
+Or run the following commands in your terminal:
+```sh
+curl https://cache.ruby-lang.org/pub/ruby/$VERSION/ruby-$RELEASE.tar.gz > ruby.tar; \
+tar -xf ruby.tar; cd ruby-$RELEASE; ./configure && make html; mv .ext/html path/to/devdocs/docs/ruby~$VERSION
+```
+
+To generate the htmls file you have to run `make` command but it does not install Ruby in your system, only generates html files so you have not
+to worry about cleaning or removing a new Ruby installation.
 
 ## Salt Stack
 

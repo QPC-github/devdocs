@@ -508,7 +508,7 @@ credits = [
     'https://daringfireball.net/projects/markdown/license'
   ], [
     'Matplotlib',
-    '2012-2018 Matplotlib Development Team. All rights reserved.',
+    '2012-2020 Matplotlib Development Team. All rights reserved.',
     'Custom',
     'https://raw.githubusercontent.com/matplotlib/matplotlib/master/LICENSE/LICENSE'
   ], [
@@ -573,9 +573,14 @@ credits = [
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
     'NumPy',
-    '2005-2019 NumPy Developers',
+    '2005-2020 NumPy Developers',
     'BSD',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
+  ], [
+    'OCaml',
+    '1995-2020 Inria',
+    'CC BY-SA',
+    'https://ocaml.org/docs/'
   ], [
     'Octave',
     '1996-2018 John W. Eaton',
@@ -643,7 +648,7 @@ credits = [
     'https://www.postgresql.org/about/licence/'
   ], [
     'Puppeteer',
-    '2017 Google Inc',
+    '2020 Google Inc',
     'Apache',
     'https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/LICENSE'
   ], [
@@ -673,7 +678,7 @@ credits = [
     'https://doc.qt.io/qt-5/licensing.html'
   ], [
     'Ramda',
-    '2013-2016 Scott Sauyet and Michael Hurley',
+    '2013-2020 Scott Sauyet and Michael Hurley',
     'MIT',
     'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
   ], [
@@ -688,7 +693,7 @@ credits = [
     'https://raw.githubusercontent.com/ReactiveX/reactivex.github.io/develop/LICENSE'
   ], [
     'Redis',
-    '2009-2018 Salvatore Sanfilippo',
+    '2009-2020 Salvatore Sanfilippo',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
@@ -853,7 +858,7 @@ credits = [
     'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [
     'Wordpress',
-    '2003-2019 WordPress Foundation',
+    '2003-2020 WordPress Foundation',
     'GPLv2+',
     'https://wordpress.org/about/license/'
   ], [
