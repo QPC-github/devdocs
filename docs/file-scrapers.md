@@ -37,11 +37,36 @@ curl https://media.djangoproject.com/docs/django-docs-$VERSION-en.zip | \
 bsdtar --extract --file - --directory=docs/django\~$VERSION/
 ```
 
+## Elisp
+
+Go to https://www.gnu.org/software/emacs/manual/elisp.html, download the HTML tarball and extract its content in `/path/to/devdocs/docs/elisp` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/elisp \
+&& curl curl https://www.gnu.org/software/emacs/manual/elisp.html_node.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=/path/to/devdocs/docs/elisp
+```
+
 ## Erlang
 
 Go to https://www.erlang.org/downloads and download the HTML documentation file.
 
+```ah
+mkdir --parent docs/erlang\~$VERSION/; \
+curl http://erlang.org/download/otp_doc_html_$RELEASE.tar.gz | \
+bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
+```
+
 ## Gnu
+
+### Bash
+Go to https://www.gnu.org/software/bash/manual/, download the HTML tar file (with one web page per node) and extract its content in `/path/to/devdocs/docs/bash` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/bash \
+&& curl https://www.gnu.org/software/bash/manual/bash.html_node.tar.gz | \
+tar --extract --gzip --directory=/path/to/devdocs/docs/bash
+```
 
 ### GCC
 Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
@@ -121,43 +146,42 @@ https://ocaml.org/releases/4.11/ocaml-4.11-refman-html.tar.gz
 and extract it as `/path/to/devdocs/docs/ocaml`:
 
 ```sh
-cd /path/to/devdocs/docs
-wget https://ocaml.org/releases/4.11/ocaml-4.11-refman-html.tar.gz
-tar xf ocaml-4.10-refman-html.tar.gz --transform 's/htmlman/ocaml/'
+curl https://ocaml.org/releases/$VERSION/ocaml-$VERSION-refman-html.tar.gz | \
+tar xz --transform 's/htmlman/ocaml/' --directory docs/
 ```
 
 ## OpenJDK
+Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
+download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
+to `path/to/devdocs/docs/openjdk~$VERSION`
 
-https://packages.debian.org/sid/openjdk-11-doc
-
+If you use or have access to a Debian-based GNU/Linux distribution you can run the following command:
 ```sh
-mkdir docs/openjdk~11
-curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-11/openjdk-11-doc_11.0.9.1+1-1_all.deb
-bsdtar --extract --to-stdout --file openjdk-11-doc_11.0.9.1+1-1_all.deb data.tar.xz | \
-bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~11/ ./usr/share/doc/openjdk-11-jre-headless/api/
+apt download openjdk-$VERSION-doc
+dpkg -x $PACKAGE ./
+# previous command makes a directory called 'usr' in the current directory
+mv ./usr/share/doc/openjdk-16-jre-headless/api/ path/to/devdocs/docs/openjdk~$VERSION
 ```
 
-https://packages.debian.org/sid/openjdk-8-doc
+## Pandas
 
 ```sh
-mkdir docs/openjdk~8
-curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-doc_8u272-b10-1_all.deb
-bsdtar --extract --to-stdout --file openjdk-8-doc_8u272-b10-1_all.deb data.tar.xz | \
-bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/ ./usr/share/doc/openjdk-8-jre-headless/api/
+mkdir docs/pandas~1
+cd docs/pandas~1
+curl https://pandas.pydata.org/docs/pandas.zip
+bsdtar xf pandas.zip
 ```
 
 ## PHP
-Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `/path/to/devdocs/docs/`.
+Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `docs/`.
 
 Or run the following commands in your terminal:
 
 ```sh
 curl https://www.php.net/distributions/manual/php_manual_en.tar.gz > php.tar; \
-tar -xf php.tar; mv php-chunked-xhtml/ path/to/devdocs/docs/php/
+tar -xf php.tar; mv php-chunked-xhtml/ docs/php/
 ```
-## Python
-
-### Versions 3.6+
+## Python 3.6+
 
 ```sh
 mkdir docs/python~$VERSION
@@ -166,13 +190,35 @@ curl -L https://docs.python.org/$VERSION/archives/python-$RELEASE-docs-html.tar.
 tar xj --strip-components=1
 ```
 
-### < 3.6
+## Python < 3.6
 
 ```sh
 mkdir docs/python~$VERSION
 cd docs/python~$VERSION
 curl -L https://docs.python.org/ftp/python/doc/$RELEASE/python-$RELEASE-docs-html.tar.bz2 | \
 tar xj --strip-components=1
+```
+
+## R
+```bash
+DEVDOCSROOT=/path/to/devdocs/docs/r
+RLATEST=https://cran.r-project.org/src/base/R-latest.tar.gz # or /R-${VERSION::1}/R-$VERSION.tar.gz
+
+RSOURCEDIR=${TMPDIR:-/tmp}/R/latest
+RBUILDDIR=${TMPDIR:-/tmp}/R/build
+mkdir -p "$RSOURCEDIR" "$RBUILDDIR" "$DEVDOCSROOT"
+
+# Download, configure, and build with static HTML pages
+curl "$RLATEST" | tar -C "$RSOURCEDIR" -xzf - --strip-components=1
+(cd "$RBUILDDIR" && "$RSOURCEDIR/configure" --enable-prebuilt-html --with-recommended-packages --disable-byte-compiled-packages --disable-shared --disable-java)
+make _R_HELP_LINKS_TO_TOPICS_=FALSE -C "$RBUILDDIR"
+
+# Export all html documentation built − global, and per-package
+cp -r "$RBUILDDIR/doc" "$DEVDOCSROOT/"
+ls -d "$RBUILDDIR"/library/*/html | while read orig; do
+    dest="$DEVDOCSROOT${orig#$RBUILDDIR}"
+    mkdir -p "$dest" && cp -r "$orig"/* "$dest/"
+done
 ```
 
 ## RDoc
@@ -194,19 +240,6 @@ tar -xf ruby.tar; cd ruby-$RELEASE; ./configure && make html; mv .ext/html path/
 To generate the htmls file you have to run `make` command but it does not install Ruby in your system, only generates html files so you have not
 to worry about cleaning or removing a new Ruby installation.
 
-## Salt Stack
-
-Replace `2019.2` with the correct tag.
-
-```sh
-git clone https://github.com/saltstack/salt.git --branch 2019.2 --depth 1
-cd salt/doc
-pip install sphinx
-make html
-```
-
-The generated html is in `salt/doc/_build/html`. Copy it to
-
 ## Scala
 
 See `lib/docs/scrapers/scala.rb`
@@ -215,3 +248,7 @@ See `lib/docs/scrapers/scala.rb`
 
 Download the docs from https://sqlite.org/download.html, unzip it, and rename
 it to `/path/to/devdocs/docs/sqlite`
+
+```sh
+curl https://sqlite.org/2021/sqlite-doc-3370000.zip | bsdtar --extract --file - --directory=docs/sqlite/```
+```

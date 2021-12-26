@@ -18,9 +18,15 @@ class app.Shortcuts
   swapArrowKeysBehavior: ->
     app.settings.get('arrowScroll')
 
+  spaceScroll: ->
+    app.settings.get('spaceScroll')
+
   showTip: ->
     app.showTip('KeyNav')
     @showTip = null
+
+  spaceTimeout: ->
+    app.settings.get('spaceTimeout')
 
   onKeydown: (event) =>
     return if @buggyEvent(event)
@@ -37,7 +43,7 @@ class app.Shortcuts
     return
 
   onKeypress: (event) =>
-    return if @buggyEvent(event)
+    return if @buggyEvent(event) or (event.charCode == 63 and document.activeElement.tagName == 'INPUT')
     unless event.ctrlKey or event.metaKey
       result = @handleKeypressEvent event
       event.preventDefault() if result is false
@@ -59,7 +65,7 @@ class app.Shortcuts
         @trigger 'escape'
         false
       when 32
-        if event.target.type is 'search' and (not @lastKeypress or @lastKeypress < Date.now() - 500)
+        if event.target.type is 'search' and @spaceScroll() and (not @lastKeypress or @lastKeypress < Date.now() - (@spaceTimeout() * 1000))
           @trigger 'pageDown'
           false
       when 33
@@ -148,6 +154,9 @@ class app.Shortcuts
           false
       when 40
         @trigger 'altDown'
+        false
+      when 67
+        @trigger 'altC'
         false
       when 68
         @trigger 'altD'

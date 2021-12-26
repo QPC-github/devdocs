@@ -7,23 +7,20 @@ module Docs
         elsif slug == 'style-guide/'
           'Style Guide'
         else
-          name = at_css('.page h1').content.gsub! /\#/, ''
-          node = at_css(".sidebar .sidebar-links a[href='#{File.basename(slug)}']")
-
-          return name if node.nil?
-
-          # index = node.parent.parent.css('> li > a').to_a.index(node)
-          prefix = node.parent.parent.parent.css('.sidebar-heading')[0].inner_text.strip
-          name.prepend "#{prefix}: " if prefix
+          name = at_css('h1').content
+          name.sub! %r{#\s*}, ''
+          index = css('.sidebar-link').to_a.index(at_css('.sidebar-link.active'))
+          name.prepend "#{index + 1}. " if index
           name
         end
       end
 
       def get_type
         if slug.start_with?('guide/migration')
-          'Migration from Vue 2'
-        elsif slug.start_with?('guide')
-          'Guide'
+          'Migration'
+       elsif slug.start_with?('guide')
+          subtype = at_css('.sidebar-heading.open, .sidebar-link.active')
+          subtype ? "Guide: #{subtype.content}": 'Guide'
         elsif slug == 'style-guide/'
           'Style Guide'
         else
@@ -34,28 +31,22 @@ module Docs
       def additional_entries
         return [] if slug.start_with?('guide')
         type = nil
-        if slug.start_with?('api')
-          current_type = at_css('.page h1').content.strip.gsub! /\#/, ''
-          css('.page h2').each_with_object [] do |node, entries|
-            if node.name == 'h2'
-              name = node.content.strip.gsub! /\#/, ''
-              entries << ["#{name} (#{current_type})", node['id'], 'API']
-            end
-          end
-        elsif slug.start_with?('style-guide')
-          css('.page h2, .page h3').each_with_object [] do |node, entries|
-            if node.name == 'h2'
-              type = node.content.strip.gsub! /\#/, ''
-            else
-              name = node.content.strip.gsub! /\#/, ''
-              name.sub! %r{\(.*\)}, '()'
-              name.sub! /(essential|strongly recommended|recommended|use with caution)\Z/, ''
 
-              current_type = "Style Guide: "
-              current_type += type.sub(/( Rules: )/, ': ').split('(')[0]
-
-              entries << [name, node['id'], current_type]
-            end
+        css('h2, h3').each_with_object [] do |node, entries|
+          if node.name == 'h2'
+            type = node.content.strip
+            type.sub! %r{#\s*}, ''
+            next if slug == 'style-guide/'
+            title = at_css('h1').content.strip
+            title.sub! %r{#\s*}, ''
+            entries << [type, node['id'], "API: #{title}"]
+          elsif slug == 'style-guide/'
+            name = node.content.strip
+            name.sub! %r{#\s*}, ''
+            name.sub! %r{\(.*\)}, '()'
+            name.sub! /(essential|strongly recommended|recommended|use with caution)\Z/, ''
+            curent_type = "Style Guide: #{type.sub(/Rules: /, ': ')}"
+            entries << [name, node['id'], curent_type]
           end
         end
       end

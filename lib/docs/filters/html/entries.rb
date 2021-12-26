@@ -8,7 +8,7 @@ module Docs
         name = super
         name.sub!('Element.', '').try(:downcase!)
         name.sub!('Global attributes.', '').try(:concat, ' (attribute)')
-        name.sub!(/input.(\w+)/, 'input type="\1"')
+        name.sub!(/input\.([-\w]+)/, 'input type="\1"')
         name
       end
 
@@ -17,7 +17,7 @@ module Docs
 
         if slug.start_with?('Global_attr')
           'Attributes'
-        elsif at_css('.obsoleteHeader', '.deprecatedHeader', '.nonStandardHeader') || OBSOLETE.include?(slug.remove('Element/'))
+        elsif at_css('#deprecated', '#non-standard', '#obsolete') || OBSOLETE.include?(slug.remove('Element/'))
           'Obsolete'
         elsif slug.start_with?('Element/')
           'Elements'

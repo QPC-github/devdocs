@@ -1,14 +1,23 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.release = '1.15'
+    self.release = '1.17.5'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
       code: 'https://go.googlesource.com/go'
     }
 
+    # Run godoc locally, since https://golang.org/pkg/ redirects to https://pkg.go.dev/std with rate limiting / scraping protection.
+
+    # curl -LO https://golang.org/dl/go1.17.5.windows-amd64.zip
+    # go install golang.org/x/tools/cmd/godoc@latest
+    # go/bin/godoc -zip=go1.17.5.windows-amd64.zip -goroot=/go
+    self.base_url = 'http://localhost:6060/pkg/'
+
+    html_filters.push 'clean_local_urls'
     html_filters.push 'go/clean_html', 'go/entries'
+    text_filters.replace 'attribution', 'go/attribution'
 
     options[:trailing_slash] = true
     options[:container] = '#page .container'
@@ -16,7 +25,7 @@ module Docs
     options[:skip_patterns] = [/\/\//]
 
     options[:fix_urls] = ->(url) do
-      url.sub 'https://golang.org/pkg//', 'https://golang.org/pkg/'
+      url.sub '/pkg//', '/pkg/'
     end
 
     options[:attribution] = <<-HTML
@@ -25,8 +34,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://golang.org/project/', opts)
-      doc.at_css('#page ul > li > a').text[3..-1]
+      doc = fetch_doc('https://go.dev/dl/', opts)
+      doc.at_css('.download[href]')['href'][/go1[0-9.]+[0-9]/][2..]
     end
 
     private

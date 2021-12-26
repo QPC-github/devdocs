@@ -8,10 +8,9 @@ module Docs
       code: 'https://github.com/vuejs/vue'
     }
 
-
-
     options[:only_patterns] = [/guide\//, /api\//]
     options[:skip] = %w(guide/team.html)
+    options[:skip_patterns] = [/guide\/contributing/]
     options[:replace_paths] = { 'guide/' => 'guide/index.html' }
 
     options[:attribution] = <<-HTML
@@ -20,20 +19,15 @@ module Docs
     HTML
 
     version '3' do
-      self.links = {
-        home: 'https://vuejs.org/',
-        code: 'https://github.com/vuejs/vue-next'
-      }
-      self.release = '3.0.3'
+      self.release = '3.2.20'
       self.base_url = 'https://v3.vuejs.org/'
       self.root_path = 'guide/introduction.html'
       self.initial_paths = %w(api/)
-
-      html_filters.push 'vue/entries_v3', 'vue/clean_html_v3'
+      html_filters.push 'vue/entries_v3', 'vue/clean_html'
     end
 
     version '2' do
-      self.release = '2.6.10'
+      self.release = '2.6.12'
       self.base_url = 'https://vuejs.org/v2/'
       self.root_path = 'guide/index.html'
       self.initial_paths = %w(api/)
@@ -49,7 +43,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('vuejs', 'vue-next', opts)
+      get_npm_version('vue', opts, 'next')
     end
   end
 end

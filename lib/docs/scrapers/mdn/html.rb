@@ -2,24 +2,13 @@ module Docs
   class Html < Mdn
     prepend FixInternalUrlsBehavior
 
+    # release = '2021-12-21'
     self.name = 'HTML'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/HTML'
 
-    html_filters.push 'html/clean_html', 'html/entries', 'title'
-
-    options[:mdn_tag] = 'HTML'
+    html_filters.push 'html/clean_html', 'html/entries'
 
     options[:root_title] = 'HTML'
-
-    options[:title] = ->(filter) do
-      if filter.slug == 'Element/Heading_Elements'
-        'Heading Elements'
-      elsif filter.slug.start_with?('Element/')
-        "<#{filter.default_title}>"
-      else
-        filter.default_title
-      end
-    end
 
     options[:skip] = %w(
       /index
@@ -40,5 +29,6 @@ module Docs
       url.sub! 'https://developer.mozilla.org/en-US/docs/HTML/', "#{Html.base_url}/" unless url.include?('Content_categories')
       url
     end
+
   end
 end

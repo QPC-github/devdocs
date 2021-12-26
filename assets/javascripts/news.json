@@ -1,5 +1,42 @@
 [
   [
+    "2021-12-07",
+    "New documentation: <a href=\"/prettier/\">Prettier</a>",
+    "Renamed documentation: <a href=\"/dom/\">Web APIs</a>"
+  ],
+  [
+    "2021-12-05",
+    "New documentation: <a href=\"/esbuild/\">esbuild</a>"
+  ],
+  [
+    "2021-12-04",
+    "New documentation: <a href=\"/vite/\">Vite</a>"
+  ],
+  [
+    "2021-11-29",
+    "New documentation: <a href=\"/i3/\">i3</a>"
+  ],
+  [
+    "2021-06-09",
+    "New documentation: <a href=\"/r/\">R</a>"
+  ],
+  [
+    "2021-05-31",
+    "New documentation: <a href=\"/web_extensions/\">Web Extensions</a>"
+  ],
+  [
+    "2021-05-26",
+    "New documentations: <a href=\"/latex/\">LaTeX</a>, <a href=\"/jq/\">jq</a>"
+  ],
+  [
+    "2021-04-29",
+    "Added <code class=\"_label\">alt + c</code> shortcut to copy URL of original page."
+  ],
+  [
+    "2021-02-26",
+    "New documentation: <a href=\"/react_bootstrap/\">React Bootstrap</a>"
+  ],
+  [
     "2021-01-03",
     "New documentation: <a href=\"/ocaml/\">OCaml</a>"
   ],

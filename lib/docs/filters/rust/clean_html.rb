@@ -45,6 +45,11 @@ module Docs
           node.remove if node.content.include?('#[must_use]')
         end
 
+        css('details').each do |node|
+          node.css('summary:contains("Expand description")').remove
+          node.before(node.children).remove
+        end
+
         css('a.header').each do |node|
           unless node.first_element_child.nil?
             node.first_element_child['id'] = node['name'] || node['id']
@@ -63,6 +68,11 @@ module Docs
         end
 
         css('> .impl-items', '> .docblock', 'pre > pre', '.tooltiptext', '.tooltip').each do |node|
+          # see .tooltip.ignore::after in https://doc.rust-lang.org/rustdoc1.50.0.css
+          node.content += ' This example is not tested' if node['class'].include?('ignore')
+          node.content += ' This example deliberately fails to compile' if node['class'].include?('compile_fail')
+          node.content += ' This example panics' if node['class'].include?('should_panic')
+          node.content += ' This code runs with edition ' + node['data-edition'] if node['class'].include?('edition')
           node.before(node.children).remove
         end
 
@@ -96,8 +106,8 @@ module Docs
           node.previous_element.before(node)
         end
 
+        css('#copy-path').remove
         css('.sidebar').remove
-
         css('.collapse-toggle').remove
 
         doc
