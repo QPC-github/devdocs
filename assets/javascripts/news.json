@@ -1,5 +1,17 @@
 [
   [
+    "2021-12-29",
+    "New documentation: <a href=\"/point_cloud_library/\">PointCloudLibrary</a>"
+  ],
+  [
+    "2021-12-27",
+    "New documentation: <a href=\"/zig/\">Zig</a>"
+  ],
+  [
+    "2021-12-26",
+    "New documentation: <a href=\"/gnu_make/\">GNU Make</a>"
+  ],
+  [
     "2021-12-07",
     "New documentation: <a href=\"/prettier/\">Prettier</a>",
     "Renamed documentation: <a href=\"/dom/\">Web APIs</a>"
