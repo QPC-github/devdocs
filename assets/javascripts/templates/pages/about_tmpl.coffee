@@ -878,6 +878,11 @@ credits = [
     'MPL',
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
+    'Varnish',
+    'Copyright (c) 2006 Verdens Gang AS<br>Copyright (c) 2006-2021 Varnish Software AS',
+    'BSD-2-Clause',
+    'https://github.com/varnishcache/varnish-cache/blob/master/LICENSE'
+  ], [
     'Vite',
     '2019–present, Yuxi (Evan) You and Vite contributors',
     'MIT',
