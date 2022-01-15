@@ -472,6 +472,11 @@ credits = [
     '2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors',
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
+  ],[
+    'Kubernetes',
+    '2022 The Kubernetes Authors',
+    'CC-BY-4.0',
+    'https://raw.githubusercontent.com/kubernetes/website/main/LICENSE'
   ], [
     'Laravel',
     'Taylor Otwell',
