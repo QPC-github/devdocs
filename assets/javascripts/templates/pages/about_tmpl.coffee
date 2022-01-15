@@ -233,6 +233,11 @@ credits = [
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
+    'Deno',
+    '2018–2021 the Deno authors',
+    'MIT',
+    'https://raw.githubusercontent.com/denoland/manual/main/LICENSE'
+  ], [
     'Django',
     'Django Software Foundation and individual contributors',
     'BSD',
@@ -589,7 +594,7 @@ credits = [
     'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
   ], [
     'Nokogiri',
-    '2008-2018 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori MUSHA, John Shahid, Lars Kanis',
+    '2008–2021 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori MUSHA, John Shahid, Lars Kanis',
     'MIT',
     'https://raw.githubusercontent.com/sparklemotion/nokogiri/master/LICENSE.md'
   ], [
@@ -724,7 +729,7 @@ credits = [
     'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
   ], [
     'React, React Native, Flow, Relay',
-    '2013-present Facebook Inc.',
+    'Facebook Inc. and its affiliates',
     'MIT',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
   ], [
@@ -732,6 +737,11 @@ credits = [
     '2014-present Stephen J. Collings, Matthew Honnibal, Pieter Vanderwerff',
     'MIT',
     'https://raw.githubusercontent.com/react-bootstrap/react-bootstrap/master/LICENSE'
+  ], [
+    'React Router',
+    'React Training 2015-2019<br>Remix Software 2020-2021',
+    'MIT',
+    'https://raw.githubusercontent.com/remix-run/react-router/main/LICENSE.md'
   ], [
     'ReactiveX',
     'ReactiveX contributors',
@@ -764,7 +774,7 @@ credits = [
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [
     'Ruby on Rails',
-    '2004-2020 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
+    '2004-2021 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
     'MIT',
     'https://raw.githubusercontent.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
