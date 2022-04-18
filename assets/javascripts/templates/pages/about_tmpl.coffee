@@ -84,7 +84,7 @@ app.templates.aboutPage = -> """
 credits = [
   [
     'Angular',
-    '2010-2021 Google, Inc.',
+    '2010-2022 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -224,7 +224,7 @@ credits = [
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
     'D3.js',
-    '2010-2021 Michael Bostock',
+    '2010-2022 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
   ], [
@@ -234,7 +234,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Deno',
-    '2018–2021 the Deno authors',
+    '2018–2022 the Deno authors',
     'MIT',
     'https://raw.githubusercontent.com/denoland/manual/main/LICENSE'
   ], [
@@ -262,6 +262,11 @@ credits = [
     '2001-2015 by the original authors<br>Drupal is a registered trademark of Dries Buytaert.',
     'GPLv2',
     'https://api.drupal.org/api/drupal/LICENSE.txt'
+  ],[
+    'Eigen3',
+    'Eigen',
+    'MPL2',
+    'https://www.mozilla.org/en-US/MPL/2.0/'
   ], [
     'Electron',
     'GitHub Inc.',
@@ -314,12 +319,12 @@ credits = [
     'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
   ], [
     'Fish',
-    '2005–2009 Axel Liljencrantz, 2009–2021 fish-shell contributors',
+    '2005–2009 Axel Liljencrantz, 2009–2022 fish-shell contributors',
     'GPLv2',
     'https://fishshell.com/docs/current/license.html'
   ], [
     'Flask',
-    '2007-2021 Pallets',
+    '2007-2022 Pallets',
     'BSD',
     'https://github.com/pallets/flask/blob/master/LICENSE.rst'
   ], [
@@ -329,7 +334,7 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Git',
-    '2012-2021 Scott Chacon and others',
+    '2012-2022 Scott Chacon and others',
     'MIT',
     'https://raw.githubusercontent.com/git/git-scm.com/master/MIT-LICENSE.txt'
   ], [
@@ -359,7 +364,7 @@ credits = [
     'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
   ], [
     'Groovy',
-    '2003-2020 The Apache Software Foundation',
+    '2003-2022 The Apache Software Foundation',
     'Apache',
     'https://github.com/apache/groovy-website/blob/asf-site/LICENSE'
   ], [
@@ -474,7 +479,7 @@ credits = [
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
     'Kotlin',
-    '2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors',
+    '2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors',
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
   ],[
@@ -609,14 +614,14 @@ credits = [
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
     'OCaml',
-    '1995-2021 INRIA',
+    '1995-2022 INRIA',
     'CC BY-SA',
     'https://ocaml.org/docs/'
   ], [
     'Octave',
-    '1996-2018 John W. Eaton',
+    '1996–2022 The Octave Project Developers',
     'Octave',
-    'https://octave.org/doc/interpreter/'
+    'https://octave.org/doc/v7.1.0/'
   ], [
     'OpenJDK',
     '1993, 2021, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
@@ -634,7 +639,7 @@ credits = [
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
     'pandas',
-    '2008-2021, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
+    '2008-2022, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
     'BSD',
     'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
   ], [
@@ -679,7 +684,7 @@ credits = [
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
     'PostgreSQL',
-    '1996-2021 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2022 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
@@ -699,7 +704,7 @@ credits = [
     'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
   ], [
     'Python',
-    '2001-2021 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    '2001-2022 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [
@@ -799,9 +804,9 @@ credits = [
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
     'Scala',
-    '2002-2019 EPFL, with contributions from Lightbend',
+    '2002-2022 EPFL, with contributions from Lightbend',
     'Apache',
-    'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
+    'https://www.scala-lang.org/license/'
   ], [
     'scikit-image',
     '2019 the scikit-image team',
@@ -848,6 +853,11 @@ credits = [
     'MIT',
     'https://symfony.com/doc/current/contributing/code/license.html'
   ], [
+    'TailwindCSS',
+    '2022 Tailwind Labs, Inc.',
+    'MIT',
+    'https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/LICENSE'
+  ], [
     'Tcl/Tk',
     'The Regents of the University of California, Sun Microsystems, Inc., Scriptics Corporation, and other parties',
     'Tcl/Tk',
@@ -874,7 +884,7 @@ credits = [
     'https://twig.symfony.com/license'
   ], [
     'TypeScript',
-    '2012-2021 Microsoft',
+    '2012-2022 Microsoft',
     'Apache',
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
@@ -924,12 +934,12 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Werkzeug',
-    '2007-2021 Pallets',
+    '2007-2022 Pallets',
     'BSD',
     'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [
     'Wordpress',
-    '2003-2021 WordPress Foundation',
+    '2003-2022 WordPress Foundation',
     'GPLv2+',
     'https://wordpress.org/about/license/'
   ], [
