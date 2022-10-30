@@ -2,8 +2,9 @@ module Docs
   class Vite
     class CleanHtmlFilter < Filter
       def call
+        return "<h1>Vitest</h1><p>A Vite-native unit test framework. It's fast!</p>" if root_page? && current_url.host == 'vitest.dev'
         return '<h1>Vite</h1>' if root_page?
-        @doc = at_css('main .content > div')
+        @doc = at_css('main h1').parent
 
         css('.demo', '.guide-links', '.footer', '#ad').remove
         css('.header-anchor', '.page-edit', '.page-nav').remove
@@ -14,18 +15,12 @@ module Docs
 
         # Remove CodePen div
         css('.codepen').each do |node|
+          raise "dsfsdfsdf"
           next if node.previous_element.nil?
           span = node.css('span:contains("See the Pen")').remove
           node.previous_element.add_child(' ')
           node.previous_element.add_child(span)
           node.remove
-        end
-
-        # Remove code highlighting
-        css('figure').each do |node|
-          node.name = 'pre'
-          node.content = node.at_css('td.code pre').css('.line').map(&:content).join("\n")
-          node['data-language'] = node['class'][/highlight (\w+)/, 1]
         end
 
         css('.line-numbers-wrapper').remove

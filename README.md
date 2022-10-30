@@ -6,11 +6,11 @@ DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated b
 
 ## We are currently searching for maintainers
 
-Please reach out to the community on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you would like to join the team!
+Please reach out to the community on [Discord](https://discord.gg/PRyKn3Vbay) if you would like to join the team!
 
 Keep track of development news:
 
-* Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
+* Join the devdocs chat room on [Discord](https://discord.gg/PRyKn3Vbay)
 * Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 
@@ -53,7 +53,16 @@ docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
 
-The app's main goals are to: keep load times as short as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean and readable user interface; be fully functional offline; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
+The app's main goals are to: 
+
+* Keep load times as short as possible
+* Improve the quality, speed, and order of search results
+* Maximize the use of caching and other performance optimizations
+* Maintain a clean and readable user interface 
+* Be fully functional offline
+* Support full keyboard navigation
+* Reduce “context switch” by using a consistent typography and design across all documentations
+* Reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
 
 **Note:** DevDocs is neither a programming guide nor a search engine. All our content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata; each piece of content is identified by a unique, "obvious" and short string. Tutorials, guides and other content that don't meet this requirement are outside the scope of the project.
 
@@ -147,8 +156,6 @@ Made something cool? Feel free to open a PR to add a new row to this table!
 
 | Project                                                                                                 | Description                                                            | Last commit                                                                                                                                                                |
 |---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)    | Chrome Web App which adds a shortcut to DevDocs apps page.             | N/A                                                                                                                                                                        |
-| [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)                               | Application for devices running Ubuntu Touch.                          | N/A                                                                                                                                                                        |
 | [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)                                       | Sublime Text plugin to search DevDocs by selection or by input.        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/vitorbritto/sublime-devdocs?logo=github&label)](https://github.com/vitorbritto/sublime-devdocs)         |
 | [Atom plugin](https://atom.io/packages/devdocs)                                                         | Atom plugin adding the `doc` command to search DevDocs.                | [![Latest GitHub commit](https://img.shields.io/github/last-commit/masnun/atom-devdocs?logo=github&label)](https://github.com/masnun/atom-devdocs)                         |
 | [gruehle/dev-docs-viewer](https://github.com/gruehle/dev-docs-viewer)                                   | Brackets extension for searching and viewing DevDocs content.          | [![Latest GitHub commit](https://img.shields.io/github/last-commit/gruehle/dev-docs-viewer?logo=github&label)](https://github.com/gruehle/dev-docs-viewer)                 |
@@ -164,7 +171,9 @@ Made something cool? Feel free to open a PR to add a new row to this table!
 | [dteoh/devdocs-macos](https://github.com/dteoh/devdocs-macos)                                           | Native macOS application for DevDocs.                                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/dteoh/devdocs-macos?logo=github&label)](https://github.com/dteoh/devdocs-macos)                         |
 | [Merith-TK/devdocs_webapp_kotlin](https://github.com/Merith-TK/devdocs_webapp_kotlin)                   | Android application which shows DevDocs in a webview.                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/Merith-TK/devdocs_webapp_kotlin?logo=github&label)](https://github.com/Merith-TK/devdocs_webapp_kotlin) |
 | [astoff/devdocs.el](https://github.com/astoff/devdocs.el)                                               | Emacs viewer for DevDocs                                               | [![Latest GitHub commit](https://img.shields.io/github/last-commit/astoff/devdocs.el?logo=github&label)](https://github.com/astoff/devdocs.el)                             |
-| [DevDocs Tab for VS Code](https://github.com/mohamed3nan/DevDocs-Tab)                                   | VS Code extension to search for documentation on DevDocs.io faster by displaying it in a tab inside VS Code.| [![Latest GitHub commit](https://img.shields.io/github/last-commit/mohamed3nan/DevDocs-Tab?logo=github&label)](https://github.com/mohamed3nan/DevDocs-Tab)                             |
+| [DevDocs Tab for VS Code](https://github.com/mohamed3nan/DevDocs-Tab)                                   | VS Code extension to search displaying DevDocs.io in a tab.            | [![Latest GitHub commit](https://img.shields.io/github/last-commit/mohamed3nan/DevDocs-Tab?logo=github&label)](https://github.com/mohamed3nan/DevDocs-Tab)                             |
+| [quickDocs](https://github.com/mdh34/quickDocs)                                                         | DevDocs viewer written in Vala/Python.                                 | [![Latest GitHub commit](https://img.shields.io/github/last-commit/mdh34/quickDocs?logo=github&label)](https://github.com/mdh34/quickDocs)                             |
+| [romainl/vim-devdocs](https://github.com/romainl/vim-devdocs)                                           | Look up keyword on DevDocs from Vim.                                   | [![Latest GitHub commit](https://img.shields.io/github/last-commit/romainl/vim-devdocs?logo=github&label)](https://github.com/romainl/vim-devdocs)                             |
 
 ## Copyright / License
 
@@ -178,4 +187,4 @@ We also wish that any documentation file generated using this software be attrib
 
 ## Questions?
 
-If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Discord](https://discord.gg/PRyKn3Vbay).
